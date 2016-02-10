@@ -6,10 +6,11 @@ using Ot_Sims_Givebox.Controllers;
 namespace Ot_Sims_Givebox.Tests.Controllers
 {
     [TestClass]
-    public class HomeControllerTest
+    public class OffresControllerTest
     {
         [TestMethod]
-        public void Index()
+        public void FileUpload()
+
         {
             // Disposer
             HomeController controller = new HomeController();
