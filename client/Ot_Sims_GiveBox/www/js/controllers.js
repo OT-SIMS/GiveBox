@@ -72,13 +72,20 @@ angular.module('starter.controllers', [])
 		};
 		
 		
-		//TODO : url du serveur à la place de urlTODO
-		var res = $http.post("urlTODO", newOffer);
-		res.success(function(data, status, headers, config) {
+		var req = {
+			 method: 'POST',
+			 url: 'http://yoda.rispal.info/givebox/api/offres',
+			 headers: {
+			   'Content-Type': 'application/json',
+			   'accept': 'application/json'
+			 },
+			 data: newOffer
+		}
+		
+		$http(req).then(function(){
 			$scope.message = data;
-		});
-		res.error(function(data, status, headers, config) {
-			alert( "failure message: " + JSON.stringify({data: data}));
+		}, function(){
+			alert( "Problème d'envoi au serveur: " + JSON.stringify({data: data}));
 		});
   };
 });
