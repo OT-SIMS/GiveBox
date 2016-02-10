@@ -1,1 +1,39 @@
 /* Empty. Add your own CSS if you like */
+
+/********/
+/* MENU */
+/********/
+#navBar{
+  font-family: 'Lobster';
+  font-size: 30px !important;
+  color: green !important;
+}
+/********/
+
+/********/
+/* HOME */
+/********/
+.itemDiv{
+  text-align: center;
+
+}
+.itemDiv img{
+  width: 100%;
+  border-radius: 5px;
+}
+#giveYourStuffButton {
+  position: fixed;
+  top: 400px;
+  left:20%;
+  width: 60%;
+  border-radius: 25px;
+  font-family:'Raleway',sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+#giveYourStuffIcon {
+  margin-left: 10px;
+  font-size:40px;
+}
+/********/
