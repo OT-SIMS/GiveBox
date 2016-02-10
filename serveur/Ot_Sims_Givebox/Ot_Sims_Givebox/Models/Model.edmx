@@ -1,0 +1,350 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Model.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="ModelStoreContainer">
+    <EntitySet Name="UtilisateurSet" EntityType="Model.Store.UtilisateurSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="OffreSet" EntityType="Model.Store.OffreSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="CategorieSet" EntityType="Model.Store.CategorieSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="FichierSet" EntityType="Model.Store.FichierSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="FichierTypeSet" EntityType="Model.Store.FichierTypeSet" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="UtilisateurOffre" Association="Model.Store.UtilisateurOffre">
+      <End Role="Utilisateur" EntitySet="UtilisateurSet" />
+      <End Role="Offre" EntitySet="OffreSet" />
+    </AssociationSet>
+    <AssociationSet Name="OffreCategorie" Association="Model.Store.OffreCategorie">
+      <End Role="Offre" EntitySet="OffreSet" />
+      <End Role="Categorie" EntitySet="CategorieSet" />
+    </AssociationSet>
+    <AssociationSet Name="OffreFichier" Association="Model.Store.OffreFichier">
+      <End Role="Offre" EntitySet="OffreSet" />
+      <End Role="Fichier" EntitySet="FichierSet" />
+    </AssociationSet>
+    <AssociationSet Name="CategorieCategorie" Association="Model.Store.CategorieCategorie">
+      <End Role="Categorie" EntitySet="CategorieSet" />
+      <End Role="Categorie1" EntitySet="CategorieSet" />
+    </AssociationSet>
+    <AssociationSet Name="FichierFichierType" Association="Model.Store.FichierFichierType">
+      <End Role="Fichier" EntitySet="FichierSet" />
+      <End Role="FichierType" EntitySet="FichierTypeSet" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="UtilisateurSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nom" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="OffreSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UtilisateurId" Type="int" Nullable="false" />
+    <Property Name="Titre" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Latitude" Type="float" Nullable="false" />
+    <Property Name="Longitude" Type="float" Nullable="false" />
+    <Property Name="Categorie_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CategorieSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nom" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ParentId" Type="int" Nullable="true" />
+  </EntityType>
+  <EntityType Name="FichierSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="OffreId" Type="int" Nullable="false" />
+    <Property Name="FichierTypeId" Type="int" Nullable="false" />
+    <Property Name="Chemin" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="FichierTypeSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nom" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <Association Name="UtilisateurOffre">
+    <End Role="Utilisateur" Type="Model.Store.UtilisateurSet" Multiplicity="1" />
+    <End Role="Offre" Type="Model.Store.OffreSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Utilisateur">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Offre">
+        <PropertyRef Name="UtilisateurId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="OffreCategorie">
+    <End Role="Offre" Type="Model.Store.OffreSet" Multiplicity="*" />
+    <End Role="Categorie" Type="Model.Store.CategorieSet" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Categorie">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Offre">
+        <PropertyRef Name="Categorie_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="OffreFichier">
+    <End Role="Offre" Type="Model.Store.OffreSet" Multiplicity="1" />
+    <End Role="Fichier" Type="Model.Store.FichierSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Offre">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Fichier">
+        <PropertyRef Name="OffreId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CategorieCategorie">
+    <End Role="Categorie" Type="Model.Store.CategorieSet" Multiplicity="0..1" />
+    <End Role="Categorie1" Type="Model.Store.CategorieSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Categorie">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Categorie1">
+        <PropertyRef Name="ParentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FichierFichierType">
+    <End Role="Fichier" Type="Model.Store.FichierSet" Multiplicity="*" />
+    <End Role="FichierType" Type="Model.Store.FichierTypeSet" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="FichierType">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Fichier">
+        <PropertyRef Name="FichierTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="Model" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="ModelContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="UtilisateurSet" EntityType="Model.Utilisateur" />
+          <EntitySet Name="OffreSet" EntityType="Model.Offre" />
+          <AssociationSet Name="UtilisateurOffre" Association="Model.UtilisateurOffre">
+            <End Role="Utilisateur" EntitySet="UtilisateurSet" />
+            <End Role="Offre" EntitySet="OffreSet" />
+          </AssociationSet>
+          <EntitySet Name="CategorieSet" EntityType="Model.Categorie" />
+          <EntitySet Name="FichierSet" EntityType="Model.Fichier" />
+          <AssociationSet Name="OffreCategorie" Association="Model.OffreCategorie">
+            <End Role="Offre" EntitySet="OffreSet" />
+            <End Role="Categorie" EntitySet="CategorieSet" />
+          </AssociationSet>
+          <AssociationSet Name="OffreFichier" Association="Model.OffreFichier">
+            <End Role="Offre" EntitySet="OffreSet" />
+            <End Role="Fichier" EntitySet="FichierSet" />
+          </AssociationSet>
+          <AssociationSet Name="CategorieCategorie" Association="Model.CategorieCategorie">
+            <End Role="Categorie" EntitySet="CategorieSet" />
+            <End Role="Categorie1" EntitySet="CategorieSet" />
+          </AssociationSet>
+          <EntitySet Name="FichierTypeSet" EntityType="Model.FichierType" />
+          <AssociationSet Name="FichierFichierType" Association="Model.FichierFichierType">
+            <End Role="Fichier" EntitySet="FichierSet" />
+            <End Role="FichierType" EntitySet="FichierTypeSet" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Utilisateur">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nom" Type="String" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Offre">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Utilisateur" Relationship="Model.UtilisateurOffre" FromRole="Offre" ToRole="Utilisateur" />
+          <Property Name="UtilisateurId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Categorie" Relationship="Model.OffreCategorie" FromRole="Offre" ToRole="Categorie" />
+          <NavigationProperty Name="Fichier" Relationship="Model.OffreFichier" FromRole="Offre" ToRole="Fichier" />
+          <Property Name="Titre" Type="String" Nullable="false" />
+          <Property Name="Description" Type="String" Nullable="false" />
+          <Property Name="Latitude" Type="Double" Nullable="false" />
+          <Property Name="Longitude" Type="Double" Nullable="false" />
+        </EntityType>
+        <Association Name="UtilisateurOffre">
+          <End Type="Model.Utilisateur" Role="Utilisateur" Multiplicity="1" />
+          <End Type="Model.Offre" Role="Offre" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Utilisateur">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Offre">
+              <PropertyRef Name="UtilisateurId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Categorie">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nom" Type="String" Nullable="false" />
+          <Property Name="ParentId" Type="Int32" Nullable="true" />
+        </EntityType>
+        <EntityType Name="Fichier">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OffreId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="FichierType" Relationship="Model.FichierFichierType" FromRole="Fichier" ToRole="FichierType" />
+          <Property Name="FichierTypeId" Type="Int32" Nullable="false" />
+          <Property Name="Chemin" Type="String" Nullable="false" />
+        </EntityType>
+        <Association Name="OffreCategorie">
+          <End Type="Model.Offre" Role="Offre" Multiplicity="*" />
+          <End Type="Model.Categorie" Role="Categorie" Multiplicity="1" />
+        </Association>
+        <Association Name="OffreFichier">
+          <End Type="Model.Offre" Role="Offre" Multiplicity="1" />
+          <End Type="Model.Fichier" Role="Fichier" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Offre">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Fichier">
+              <PropertyRef Name="OffreId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CategorieCategorie">
+          <End Type="Model.Categorie" Role="Categorie" Multiplicity="0..1" />
+          <End Type="Model.Categorie" Role="Categorie1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categorie">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Categorie1">
+              <PropertyRef Name="ParentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="FichierType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nom" Type="String" Nullable="false" cg:SetterAccess="Public" />
+        </EntityType>
+        <Association Name="FichierFichierType">
+          <End Type="Model.Fichier" Role="Fichier" Multiplicity="*" />
+          <End Type="Model.FichierType" Role="FichierType" Multiplicity="1" />
+          <ReferentialConstraint>
+            <Principal Role="FichierType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Fichier">
+              <PropertyRef Name="FichierTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="ModelContainer">
+    <EntitySetMapping Name="UtilisateurSet">
+      <EntityTypeMapping TypeName="IsTypeOf(Model.Utilisateur)">
+        <MappingFragment StoreEntitySet="UtilisateurSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Nom" ColumnName="Nom" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OffreSet">
+      <EntityTypeMapping TypeName="IsTypeOf(Model.Offre)">
+        <MappingFragment StoreEntitySet="OffreSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="UtilisateurId" ColumnName="UtilisateurId" />
+          <ScalarProperty Name="Titre" ColumnName="Titre" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+          <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CategorieSet">
+      <EntityTypeMapping TypeName="IsTypeOf(Model.Categorie)">
+        <MappingFragment StoreEntitySet="CategorieSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Nom" ColumnName="Nom" />
+          <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FichierSet">
+      <EntityTypeMapping TypeName="IsTypeOf(Model.Fichier)">
+        <MappingFragment StoreEntitySet="FichierSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="OffreId" ColumnName="OffreId" />
+          <ScalarProperty Name="FichierTypeId" ColumnName="FichierTypeId" />
+          <ScalarProperty Name="Chemin" ColumnName="Chemin" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FichierTypeSet">
+      <EntityTypeMapping TypeName="IsTypeOf(Model.FichierType)">
+        <MappingFragment StoreEntitySet="FichierTypeSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Nom" ColumnName="Nom" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="OffreCategorie" TypeName="Model.OffreCategorie" StoreEntitySet="OffreSet">
+      <EndProperty Name="Categorie">
+        <ScalarProperty Name="Id" ColumnName="Categorie_Id" />
+      </EndProperty>
+      <EndProperty Name="Offre">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Aucun" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
