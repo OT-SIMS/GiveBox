@@ -25,9 +25,10 @@ namespace Ot_Sims_Givebox.Models
         public string Description { get; set; }
         public double Latitude { get; set; }
         public double Longitude { get; set; }
+        public int CategorieId { get; set; }
     
         public virtual Utilisateur Utilisateur { get; set; }
-        public virtual Categorie Categorie { get; set; }
         public virtual ICollection<Fichier> Fichier { get; set; }
+        public virtual Categorie Categorie { get; set; }
     }
 }

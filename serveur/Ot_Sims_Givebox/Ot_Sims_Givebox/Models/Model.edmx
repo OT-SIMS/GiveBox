@@ -15,10 +15,6 @@
       <End Role="Utilisateur" EntitySet="UtilisateurSet" />
       <End Role="Offre" EntitySet="OffreSet" />
     </AssociationSet>
-    <AssociationSet Name="OffreCategorie" Association="Model.Store.OffreCategorie">
-      <End Role="Offre" EntitySet="OffreSet" />
-      <End Role="Categorie" EntitySet="CategorieSet" />
-    </AssociationSet>
     <AssociationSet Name="OffreFichier" Association="Model.Store.OffreFichier">
       <End Role="Offre" EntitySet="OffreSet" />
       <End Role="Fichier" EntitySet="FichierSet" />
@@ -30,6 +26,10 @@
     <AssociationSet Name="FichierFichierType" Association="Model.Store.FichierFichierType">
       <End Role="Fichier" EntitySet="FichierSet" />
       <End Role="FichierType" EntitySet="FichierTypeSet" />
+    </AssociationSet>
+    <AssociationSet Name="CategorieOffre" Association="Model.Store.CategorieOffre">
+      <End Role="Categorie" EntitySet="CategorieSet" />
+      <End Role="Offre" EntitySet="OffreSet" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="UtilisateurSet">
@@ -49,7 +49,7 @@
     <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
     <Property Name="Latitude" Type="float" Nullable="false" />
     <Property Name="Longitude" Type="float" Nullable="false" />
-    <Property Name="Categorie_Id" Type="int" Nullable="false" />
+    <Property Name="CategorieId" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="CategorieSet">
     <Key>
@@ -84,18 +84,6 @@
       </Principal>
       <Dependent Role="Offre">
         <PropertyRef Name="UtilisateurId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="OffreCategorie">
-    <End Role="Offre" Type="Model.Store.OffreSet" Multiplicity="*" />
-    <End Role="Categorie" Type="Model.Store.CategorieSet" Multiplicity="1" />
-    <ReferentialConstraint>
-      <Principal Role="Categorie">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="Offre">
-        <PropertyRef Name="Categorie_Id" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -135,6 +123,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="CategorieOffre">
+    <End Role="Categorie" Type="Model.Store.CategorieSet" Multiplicity="1" />
+    <End Role="Offre" Type="Model.Store.OffreSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Categorie">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Offre">
+        <PropertyRef Name="CategorieId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -148,10 +148,6 @@
           </AssociationSet>
           <EntitySet Name="CategorieSet" EntityType="Model.Categorie" />
           <EntitySet Name="FichierSet" EntityType="Model.Fichier" />
-          <AssociationSet Name="OffreCategorie" Association="Model.OffreCategorie">
-            <End Role="Offre" EntitySet="OffreSet" />
-            <End Role="Categorie" EntitySet="CategorieSet" />
-          </AssociationSet>
           <AssociationSet Name="OffreFichier" Association="Model.OffreFichier">
             <End Role="Offre" EntitySet="OffreSet" />
             <End Role="Fichier" EntitySet="FichierSet" />
@@ -164,6 +160,10 @@
           <AssociationSet Name="FichierFichierType" Association="Model.FichierFichierType">
             <End Role="Fichier" EntitySet="FichierSet" />
             <End Role="FichierType" EntitySet="FichierTypeSet" />
+          </AssociationSet>
+          <AssociationSet Name="CategorieOffre" Association="Model.CategorieOffre">
+            <End Role="Categorie" EntitySet="CategorieSet" />
+            <End Role="Offre" EntitySet="OffreSet" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Utilisateur">
@@ -180,12 +180,13 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="Utilisateur" Relationship="Model.UtilisateurOffre" FromRole="Offre" ToRole="Utilisateur" />
           <Property Name="UtilisateurId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Categorie" Relationship="Model.OffreCategorie" FromRole="Offre" ToRole="Categorie" />
           <NavigationProperty Name="Fichier" Relationship="Model.OffreFichier" FromRole="Offre" ToRole="Fichier" />
           <Property Name="Titre" Type="String" Nullable="false" />
           <Property Name="Description" Type="String" Nullable="false" />
           <Property Name="Latitude" Type="Double" Nullable="false" />
           <Property Name="Longitude" Type="Double" Nullable="false" />
+          <NavigationProperty Name="Categorie" Relationship="Model.CategorieOffre" FromRole="Offre" ToRole="Categorie" />
+          <Property Name="CategorieId" Type="Int32" Nullable="false" />
         </EntityType>
         <Association Name="UtilisateurOffre">
           <End Type="Model.Utilisateur" Role="Utilisateur" Multiplicity="1" />
@@ -217,10 +218,6 @@
           <Property Name="FichierTypeId" Type="Int32" Nullable="false" />
           <Property Name="Chemin" Type="String" Nullable="false" />
         </EntityType>
-        <Association Name="OffreCategorie">
-          <End Type="Model.Offre" Role="Offre" Multiplicity="*" />
-          <End Type="Model.Categorie" Role="Categorie" Multiplicity="1" />
-        </Association>
         <Association Name="OffreFichier">
           <End Type="Model.Offre" Role="Offre" Multiplicity="1" />
           <End Type="Model.Fichier" Role="Fichier" Multiplicity="*" />
@@ -264,6 +261,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="CategorieOffre">
+          <End Type="Model.Categorie" Role="Categorie" Multiplicity="1" />
+          <End Type="Model.Offre" Role="Offre" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categorie">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Offre">
+              <PropertyRef Name="CategorieId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -287,6 +296,7 @@
           <ScalarProperty Name="Description" ColumnName="Description" />
           <ScalarProperty Name="Latitude" ColumnName="Latitude" />
           <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+          <ScalarProperty Name="CategorieId" ColumnName="CategorieId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -317,14 +327,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <AssociationSetMapping Name="OffreCategorie" TypeName="Model.OffreCategorie" StoreEntitySet="OffreSet">
-      <EndProperty Name="Categorie">
-        <ScalarProperty Name="Id" ColumnName="Categorie_Id" />
-      </EndProperty>
-      <EndProperty Name="Offre">
-        <ScalarProperty Name="Id" ColumnName="Id" />
-      </EndProperty>
-    </AssociationSetMapping>
   </EntityContainerMapping>
 </Mapping></edmx:Mappings>
   </edmx:Runtime>

@@ -9,12 +9,12 @@
         <EntityTypeShape EntityType="Model.Offre" Width="1.5" PointX="3.375" PointY="1.75" />
         <AssociationConnector Association="Model.UtilisateurOffre" />
         <EntityTypeShape EntityType="Model.Categorie" Width="1.5" PointX="7.25" PointY="2.625" />
-        <EntityTypeShape EntityType="Model.Fichier" Width="1.5" PointX="5.125" PointY="4.25" />
-        <AssociationConnector Association="Model.OffreCategorie" />
+        <EntityTypeShape EntityType="Model.Fichier" Width="1.5" PointX="5.5" PointY="4.25" />
         <AssociationConnector Association="Model.OffreFichier" />
         <AssociationConnector Association="Model.CategorieCategorie" />
-        <EntityTypeShape EntityType="Model.FichierType" Width="1.5" PointX="7.125" PointY="5.5" />
+        <EntityTypeShape EntityType="Model.FichierType" Width="1.5" PointX="8" PointY="5.375" />
         <AssociationConnector Association="Model.FichierFichierType" />
+        <AssociationConnector Association="Model.CategorieOffre" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
