@@ -89,7 +89,7 @@ namespace Ot_Sims_Givebox.Controllers
             return CreatedAtRoute("DefaultApi", new { id = offre.Id }, offre);
         }
         // RECUPERATION DE L'IMAGE
-        public async Task<List<string>> SaveFile()
+        public async Task<List<string>> SaveFile(int id)
         {
             if (!Request.Content.IsMimeMultipartContent())
             {
