@@ -53,4 +53,32 @@ angular.module('starter.controllers', [])
 })
 
 .controller('PlaylistCtrl', function($scope, $stateParams) {
+})
+
+.controller('CreateOffer', function($scope, $http) {
+	
+	
+	// Create and send a request to create an offer
+  $scope.sendNewOfferRequest = function(offer) {
+				
+		var newOffer = {
+			"UtilisateurId": 1,
+			"CategorieId":1,
+			"Fichier": [],
+			"Titre": offer.title,
+			"Description": "test",
+			"Latitude": 1,
+			"Longitude": 1
+		};
+		
+		
+		//TODO : url du serveur à la place de urlTODO
+		var res = $http.post("urlTODO", newOffer);
+		res.success(function(data, status, headers, config) {
+			$scope.message = data;
+		});
+		res.error(function(data, status, headers, config) {
+			alert( "failure message: " + JSON.stringify({data: data}));
+		});
+  };
 });

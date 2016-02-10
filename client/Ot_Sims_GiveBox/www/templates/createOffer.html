@@ -4,10 +4,15 @@
 	
 	
 	<ion-content>
-	<div class="list">
+	<ion-list>
+	<form novalidate>
 		<label class="item item-input">
-			<input type="text" placeholder="Titre de votre offre">
+			<input type="text" ng-model="offer.title" placeholder="Titre de votre offre">
 		</label>
-	</div>
+		<button class="button button-balanced" align="center" ng-click="sendNewOfferRequest(offer)">
+			button-balanced
+		</button>
+	</form>
+	</ion-list>
   </ion-content>
 </ion-view>

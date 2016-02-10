@@ -36,7 +36,8 @@ angular.module('starter', ['ionic', 'starter.controllers'])
     url: '/createOffer',
     views: {
       'menuContent': {
-        templateUrl: 'templates/createOffer.html'
+        templateUrl: 'templates/createOffer.html',
+		controller: 'CreateOffer'
       }
     }
   })
