@@ -76,7 +76,7 @@ namespace Ot_Sims_Givebox.Controllers
 
         // POST: api/Offres
         [ResponseType(typeof(Offre))]
-        public async Task<IHttpActionResult> PostOffre(Offre offre)
+        public async Task<IHttpActionResult> PostOffre([FromBody] Offre offre)
         {
             if (!ModelState.IsValid)
             {
@@ -146,6 +146,12 @@ namespace Ot_Sims_Givebox.Controllers
         private bool OffreExists(int id)
         {
             return db.OffreSet.Count(e => e.Id == id) > 0;
+        }
+
+        //option handler
+        public HttpResponseMessage Options()
+        {
+            return new HttpResponseMessage { StatusCode = HttpStatusCode.OK };
         }
     }
 }
