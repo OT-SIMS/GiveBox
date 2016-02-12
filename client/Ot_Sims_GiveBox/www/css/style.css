@@ -52,3 +52,19 @@
   margin-top: 12px;
 }
 /********/
+
+
+/********/
+/* CREATE OFFER */
+/********/
+.createOfferInput{
+	text-align:center;
+	border-radius: 5px;
+}
+.createOfferLabel{
+	border-radius: 10px;
+}
+.spaceTop {
+	margin-top: 20px;
+}
+/********/

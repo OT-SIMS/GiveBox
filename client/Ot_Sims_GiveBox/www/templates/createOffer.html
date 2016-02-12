@@ -1,18 +1,53 @@
-<ion-view view-title="Créer une offre" >
+<ion-view>
   
-  
+	<ion-nav-title class="nav-title green">
+		Créer une offre
+	</ion-nav-title>
 	
 	
 	<ion-content>
-	<ion-list>
-	<form novalidate>
-		<label class="item item-input">
-			<input type="text" ng-model="offer.title" placeholder="Titre de votre offre">
-		</label>
-		<button class="button button-balanced" align="center" ng-click="sendNewOfferRequest(offer)">
-			button-balanced
-		</button>
-	</form>
-	</ion-list>
+	
+	
+		<form novalidate>
+			<div class="row">
+				<label class="item item-input item-select spaceTop col col-50">
+					<div class="input-label">
+						Catégorie
+					</div>
+					<select>
+						<option>Blue</option>
+						<option selected>Green</option>
+						<option>Red</option>
+					</select>
+				</label>
+				<label class="item item-input item-select spaceTop col col-50">
+					<div class="input-label">
+						Localisation
+					</div>
+					<select>
+						<option>Blue</option>
+						<option selected>Green</option>
+						<option>Red</option>
+					</select>
+				</label>
+			</div>
+			<div class="row">
+				<label class="item item-input col createOfferLabel spaceTop">
+					<input type="text" class="createOfferInput" ng-model="offer.title" placeholder="Titre de votre offre">
+				</label>
+			</div>
+			<div class="row">
+				<label class="item item-input col createOfferLabel spaceTop">
+					<input type="text" class="createOfferInput"  ng-model="offer.description" placeholder="Description de votre offre">
+				</label>
+			</div>
+			<div class="row">
+				<button class="button button-balanced item-icon-right spaceTop" id="giveYourStuffButton" ng-click="sendNewOfferRequest(offer)">
+					<i class="icon ion-android-add"></i>
+					Créer votre offre
+				</button>
+			</div>
+		</form>
+	
   </ion-content>
 </ion-view>

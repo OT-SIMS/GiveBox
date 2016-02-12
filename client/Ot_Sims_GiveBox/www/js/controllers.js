@@ -66,7 +66,7 @@ angular.module('starter.controllers', [])
 			"CategorieId":1,
 			"Fichier": [],
 			"Titre": offer.title,
-			"Description": "test",
+			"Description": offer.description,
 			"Latitude": 1,
 			"Longitude": 1
 		};
