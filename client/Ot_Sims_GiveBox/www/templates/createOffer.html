@@ -14,10 +14,10 @@
 					<div class="input-label">
 						Catégorie
 					</div>
-					<select>
-						<option>Blue</option>
-						<option selected>Green</option>
-						<option>Red</option>
+					<select ng-model="offer.categorie">
+						<option>Mobilier</option>
+						<option selected>Informatique</option>
+						<option>Automobile</option>
 					</select>
 				</label>
 				<label class="item item-input item-select spaceTop col col-50">
@@ -25,9 +25,9 @@
 						Localisation
 					</div>
 					<select>
-						<option>Blue</option>
-						<option selected>Green</option>
-						<option>Red</option>
+						<option>Paris</option>
+						<option selected>Lyon</option>
+						<option>Bordeaux</option>
 					</select>
 				</label>
 			</div>
@@ -42,7 +42,42 @@
 				</label>
 			</div>
 			<div class="row">
-				<button class="button button-balanced item-icon-right spaceTop" id="giveYourStuffButton" ng-click="sendNewOfferRequest(offer)">
+				<div class="item createOfferLabel col spaceTop">
+					<div class="row">
+						<label class="col" >Vos photos</label>
+					</div>
+					<div class="row" id="offerImages">
+					</div>
+					<div class="row">
+						<div class="col col-offset-50">
+								<button class="button button-balanced item-icon-center generalCreateOfferButton" id="takePhotoButton" ng-click="takeAPhoto()">
+									<i class="icon ion-android-camera"></i>
+								</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--
+			<div class="row">
+				<div class="item createOfferLabel col spaceTop">
+					<div class="row">
+						<label class="col" >Vos vidéos</label>
+					</div>
+					<div class="row" id="offerImages">
+						
+					</div>
+					<div class="row">
+						<div class="col col-offset-50">
+								<button class="button button-balanced item-icon-center generalCreateOfferButton" ng-model="offer.video" id="takePhotoButton" ng-click="recordAVideo(offer)">
+									<i class="icon ion-android-film"></i>
+								</button>
+							</div>
+						</div>
+				</div>
+			</div>
+			-->
+			<div class="row">
+				<button class="button button-balanced item-icon-right generalCreateOfferButton spaceTop" id="createOfferButton" ng-click="sendNewOfferRequest(offer)">
 					<i class="icon ion-android-add"></i>
 					Créer votre offre
 				</button>

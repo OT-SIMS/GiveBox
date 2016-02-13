@@ -50,21 +50,33 @@ angular.module('starter.controllers', [])
     { title: 'Rap', id: 5 },
     { title: 'Cowbell', id: 6 }
   ];
-})
+})	
 
 .controller('PlaylistCtrl', function($scope, $stateParams) {
 })
 
-.controller('CreateOffer', function($scope, $http) {
+.controller('CreateOffer', function($scope, $http, $cordovaCamera, $cordovaCapture) {
 	
 	
 	// Create and send a request to create an offer
-  $scope.sendNewOfferRequest = function(offer) {
+  $scope.sendNewOfferRequest = function(offer) {	    
+		var imagesContainer = document.getElementById('offerImages');
+		var images = imagesContainer.getElementsByTagName("img");
+		
+		console.log(images.length);
+		
+		var imagesArray = [];
+		for(var i = 0; i< images.length; i++){
+				var element = images[i];
+				imagesArray.push(element.getAttribute("src"));
+				console.log(element.getAttribute("src"));
+		}
+	  
 				
 		var newOffer = {
 			"UtilisateurId": 1,
 			"CategorieId":1,
-			"Fichier": [],
+			"Fichier": imagesArray,
 			"Titre": offer.title,
 			"Description": offer.description,
 			"Latitude": 1,
@@ -82,10 +94,71 @@ angular.module('starter.controllers', [])
 			 data: newOffer
 		}
 		
+		/*
 		$http(req).then(function(){
 			$scope.message = data;
 		}, function(){
 			alert( "Problème d'envoi au serveur: " + JSON.stringify({data: data}));
 		});
+		*/
   };
+  
+	
+	$scope.takeAPhoto = function() {
+		var options = {
+			quality: 100,
+			destinationType: Camera.DestinationType.FILE_URI,
+			sourceType: Camera.PictureSourceType.CAMERA,
+			allowEdit: true,
+			encodingType: Camera.EncodingType.JPEG,
+			targetWidth: 100,
+			targetHeight: 100,
+			popoverOptions: CameraPopoverOptions,
+			saveToPhotoAlbum: false,
+			correctOrientation:true
+		};
+		
+		$cordovaCamera.getPicture(options).then(function(imageURI) {
+			var imagesContainer = document.getElementById('offerImages');
+			imagesContainer.innerHTML += "<img src=" + imageURI + "> </img>";
+			
+			$scope.offer.photo = imageURI;
+		}, function(err) {
+			// error
+		});
+	};
+	
+	
+	//Use of cordovaCapture instead of cordovaCamera.
+	$scope.takeAnImage = function(offer) {
+		var options = {
+			quality: 100,
+			destinationType: Camera.DestinationType.FILE_URI,
+			sourceType: Camera.PictureSourceType.CAMERA,
+			allowEdit: true,
+			encodingType: Camera.EncodingType.JPEG,
+			targetWidth: 100,
+			targetHeight: 100,
+			popoverOptions: CameraPopoverOptions,
+			saveToPhotoAlbum: false,
+			correctOrientation:true
+		};
+		
+		$cordovaCapture.captureImage(options).then(function(imageURI) {
+			var imagesContainer = document.getElementById('offerImages');
+			imagesContainer.innerHTML += "<img src=" + imageURI + "> </img>";
+			
+		}, function(err) {
+			// error
+		});
+	};
+	
+	$scope.recordAVideo = function() {
+		 $cordovaCapture.captureVideo().then(function(videoData) {
+      // Success! Video data is here
+    }, function(err) {
+      // An error occurred. Show a message to the user
+    });
+	};
+
 });

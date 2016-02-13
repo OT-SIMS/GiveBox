@@ -57,6 +57,14 @@
 /********/
 /* CREATE OFFER */
 /********/
+.generalCreateOfferButton{
+  border-radius: 25px;
+  font-family:'Raleway',sans-serif;
+  font-size: 16px;
+  line-height: 0;
+  font-weight: 600;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
 .createOfferInput{
 	text-align:center;
 	border-radius: 5px;
@@ -66,5 +74,15 @@
 }
 .spaceTop {
 	margin-top: 20px;
+}
+#createOfferButton{
+	left: 20%;
+	position: fixed;
+	width: 60%;
+	
+}
+#takePhotoButton{
+	left:-50px;
+	width: 100px;
 }
 /********/
