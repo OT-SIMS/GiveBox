@@ -82,14 +82,15 @@ namespace Ot_Sims_Givebox.Controllers
             {
                 return BadRequest(ModelState);
             }
-
-            db.OffreSet.Add(offre);
-            await db.SaveChangesAsync();
+                
+                db.OffreSet.Add(offre);
+                await db.SaveChangesAsync();
             //Offre offre2 = await db.OffreSet.FindAsync(offre.Id);
-            return CreatedAtRoute("DefaultApi", new { id = offre.Id }, offre);
+                    return CreatedAtRoute("DefaultApi", new { id = offre.Id }, offre);
+
         }
-        // RECUPERATION DE L'IMAGE
-        public async Task<List<string>> SaveFile(int id)
+        // RECUPERATION DE L'IMAGE - POST
+        public async Task<HttpResponseMessage> SaveFile(int OffreId)
         {
             if (!Request.Content.IsMimeMultipartContent())
             {
@@ -98,7 +99,7 @@ namespace Ot_Sims_Givebox.Controllers
             string root = HttpContext.Current.Server.MapPath("~/App_Data");
             var provider = new MultipartFormDataStreamProvider(root);
 
-            List<string> ret = new List<string>();  
+           HttpResponseMessage ret = new HttpResponseMessage(HttpStatusCode.Created);  
             try
             {
                 // Read the form data.
@@ -108,7 +109,11 @@ namespace Ot_Sims_Givebox.Controllers
 
                 foreach (MultipartFileData file in provider.FileData)
                 {
-                    ret.Add(file.LocalFileName);
+                    Fichier fichier = new Fichier()
+                    {
+                        Titre = file.Headers.ContentDisposition.FileName,
+                        Chemin = file.LocalFileName
+                    };
                     //Trace.WriteLine(file.Headers.ContentDisposition.FileName);
                     //Trace.WriteLine("Server file path: " + file.LocalFileName);
                 }

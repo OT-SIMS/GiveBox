@@ -217,6 +217,7 @@
           <NavigationProperty Name="FichierType" Relationship="Model.FichierFichierType" FromRole="Fichier" ToRole="FichierType" />
           <Property Name="FichierTypeId" Type="Int32" Nullable="false" />
           <Property Name="Chemin" Type="String" Nullable="false" />
+          <Property Name="Titre" Type="String" Nullable="false" />
         </EntityType>
         <Association Name="OffreFichier">
           <End Type="Model.Offre" Role="Offre" Multiplicity="1" />
