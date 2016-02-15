@@ -9,7 +9,8 @@ angular.module('starter', [
   'starter.controllers',
   'ngCordova',
   'starter.controllers.Home',
-  'starter.controllers.CreateOffer'
+  'starter.controllers.CreateOffer',
+  'starter.controllers.Menu'
 ])
 
 .run(function($ionicPlatform) {
@@ -47,6 +48,7 @@ angular.module('starter', [
     url: '/app',
     abstract: true,
     templateUrl: 'templates/menu.html',
+    controller: 'MenuCtrl',
     controller: 'AppCtrl'
   })
 
