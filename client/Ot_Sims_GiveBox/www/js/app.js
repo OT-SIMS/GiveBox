@@ -8,7 +8,8 @@ angular.module('starter', [
   'ionic',
   'starter.controllers',
   'ngCordova',
-  'starter.controllers.Home'
+  'starter.controllers.Home',
+  'starter.controllers.CreateOffer'
 ])
 
 .run(function($ionicPlatform) {
@@ -53,7 +54,8 @@ angular.module('starter', [
     url: '/home',
     views: {
       'menuContent': {
-        templateUrl: 'templates/home.html'
+        templateUrl: 'templates/home.html',
+        controller: 'HomeCtrl'
       }
     }
   })
@@ -63,7 +65,7 @@ angular.module('starter', [
     views: {
       'menuContent': {
         templateUrl: 'templates/createOffer.html',
-		controller: 'CreateOffer'
+		    controller: 'CreateOfferCtrl'
       }
     }
   })
