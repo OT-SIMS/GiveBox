@@ -118,13 +118,15 @@ angular.module('starter.controllers', [])
 			 data: newOffer
 		}
 		
-		/*
-		$http(req).then(function(){
+		
+		$http(req).then(function(data){
+			console.log("Succès de l'envoi : " + data);
 			$scope.message = data;
-		}, function(){
+		}, function(data){
+			console.log("Problème d'envoi de la requête.");
 			alert( "Problème d'envoi au serveur: " + JSON.stringify({data: data}));
 		});
-		*/
+		
   };
   
 	

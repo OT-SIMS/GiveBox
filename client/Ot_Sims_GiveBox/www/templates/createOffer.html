@@ -5,7 +5,8 @@
 	</ion-nav-title>
 	
 	<ion-content>
-	
+	<div class="row">
+		<div class="col">
 		<form novalidate>
 			<div class="row">
 				<label class="item item-input item-select spaceTop col">
@@ -287,7 +288,6 @@
 							<img ng-repeat="image in allImages" ng-src="{{image.src}}" ng-click="showImages($index)" class="image-list-thumb"/>
 						</ion-scroll>
 					</a>
-		<br><br>
 					<div class="row">
 						<div class="col col-offset-50">
 								<button class="button button-balanced item-icon-center generalCreateOfferButton" id="takePhotoButton" ng-click="takeAPhoto()">
@@ -297,6 +297,7 @@
 					</div>
 				</div>
 			</div>
+			
 			
 			<div class="row">
 				<div class="item createOfferLabel col spaceTop">
@@ -316,13 +317,21 @@
 				</div>
 			</div>
 			
+			
 			<div class="row">
 				<button class="button button-balanced item-icon-right generalCreateOfferButton spaceTop" id="createOfferButton" ng-click="sendNewOfferRequest(offer)">
 					<i class="icon ion-android-add"></i>
 					Créer votre offre
 				</button>
 			</div>
+			
+			<div class="row">
+				<div class="col">
+					{{message}}
+				</div>
+			</div>
 		</form>
-	
+		</div>
+	</div>
   </ion-content>
 </ion-view>
