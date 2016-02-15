@@ -11,6 +11,10 @@
       <ion-nav-title class="nav-title green">
         GiveBox
       </ion-nav-title>
+      <ion-nav-buttons side="right">
+        <button class="button button-icon button-clear ion-search green">
+        </button>
+      </ion-nav-buttons>
     </ion-nav-bar>
     <ion-nav-view name="menuContent"></ion-nav-view>
   </ion-side-menu-content>
@@ -24,18 +28,18 @@
         <ion-item menu-close href="#/app/home">
           Home
         </ion-item>
-        <ion-item menu-close ng-click="login()">
+        <!--<ion-item menu-close ng-click="login()">
           Login
-        </ion-item>
+        </ion-item>-->
         <ion-item menu-close href="#/app/createOffer">
           Créer une offre
         </ion-item>
-        <ion-item menu-close href="#/app/browse">
+        <!--<ion-item menu-close href="#/app/browse">
           Browse
         </ion-item>
         <ion-item menu-close href="#/app/playlists">
           Playlists
-        </ion-item>
+        </ion-item>-->
       </ion-list>
     </ion-content>
   </ion-side-menu>
