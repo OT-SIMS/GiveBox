@@ -19,7 +19,7 @@ angular.module('starter.controllers.Home', [
       alert( "Problème d'envoi au serveur: " + JSON.stringify({data: data}));
     });*/
 
-  $scope.items[
+  $scope.items = [
     {img: 'img/pokemon_tshirt.jpg'},
     {img: 'img/pokemon_socks.jpg'},
     {img: 'img/pokemon_cards.jpg'},

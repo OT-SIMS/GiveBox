@@ -3,31 +3,15 @@
     <div id="donationsDiv">
       <div class="row">
         <div class="col col-50 itemDiv">
-          <!--<img src="img/pokemon_cards.jpg">
-          <img src="img/pokemon_cap.jpg">
-          <img src="img/pokemon_tshirt.jpg">
-          <img src="img/pokemon_socks.jpg">
-          <img src="img/pokemon_cards.jpg">
-          <img src="img/pokemon_cap.jpg">
-          <img src="img/pokemon_tshirt.jpg">
-          <img src="img/pokemon_socks.jpg">-->
           <ion-list>
-            <ion-item ng-repeat="item in items" ng-show="$odd">
+            <ion-item class="no-padding" ng-repeat="item in items" ng-show="$odd">
               <img ng-src="{{item.img}}">
             </ion-item>
           </ion-list>
         </div>
         <div class="col col-50 itemDiv">
-          <!--<img src="img/pokemon_tshirt.jpg">
-          <img src="img/pokemon_socks.jpg">
-          <img src="img/pokemon_cards.jpg">
-          <img src="img/pokemon_cap.jpg">
-          <img src="img/pokemon_tshirt.jpg">
-          <img src="img/pokemon_socks.jpg">
-          <img src="img/pokemon_cards.jpg">
-          <img src="img/pokemon_cap.jpg">-->
           <ion-list>
-            <ion-item ng-repeat="item in items" ng-show="$even">
+            <ion-item class="no-padding" ng-repeat="item in items" ng-show="$even">
               <img ng-src="{{item.img}}">
             </ion-item>
           </ion-list>
@@ -35,17 +19,17 @@
       </div>
     </div>
     </ion-content>
-    <!--<div class="fixed-outside-up">
+    <div class="fixed-outside-up">
       <div class="row">
         <div class="text-center">
-          <button class="button button-stable center" id="popularNearYouButton">
-            <p id="popularNearYouContent">
+          <button class="button button-small button-stable center" id="popularNearYouButton">
+            <!--<p id="popularNearYouContent">-->
               Popular near you
-            </p>
+            <!--</p>-->
           </button>
         </div>
       </div>
-    </div>-->
+    </div>
     <div class="fixed-outside">
       <div class="row">
         <div class="text-center">
