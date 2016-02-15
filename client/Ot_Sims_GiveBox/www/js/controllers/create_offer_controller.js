@@ -1,7 +1,7 @@
 angular.module('starter.controllers.CreateOffer', [
 ])
 
-.controller('CreateOffer', function($scope, $http, $ionicModal, $cordovaCamera, $cordovaCapture, $cordovaGeolocation) {
+.controller('CreateOfferCtrl', function($scope, $http, $ionicModal, $cordovaCamera, $cordovaCapture, $cordovaGeolocation) {
 
 	$scope.allImages = [
 	];
