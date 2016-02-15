@@ -90,7 +90,7 @@ namespace Ot_Sims_Givebox.Controllers
 
         }
         // RECUPERATION DE L'IMAGE - POST
-        public async Task<HttpResponseMessage> SaveFile(int OffreId)
+        public async Task<HttpResponseMessage> SaveFile(int id)
         {
             if (!Request.Content.IsMimeMultipartContent())
             {
@@ -109,19 +109,26 @@ namespace Ot_Sims_Givebox.Controllers
 
                 foreach (MultipartFileData file in provider.FileData)
                 {
+                    string type = file.Headers.ContentDisposition.Name;
+                    string type2 = type.TrimStart('"');
+                    string[] type3 = type2.Split('_');
+                    
+                    
                     Fichier fichier = new Fichier()
                     {
                         Titre = file.Headers.ContentDisposition.FileName,
-                        Chemin = file.LocalFileName
+                        Chemin = file.LocalFileName,
+                        FichierTypeId = Int32.Parse(type3[0])
                     };
                     //Trace.WriteLine(file.Headers.ContentDisposition.FileName);
                     //Trace.WriteLine("Server file path: " + file.LocalFileName);
+
                 }
                 return ret;
             }
             catch (System.Exception e)
             {
-                return null;
+                return new HttpResponseMessage (HttpStatusCode.InternalServerError);
             }
         }
         // DELETE: api/Offres/5

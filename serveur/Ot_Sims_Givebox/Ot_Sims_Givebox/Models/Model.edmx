@@ -67,6 +67,7 @@
     <Property Name="OffreId" Type="int" Nullable="false" />
     <Property Name="FichierTypeId" Type="int" Nullable="false" />
     <Property Name="Chemin" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Titre" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
   <EntityType Name="FichierTypeSet">
     <Key>
@@ -317,6 +318,7 @@
           <ScalarProperty Name="OffreId" ColumnName="OffreId" />
           <ScalarProperty Name="FichierTypeId" ColumnName="FichierTypeId" />
           <ScalarProperty Name="Chemin" ColumnName="Chemin" />
+          <ScalarProperty Name="Titre" ColumnName="Titre" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
