@@ -33,6 +33,10 @@ angular.module('starter.controllers.CreateOffer', [
 		var imagesContainer = document.getElementById('offerImages');
 		var images = imagesContainer.getElementsByTagName("img");
 
+		$scope.test = {premier : 'permier'};
+		scope.test.push(second : 'second');
+
+		/*
 		console.log(images.length);
 
 		var imagesArray = [];
@@ -46,7 +50,6 @@ angular.module('starter.controllers.CreateOffer', [
 		var newOffer = {
 			"UtilisateurId": 1,
 			"CategorieId":1,
-			"Fichier": imagesArray,
 			"Titre": offer.title,
 			"Description": offer.description,
 			"Latitude": 1,
@@ -58,8 +61,8 @@ angular.module('starter.controllers.CreateOffer', [
 			 method: 'POST',
 			 url: 'http://yoda.rispal.info/givebox/api/offres',
 			 headers: {
-			   'Content-Type': 'application/json',
-			   'accept': 'application/json'
+			   'content-type': 'multipart/form-data',
+			   'accept': 'multipart/form-data'
 			 },
 			 data: newOffer
 		}
@@ -73,6 +76,7 @@ angular.module('starter.controllers.CreateOffer', [
 			alert( "Problème d'envoi au serveur: " + JSON.stringify({data: data}));
 		});
 
+		*/
   };
 
 
