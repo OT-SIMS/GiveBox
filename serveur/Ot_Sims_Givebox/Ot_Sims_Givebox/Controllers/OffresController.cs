@@ -97,7 +97,8 @@ namespace Ot_Sims_Givebox.Controllers
             }
             string root = HttpContext.Current.Server.MapPath("~/App_Data");
             var provider = new MultipartFormDataStreamProvider(root);
-            List<string> ret = new List<string>();
+
+            List<string> ret = new List<string>();  
             try
             {
                 // Read the form data.
