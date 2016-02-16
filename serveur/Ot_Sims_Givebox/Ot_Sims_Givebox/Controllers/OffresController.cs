@@ -28,17 +28,28 @@ namespace Ot_Sims_Givebox.Controllers
 
         // GET: api/Offres/5
         [ResponseType(typeof(Offre))]
-        public async Task<IHttpActionResult> GetOffre(int id)
+        public async Task<IHttpActionResult> GetOffre(string id)
 
         {
-           // Int32.
-            Offre offre = await db.OffreSet.FindAsync(id);
-            if (offre == null)
+            int idint;
+            if (Int32.TryParse(id, out idint))
             {
-                return NotFound();
-            }
+                Offre offre = await db.OffreSet.FindAsync(idint);
+                if (offre == null)
+                {
+                    return NotFound();
+                }
 
-            return Ok(offre);
+                return Ok(offre);
+            }
+            else
+            {
+                var OffreFiltre = from offres in db.OffreSet
+                                  where offres.Titre.Contains(id) | offres.Description.Contains(id)
+                                  select offres;
+                return Ok(OffreFiltre);                        
+            }
+            
         }
 
         // PUT: api/Offres/5
