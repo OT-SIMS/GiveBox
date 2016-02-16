@@ -1,10 +1,23 @@
 <ion-view>
   <ion-content class="has-bottom">
+    <div ng-show="vm.myValue">
+      <div class="bar bar-header my-bar item-input-inset">
+        <label class="item-input-wrapper">
+          <i class="icon ion-ios-search placeholder-icon"></i>
+          <form class="width-max" novalidate ng-submit="keyWordsResearch(keyword)">
+            <input class="width-max" type="search" placeholder="What are you looking for ?" ng-model="keyword" required>
+          </form>
+        </label>
+        <button class="button button-clear green" ng-click="vm.toggle()">
+          Cancel
+        </button>
+      </div>
+    </div>
     <div id="donationsDiv">
       <div class="row">
         <div class="col col-50 itemDiv">
           <ion-list>
-            <ion-item class="no-padding" ng-repeat="item in items" ng-show="$odd">
+            <ion-item class="my-items" ng-repeat="item in items" ng-show="$odd">
               <img ng-src="{{item.img}}">
               <!--{{item.Titre}}-->
             </ion-item>
@@ -12,7 +25,7 @@
         </div>
         <div class="col col-50 itemDiv">
           <ion-list>
-            <ion-item class="no-padding" ng-repeat="item in items" ng-show="$even">
+            <ion-item class="my-items" ng-repeat="item in items" ng-show="$even">
               <img ng-src="{{item.img}}">
               <!--{{item.Titre}}-->
             </ion-item>

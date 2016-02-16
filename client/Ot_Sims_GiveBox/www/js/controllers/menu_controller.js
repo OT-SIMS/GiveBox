@@ -17,21 +17,5 @@ angular.module('starter.controllers.Menu', [
     }
   };
 
-  $scope.keyWordsResearch = function(){
-    var req = {
-       method: 'GET',
-       url: 'http://yoda.rispal.info/givebox/api/offres',
-       headers: {
-         'Content-Type': 'application/json',
-         'accept': 'application/json'
-       }
-    }
-
-    /*$http(req)
-      .then(function(response){
-        $scope.items=response.data;
-      }, function(response){
-        alert( "Problème d'envoi au serveur: " + JSON.stringify({response: response}));
-      });*/
-    }
-});
+  }
+);

@@ -21,6 +21,11 @@ namespace Ot_Sims_Givebox
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+            config.Routes.MapHttpRoute(
+                name: "DefaultApi2",
+                routeTemplate: "api/{controller}/{lgt}/{latt}/{r}",
+                defaults: new { r = RouteParameter.Optional }
+            );
         }
     }
 }
