@@ -48,8 +48,8 @@ angular.module('starter', [
     url: '/app',
     abstract: true,
     templateUrl: 'templates/menu.html',
-    controller: 'MenuCtrl',
-    controller: 'AppCtrl'
+    controller: 'MenuCtrl'/*,
+    controller: 'AppCtrl'*/
   })
 
   .state('app.home', {
