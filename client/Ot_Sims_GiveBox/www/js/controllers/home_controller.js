@@ -44,4 +44,24 @@ angular.module('starter.controllers.Home', [
     {img: 'img/pokemon_cap.jpg'},
     {img: 'img/pokemon_cards.jpg'}
   ]
+
+  $scope.keyWordsResearch = function(keyword){
+    console.log(keyword);
+    var req = {
+       method: 'GET',
+       url: 'http://yoda.rispal.info/givebox/api/offres/'+keyword,
+       headers: {
+         'Content-Type': 'application/json',
+         'accept': 'application/json'
+       }
+    }
+
+    $http(req)
+      .then(function(response){
+        $scope.items=response.data;
+      }, function(response){
+        alert( "Problème d'envoi au serveur: " + JSON.stringify({response: response}));
+      });
+  }
+
 });

@@ -13,6 +13,9 @@
 .my-bar{
   border-color: #33CD5F !important;
 }
+.my-width{
+  width: 70% !important;
+}
 /********/
 
 /********/
@@ -139,5 +142,12 @@
 .slider {
     width: 100%;
     height: 100%;
+}
+.my-items {
+  padding: 2px 0px 2px 0px !important;
+  border: 0 !important;
+}
+.wdith.max {
+  width:100% !important;
 }
 /********/
