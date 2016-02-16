@@ -18,7 +18,6 @@ namespace Ot_Sims_Givebox.Controllers
     public class OffresController : ApiController
     {
         private ModelContainer db = new ModelContainer();
-        private CancellationToken id;
 
         // GET: api/Offres
         public IQueryable<Offre> GetOffreSet()
@@ -45,7 +44,6 @@ namespace Ot_Sims_Givebox.Controllers
         // GET: api/Offres/5
         [ResponseType(typeof(Offre))]
         public async Task<IHttpActionResult> GetOffre(string id)
-
         {
             int idint;
             if (Int32.TryParse(id, out idint))
@@ -122,50 +120,7 @@ namespace Ot_Sims_Givebox.Controllers
             return CreatedAtRoute("DefaultApi", new { id = offre.Id }, offre);
 
         }
-        // RECUPERATION DE L'IMAGE - POST
-        public async Task<HttpResponseMessage> SaveFile(int id)
-        {
-            if (!Request.Content.IsMimeMultipartContent())
-            {
-                throw new HttpResponseException(HttpStatusCode.UnsupportedMediaType);
-            }
-            string root = HttpContext.Current.Server.MapPath("~/App_Data");
-            var provider = new MultipartFormDataStreamProvider(root);
-
-            HttpResponseMessage ret = new HttpResponseMessage(HttpStatusCode.Created);
-            try
-            {
-                // Read the form data.
-                await Request.Content.ReadAsMultipartAsync(provider);
-
-                // This illustrates how to get the file names.
-
-                foreach (MultipartFileData file in provider.FileData)
-                {
-                    string type = file.Headers.ContentDisposition.Name;
-                    string type2 = type.TrimStart('"');
-                    string[] type3 = type2.Split('_');
-
-
-                    Fichier fichier = new Fichier()
-                    {
-                        OffreId = id,
-                        Titre = file.Headers.ContentDisposition.FileName,
-                        Chemin = file.LocalFileName,
-                        FichierTypeId = Int32.Parse(type3[0])
-                    };
-                    //Trace.WriteLine(file.Headers.ContentDisposition.FileName);
-                    //Trace.WriteLine("Server file path: " + file.LocalFileName);
-                    db.FichierSet.Add(fichier);
-                }
-                await db.SaveChangesAsync();
-                return ret;
-            }
-            catch (System.Exception e)
-            {
-                return new HttpResponseMessage(HttpStatusCode.InternalServerError);
-            }
-        }
+       
         // DELETE: api/Offres/5
         [ResponseType(typeof(Offre))]
         public async Task<IHttpActionResult> DeleteOffre(int id)

@@ -12,7 +12,6 @@ namespace Ot_Sims_Givebox.Controllers
     public class CategoriesController : ApiController
     {
         private ModelContainer db = new ModelContainer();
-        private CancellationToken id;
 
         // GET: api/Categories
         public IQueryable<Categorie> GetCategorieSet()

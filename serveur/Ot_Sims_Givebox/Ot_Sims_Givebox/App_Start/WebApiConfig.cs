@@ -12,10 +12,10 @@ namespace Ot_Sims_Givebox
             // Configuration et services API Web
             config.EnableCors();
 
-
+            
             // Itinéraires de l'API Web
             config.MapHttpAttributeRoutes();
-
+            
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{id}",

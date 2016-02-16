@@ -19,6 +19,8 @@ namespace Ot_Sims_Givebox.Models
         public int FichierTypeId { get; set; }
         public string Chemin { get; set; }
         public string Titre { get; set; }
+        public string url { get; set; }
+        public string contentType { get; set; }
     
         public virtual FichierType FichierType { get; set; }
     }
