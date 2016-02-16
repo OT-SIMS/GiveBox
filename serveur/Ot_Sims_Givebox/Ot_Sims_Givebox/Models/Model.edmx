@@ -67,6 +67,7 @@
     <Property Name="OffreId" Type="int" Nullable="false" />
     <Property Name="FichierTypeId" Type="int" Nullable="false" />
     <Property Name="Chemin" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Titre" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
   <EntityType Name="FichierTypeSet">
     <Key>
@@ -217,6 +218,7 @@
           <NavigationProperty Name="FichierType" Relationship="Model.FichierFichierType" FromRole="Fichier" ToRole="FichierType" />
           <Property Name="FichierTypeId" Type="Int32" Nullable="false" />
           <Property Name="Chemin" Type="String" Nullable="false" />
+          <Property Name="Titre" Type="String" Nullable="false" />
         </EntityType>
         <Association Name="OffreFichier">
           <End Type="Model.Offre" Role="Offre" Multiplicity="1" />
@@ -316,6 +318,7 @@
           <ScalarProperty Name="OffreId" ColumnName="OffreId" />
           <ScalarProperty Name="FichierTypeId" ColumnName="FichierTypeId" />
           <ScalarProperty Name="Chemin" ColumnName="Chemin" />
+          <ScalarProperty Name="Titre" ColumnName="Titre" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

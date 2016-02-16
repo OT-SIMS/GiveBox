@@ -12,12 +12,19 @@ angular.module('starter.controllers.Home', [
   }
 
   /*$http(req)
-    .then(function(data){
-      $scope.items=data;
-      }
-    }, function(data){
-      alert( "Problème d'envoi au serveur: " + JSON.stringify({data: data}));
+    .then(function(response){
+      $scope.items=response.data;
+    }, function(response){
+      alert( "Problème d'envoi au serveur: " + JSON.stringify({response: response}));
     });*/
+  //id
+  //objet utilistaur id nom
+  //titre
+  //description
+  //objet categrorie nom parent
+  //latitude
+  //longitude
+  //liste de fichiers
 
   $scope.items = [
     {img: 'img/pokemon_tshirt.jpg'},

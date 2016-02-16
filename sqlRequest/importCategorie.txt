@@ -1,0 +1,58 @@
+id,nom,parentId
+,VEHICULES,
+,MULTIMEDIA,
+,MAISON,
+,LOISIRS,
+,MATERIEL PROFESSIONNEL,
+
+,Voitures,1
+,Motos,1
+,Caravaning,1
+,Utilitaires,1
+,Equipement Auto,1
+,Equipement Moto,1
+,Equipement Caravaning,1
+,Nautisme,1
+,Equipement Nautisme,1
+
+,Informatique,2
+,Consoles & Jeux vidéo,2
+,Image & Son,2
+,Téléphonie,2
+
+,Ameublement,3
+,Electroménager,3
+,Arts de la table,3
+,Décoration,3
+,Linge de maison,3
+,Bricolage,3
+,Jardinage,3
+,Vêtements,3
+,Chaussures,3
+,Accessoires & Bagagerie,3
+,Montres & Bijoux,3
+,Equipement bébé,3
+,Vêtements bébé,3
+
+,DVD / Films,4
+,CD / Musique,4
+,Livres,4
+,Animaux,4
+,Vélos,4
+,Sports &amp; Hobbies,4
+,Instruments de musique,4
+,Collection,4
+,Jeux & Jouets,4
+,Vins & Gastronomie,4
+
+,Matériel Agricole,5
+,Transport - Manutention,5
+,BTP - Chantier Gros-oeuvre,5
+,Outillage - Matériaux 2nd-oeuvre,5
+,Équipements Industriels,5
+,Restauration - Hôtellerie,5
+,Fournitures de Bureau,5
+,Commerces & Marchés,5
+,Matériel Médical,5
+
+,Autres,

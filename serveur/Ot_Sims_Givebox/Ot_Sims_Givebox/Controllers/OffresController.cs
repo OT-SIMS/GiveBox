@@ -28,15 +28,28 @@ namespace Ot_Sims_Givebox.Controllers
 
         // GET: api/Offres/5
         [ResponseType(typeof(Offre))]
-        public async Task<IHttpActionResult> GetOffre(int id)
-        {
-            Offre offre = await db.OffreSet.FindAsync(id);
-            if (offre == null)
-            {
-                return NotFound();
-            }
+        public async Task<IHttpActionResult> GetOffre(string id)
 
-            return Ok(offre);
+        {
+            int idint;
+            if (Int32.TryParse(id, out idint))
+            {
+                Offre offre = await db.OffreSet.FindAsync(idint);
+                if (offre == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(offre);
+            }
+            else
+            {
+                var OffreFiltre = from offres in db.OffreSet
+                                  where offres.Titre.Contains(id) | offres.Description.Contains(id)
+                                  select offres;
+                return Ok(OffreFiltre);                        
+            }
+            
         }
 
         // PUT: api/Offres/5
@@ -82,14 +95,15 @@ namespace Ot_Sims_Givebox.Controllers
             {
                 return BadRequest(ModelState);
             }
-
-            db.OffreSet.Add(offre);
-            await db.SaveChangesAsync();
+                
+                db.OffreSet.Add(offre);
+                await db.SaveChangesAsync();
             //Offre offre2 = await db.OffreSet.FindAsync(offre.Id);
-            return CreatedAtRoute("DefaultApi", new { id = offre.Id }, offre);
+                    return CreatedAtRoute("DefaultApi", new { id = offre.Id }, offre);
+
         }
-        // RECUPERATION DE L'IMAGE
-        public async Task<List<string>> SaveFile(int id)
+        // RECUPERATION DE L'IMAGE - POST
+        public async Task<HttpResponseMessage> SaveFile(int id)
         {
             if (!Request.Content.IsMimeMultipartContent())
             {
@@ -98,7 +112,7 @@ namespace Ot_Sims_Givebox.Controllers
             string root = HttpContext.Current.Server.MapPath("~/App_Data");
             var provider = new MultipartFormDataStreamProvider(root);
 
-            List<string> ret = new List<string>();  
+           HttpResponseMessage ret = new HttpResponseMessage(HttpStatusCode.Created);  
             try
             {
                 // Read the form data.
@@ -108,15 +122,28 @@ namespace Ot_Sims_Givebox.Controllers
 
                 foreach (MultipartFileData file in provider.FileData)
                 {
-                    ret.Add(file.LocalFileName);
+                    string type = file.Headers.ContentDisposition.Name;
+                    string type2 = type.TrimStart('"');
+                    string[] type3 = type2.Split('_');
+                    
+                    
+                    Fichier fichier = new Fichier()
+                    {
+                        OffreId = id,
+                        Titre = file.Headers.ContentDisposition.FileName,
+                        Chemin = file.LocalFileName,
+                        FichierTypeId = Int32.Parse(type3[0])
+                    };
                     //Trace.WriteLine(file.Headers.ContentDisposition.FileName);
                     //Trace.WriteLine("Server file path: " + file.LocalFileName);
+                    db.FichierSet.Add(fichier);
                 }
+                await  db.SaveChangesAsync(); 
                 return ret;
             }
             catch (System.Exception e)
             {
-                return null;
+                return new HttpResponseMessage (HttpStatusCode.InternalServerError);
             }
         }
         // DELETE: api/Offres/5
