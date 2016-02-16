@@ -279,19 +279,20 @@
 					<div class="row">
 						<label class="col" >Vos photos</label>
 					</div>
-					<!--
-					<div class="row" id="offerImages">
-					</div>
-					-->
 					<a class="item item-list-detail">
 						<ion-scroll direction="x">
-							<img ng-repeat="image in allImages" ng-src="{{image.src}}" ng-click="showImages($index)" class="image-list-thumb"/>
+							<img ng-repeat="image in allImages" ng-src="{{ image.src }}" ng-click="showImages($index)" class="image-list-thumb"/>
 						</ion-scroll>
 					</a>
 					<div class="row">
-						<div class="col col-offset-50">
+						<div class="col col-50 text-center">
 								<button class="button button-balanced item-icon-center generalCreateOfferButton" id="takePhotoButton" ng-click="takeAPhoto()">
 									<i class="icon ion-android-camera"></i>
+								</button>
+						</div>
+						<div class="col col-50 text-center">
+								<button class="button button-balanced item-icon-center generalCreateOfferButton" id="takePhotoButton" ng-click="importAPhoto()">
+									<i class="icon ion-android-folder-open"></i>
 								</button>
 						</div>
 					</div>
@@ -308,7 +309,7 @@
 
 					</div>
 					<div class="row">
-						<div class="col col-offset-50">
+						<div class="col text-center">
 								<button class="button button-balanced item-icon-center generalCreateOfferButton" ng-model="offer.video" id="takePhotoButton" ng-click="recordAVideo()">
 									<i class="icon ion-android-film"></i>
 								</button>
@@ -325,11 +326,6 @@
 				</button>
 			</div>
 
-			<div class="row">
-				<div class="col">
-					{{test}}
-				</div>
-			</div>
 		</form>
 		</div>
 	</div>

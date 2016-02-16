@@ -5,6 +5,8 @@ angular.module('starter.controllers.CreateOffer', [
 
 	$scope.allImages = [
 	];
+	$scope.allImagesObject = [
+	];
 
 	$scope.showImages = function(index) {
 		$scope.activeSlide = index;
@@ -30,20 +32,19 @@ angular.module('starter.controllers.CreateOffer', [
 
 	// Create and send a request to create an offer
   $scope.sendNewOfferRequest = function(offer) {
-		var imagesContainer = document.getElementById('offerImages');
-		var images = imagesContainer.getElementsByTagName("img");
+		for(var i = 0; i< 2; i++){
+				//var imageName = '\'' + $scope.allImages[i].src + '\'' ;
 
-		$scope.test = {premier : 'permier'};
-		scope.test.push(second : 'second');
+				var imageName = 'file:///storage/emulated/0/Android/data/com.ionicframework.otsimsgivebox351025/cache/1455547352370.jpg' ;
 
-		/*
-		console.log(images.length);
+				console.log(imageName.src);
 
-		var imagesArray = [];
-		for(var i = 0; i< images.length; i++){
-				var element = images[i];
-				imagesArray.push(element.getAttribute("src"));
-				console.log(element.getAttribute("src"));
+				//$scope.test = imageName;
+
+				action = 'imagesInRequest.image_' + i + ' = { value: fs.createReadStream( imageName ), options: { filename: imageName , contentType: null } }';
+				eval(action)
+
+				$scope.test = imagesInRequest;
 		}
 
 
@@ -56,62 +57,87 @@ angular.module('starter.controllers.CreateOffer', [
 			"Longitude": 1
 		};
 
-
-		var req = {
+		var reqJson = {
 			 method: 'POST',
 			 url: 'http://yoda.rispal.info/givebox/api/offres',
 			 headers: {
-			   'content-type': 'multipart/form-data',
-			   'accept': 'multipart/form-data'
-			 },
-			 data: newOffer
+			   'content-type': 'application/json',
+			   'accept': 'application/json'
+			 }
 		}
 
+		$http(reqJson).then(function(data){
+				console.log("Succès de l'envoi du json : " + data);
+				$scope.message = data;
+				//todo : .../apt/offres/id
 
-		$http(req).then(function(data){
-			console.log("Succès de l'envoi : " + data);
-			$scope.message = data;
+				var reqMultimedia = {
+					 method: 'POST',
+					 url: 'http://yoda.rispal.info/givebox/api/offres',
+					 headers: {
+					   'content-type': 'multipart/form-data',
+					   'accept': 'multipart/form-data'
+					 }
+				}
+
+				$http(reqMultimedia).then(function(data){
+						console.log("Succès de l'envoi du contenu multimedia : " + data);
+				},function(data){
+
+				})
 		}, function(data){
 			console.log("Problème d'envoi de la requête.");
 			alert( "Problème d'envoi au serveur: " + JSON.stringify({data: data}));
 		});
 
-		*/
   };
 
-
-	$scope.takeAPhoto = function() {
-		/*
+	$scope.importAPhoto = function() {
 		var options = {
-			quality: 100,
-			destinationType: Camera.DestinationType.FILE_URI,
-			sourceType: Camera.PictureSourceType.CAMERA,
 			allowEdit: true,
-			encodingType: Camera.EncodingType.JPEG,
-			mediaType: Camera.MediaType.VIDEO,
-			popoverOptions: CameraPopoverOptions,
-			saveToPhotoAlbum: false,
-			correctOrientation:true
-		};
-		*/
-		var options = {
-			mediaType: Camera.MediaType.VIDEO,
+			sourceType: Camera.PictureSourceType.PHOTOLIBRARY
 		};
 
 		$cordovaCamera.getPicture(options).then(function(imageURI) {
-			/*
-			var imagesContainer = document.getElementById('offerImages');
-			imagesContainer.innerHTML += "<img src=" + imageURI + "> </img>";
-			*/
+
+
 			console.log(imageURI);
 			$scope.allImages.push({'src' : imageURI});
 
 		}, function(err) {
 			// error
 		});
+	}
+
+	$scope.takeAPhoto = function() {
+		var options = { limit: 1	}
+
+		var captureSuccess = function(mediaFiles) {
+			console.log(name);
+			$scope.allImages.push({'src' : name});
+
+			/*
+			for (i = 0, len = mediaFiles.length; i < len; i += 1) {
+
+					//$scope.allImages.push({'src' : mediaFiles[i].fullPath});
+					console.log('adding');
+					$scope.allImages.push({'src' : 'file:///storage/emulated/0/Pictures/1455615517315.jpg'})
+					//$scope.allImagesObject.push(mediaFiles[i]);
+			    // do something interesting with the file
+			}
+			*/
+		}
+
+		// capture error callback
+		var captureError = function(error) {
+			navigator.notification.alert('Error code: ' + error.code, null, 'Capture Error');
+		};
+
+		navigator.device.capture.captureImage(captureSuccess, captureError, options);
+
 	};
 
-	$scope.recordAVideo = function() {
+$scope.recordAVideo = function() {
 		var options = {	}
 
 

@@ -9,7 +9,7 @@ angular.module('starter', [
   'starter.controllers',
   'ngCordova',
   'starter.controllers.Home',
-  'starter.controllers.CreateOffer'
+  'starter.controllers.CreateOffer',
 ])
 
 .run(function($ionicPlatform) {
@@ -27,20 +27,14 @@ angular.module('starter', [
     }
   });
 
-	$ionicPlatform.ready(function() {
-		$cordovaCapture.captureImage().then(success, error);
-	});
-
-	$ionicPlatform.ready(function() {
-		$cordovaCamera.getPicture().then(success, error);
-	});
-
-	$ionicPlatform.ready(function() {
-		$cordovaCapture.captureVideo().then(success, error);
-	});
+  $ionicPlatform.ready(function(){
+    console.log(navigator.device.capture);
+  });
 })
 
-.config(function($stateProvider, $urlRouterProvider) {
+.config(function($stateProvider, $urlRouterProvider, $compileProvider) {
+  $compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|file|blob|content):|data:image\//);
+
   $stateProvider
 
   .state('app', {
