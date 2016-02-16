@@ -29,7 +29,9 @@ namespace Ot_Sims_Givebox.Controllers
         // GET: api/Offres/5
         [ResponseType(typeof(Offre))]
         public async Task<IHttpActionResult> GetOffre(int id)
+
         {
+           // Int32.
             Offre offre = await db.OffreSet.FindAsync(id);
             if (offre == null)
             {
@@ -116,14 +118,16 @@ namespace Ot_Sims_Givebox.Controllers
                     
                     Fichier fichier = new Fichier()
                     {
+                        OffreId = id,
                         Titre = file.Headers.ContentDisposition.FileName,
                         Chemin = file.LocalFileName,
                         FichierTypeId = Int32.Parse(type3[0])
                     };
                     //Trace.WriteLine(file.Headers.ContentDisposition.FileName);
                     //Trace.WriteLine("Server file path: " + file.LocalFileName);
-
+                    db.FichierSet.Add(fichier);
                 }
+                await  db.SaveChangesAsync(); 
                 return ret;
             }
             catch (System.Exception e)
