@@ -32,21 +32,6 @@ angular.module('starter.controllers.CreateOffer', [
 
 	// Create and send a request to create an offer
   $scope.sendNewOfferRequest = function(offer) {
-		for(var i = 0; i< 2; i++){
-				//var imageName = '\'' + $scope.allImages[i].src + '\'' ;
-
-				var imageName = 'file:///storage/emulated/0/Android/data/com.ionicframework.otsimsgivebox351025/cache/1455547352370.jpg' ;
-
-				console.log(imageName.src);
-
-				//$scope.test = imageName;
-
-				action = 'imagesInRequest.image_' + i + ' = { value: fs.createReadStream( imageName ), options: { filename: imageName , contentType: null } }';
-				eval(action)
-
-				$scope.test = imagesInRequest;
-		}
-
 
 		var newOffer = {
 			"UtilisateurId": 1,
@@ -63,28 +48,55 @@ angular.module('starter.controllers.CreateOffer', [
 			 headers: {
 			   'content-type': 'application/json',
 			   'accept': 'application/json'
-			 }
+			 },
+			 data: newOffer
 		}
 
-		$http(reqJson).then(function(data){
-				console.log("Succès de l'envoi du json : " + data);
-				$scope.message = data;
+		$http(reqJson).then(function(dataServer){
+				$scope.message = dataServer;
 				//todo : .../apt/offres/id
+				console.log(dataServer.data.Id);
 
-				var reqMultimedia = {
-					 method: 'POST',
-					 url: 'http://yoda.rispal.info/givebox/api/offres',
-					 headers: {
-					   'content-type': 'multipart/form-data',
-					   'accept': 'multipart/form-data'
-					 }
+				var win = function (r) {
+				    console.log("Code = " + r.responseCode);
+				    console.log("Response = " + r.response);
+				    console.log("Sent = " + r.bytesSent);
 				}
 
-				$http(reqMultimedia).then(function(data){
-						console.log("Succès de l'envoi du contenu multimedia : " + data);
-				},function(data){
+				var fail = function (error) {
+				    console.log("An error has occurred: Code = " + error.code);
+				    console.log("upload error source " + error.source);
+				    console.log("upload error target " + error.target);
+						console.log(error);
+				}
 
-				})
+				//Send each images to the server.
+				for(var i = 0; i< $scope.allImages.length; i++){
+						var imagePath = $scope.allImages[i];
+
+						var options = new FileUploadOptions();
+						options.fileKey = "1_" + i;
+						options.name = "1_" + i;
+						options.mimeType = "image/jpeg";
+						options.httpMethod = "POST";
+
+						var params = {};
+						params.value1 = 1;
+
+						options.params = params;
+
+						var headers={
+	 			   		'accept': 'application/json'
+						};
+
+						options.headers = headers;
+
+						var ft = new FileTransfer();
+						//dataServer.data.Id
+						ft.upload($scope.allImages[i].src, encodeURI("http://yoda.rispal.info/givebox/api/fichiers/" + dataServer.data.Id), win, fail, options);
+				}
+
+
 		}, function(data){
 			console.log("Problème d'envoi de la requête.");
 			alert( "Problème d'envoi au serveur: " + JSON.stringify({data: data}));
@@ -94,8 +106,9 @@ angular.module('starter.controllers.CreateOffer', [
 
 	$scope.importAPhoto = function() {
 		var options = {
-			allowEdit: true,
-			sourceType: Camera.PictureSourceType.PHOTOLIBRARY
+			allowEdit: false,
+			sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
+			encodingType: Camera.EncodingType.JPEG
 		};
 
 		$cordovaCamera.getPicture(options).then(function(imageURI) {
@@ -113,6 +126,7 @@ angular.module('starter.controllers.CreateOffer', [
 		var options = { limit: 1	}
 
 		var captureSuccess = function(mediaFiles) {
+			var name = mediaFiles[0].fullPath;
 			console.log(name);
 			$scope.allImages.push({'src' : name});
 
