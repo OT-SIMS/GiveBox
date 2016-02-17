@@ -1,33 +1,33 @@
-<ion-view>
+<ion-view hide-nav-bar="vm.myValue">
+  <ion-header-bar class="bar bar-header my-bar item-input-inset my-search-header" ng-show="vm.myValue">
+    <label class="item-input-wrapper">
+      <i class="icon ion-ios-search placeholder-icon"></i>
+      <form class="width-max" novalidate ng-submit="keyWordsResearch(keyword)">
+        <input class="width-max" type="search" placeholder="What are you looking for ?" ng-model="keyword" required>
+      </form>
+      <a class="icon ion-close my-clear-button" on-tap="keyword = ''"></a>
+    </label>
+    <button class="button button-clear green" ng-click="vm.toggle(); getAllOffers()">
+      Cancel
+    </button>
+  </ion-header-bar>
+
   <ion-content class="has-bottom">
-    <div ng-show="vm.myValue">
-      <div class="bar bar-header my-bar item-input-inset">
-        <label class="item-input-wrapper">
-          <i class="icon ion-ios-search placeholder-icon"></i>
-          <form class="width-max" novalidate ng-submit="keyWordsResearch(keyword)">
-            <input class="width-max" type="search" placeholder="What are you looking for ?" ng-model="keyword" required>
-          </form>
-        </label>
-        <button class="button button-clear green" ng-click="vm.toggle()">
-          Cancel
-        </button>
-      </div>
-    </div>
     <div id="donationsDiv">
       <div class="row">
         <div class="col col-50 itemDiv">
           <ion-list>
             <ion-item class="my-items" ng-repeat="item in items" ng-show="$odd">
-              <img ng-src="{{item.img}}">
-              <!--{{item.Titre}}-->
+              <!--<img ng-src="{{item.img}}">-->
+              <img ng-src="{{item.Fichier[0].url}}">
             </ion-item>
           </ion-list>
         </div>
         <div class="col col-50 itemDiv">
           <ion-list>
             <ion-item class="my-items" ng-repeat="item in items" ng-show="$even">
-              <img ng-src="{{item.img}}">
-              <!--{{item.Titre}}-->
+              <!--<img ng-src="{{item.img}}">-->
+              <img ng-src="{{item.Fichier[0].url}}">
             </ion-item>
           </ion-list>
         </div>
@@ -37,7 +37,7 @@
     <div class="fixed-outside-up">
       <div class="row">
         <div class="text-center">
-          <button class="button button-small button-stable center" id="popularNearYouButton">
+          <button class="button button-small button-stable center" id="popularNearYouButton" ng-click="getAllOffers(); vm.toggle()">
               Popular near you
           </button>
         </div>

@@ -21,6 +21,15 @@
 /********/
 /* HOME */
 /********/
+.my-margin{
+  padding-bottom: 20px !important;
+}
+.width-max{
+  width:100%;
+}
+.my-clear-button{
+  color: grey;
+}
 .itemDiv{
   text-align: center;
 }
