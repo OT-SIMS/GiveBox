@@ -6,7 +6,7 @@ en modifiant ce fichier MSBuild. Pour en savoir plus à ce sujet, consultez la p
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <TimeStampOfAssociatedLegacyPublishXmlFile />
-    <_PublishTargetUrl>C:\Users\Simon\Documents\givebox</_PublishTargetUrl>
+    <_PublishTargetUrl>C:\inetpub\wwwroot\givebox</_PublishTargetUrl>
   </PropertyGroup>
   <ItemGroup>
     <File Include="Areas/HelpPage/HelpPage.css">
@@ -73,6 +73,9 @@ en modifiant ce fichier MSBuild. Pour en savoir plus à ce sujet, consultez la p
       <publishTime>02/09/2016 14:42:57</publishTime>
     </File>
     <File Include="bin/Antlr3.Runtime.dll">
+      <publishTime>02/09/2016 14:25:23</publishTime>
+    </File>
+    <File Include="bin/Antlr3.Runtime.pdb">
       <publishTime>02/09/2016 14:25:23</publishTime>
     </File>
     <File Include="bin/de/Microsoft.Data.Edm.resources.dll">
@@ -181,7 +184,10 @@ en modifiant ce fichier MSBuild. Pour en savoir plus à ce sujet, consultez la p
       <publishTime>02/09/2016 14:24:09</publishTime>
     </File>
     <File Include="bin/Ot_Sims_Givebox.dll">
-      <publishTime>02/12/2016 23:54:56</publishTime>
+      <publishTime>02/16/2016 20:38:14</publishTime>
+    </File>
+    <File Include="bin/Ot_Sims_Givebox.pdb">
+      <publishTime>02/16/2016 20:38:14</publishTime>
     </File>
     <File Include="bin/ru/Microsoft.Data.Edm.resources.dll">
       <publishTime>02/10/2016 09:52:04</publishTime>
@@ -286,10 +292,10 @@ en modifiant ce fichier MSBuild. Pour en savoir plus à ce sujet, consultez la p
       <publishTime>02/10/2016 14:44:59</publishTime>
     </File>
     <File Include="Models/Model.edmx.sql">
-      <publishTime>02/10/2016 14:12:45</publishTime>
+      <publishTime>02/16/2016 20:08:53</publishTime>
     </File>
     <File Include="packages.config">
-      <publishTime>02/11/2016 21:52:58</publishTime>
+      <publishTime>02/13/2016 00:03:01</publishTime>
     </File>
     <File Include="Scripts/bootstrap.js">
       <publishTime>02/09/2016 14:42:57</publishTime>
@@ -334,7 +340,7 @@ en modifiant ce fichier MSBuild. Pour en savoir plus à ce sujet, consultez la p
       <publishTime>02/09/2016 14:42:57</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>02/11/2016 22:00:47</publishTime>
+      <publishTime>02/16/2016 15:21:07</publishTime>
     </File>
   </ItemGroup>
 </Project>

@@ -1,58 +1,58 @@
 id,nom,parentId
-,VEHICULES,
-,MULTIMEDIA,
-,MAISON,
-,LOISIRS,
-,MATERIEL PROFESSIONNEL,
+1,VEHICULES,
+2,MULTIMEDIA,
+3,MAISON,
+4,LOISIRS,
+5,MATERIEL PROFESSIONNEL,
 
-,Voitures,1
-,Motos,1
-,Caravaning,1
-,Utilitaires,1
-,Equipement Auto,1
-,Equipement Moto,1
-,Equipement Caravaning,1
-,Nautisme,1
-,Equipement Nautisme,1
+6,Voitures,1
+7,Motos,1
+8,Caravaning,1
+9,Utilitaires,1
+10,Equipement Auto,1
+11,Equipement Moto,1
+12,Equipement Caravaning,1
+13,Nautisme,1
+14,Equipement Nautisme,1
 
-,Informatique,2
-,Consoles & Jeux vidéo,2
-,Image & Son,2
-,Téléphonie,2
+15,Informatique,2
+16,Consoles & Jeux vidéo,2
+17,Image & Son,2
+18,Téléphonie,2
 
-,Ameublement,3
-,Electroménager,3
-,Arts de la table,3
-,Décoration,3
-,Linge de maison,3
-,Bricolage,3
-,Jardinage,3
-,Vêtements,3
-,Chaussures,3
-,Accessoires & Bagagerie,3
-,Montres & Bijoux,3
-,Equipement bébé,3
-,Vêtements bébé,3
+19,Ameublement,3
+20,Electroménager,3
+21,Arts de la table,3
+22,Décoration,3
+23,Linge de maison,3
+24,Bricolage,3
+25,Jardinage,3
+26,Vêtements,3
+27,Chaussures,3
+28,Accessoires & Bagagerie,3
+29,Montres & Bijoux,3
+30,Equipement bébé,3
+31,Vêtements bébé,3
 
-,DVD / Films,4
-,CD / Musique,4
-,Livres,4
-,Animaux,4
-,Vélos,4
-,Sports &amp; Hobbies,4
-,Instruments de musique,4
-,Collection,4
-,Jeux & Jouets,4
-,Vins & Gastronomie,4
+32,DVD / Films,4
+33,CD / Musique,4
+34,Livres,4
+35,Animaux,4
+36,Vélos,4
+37,Sports &amp; Hobbies,4
+38,Instruments de musique,4
+39,Collection,4
+40,Jeux & Jouets,4
+41,Vins & Gastronomie,4
 
-,Matériel Agricole,5
-,Transport - Manutention,5
-,BTP - Chantier Gros-oeuvre,5
-,Outillage - Matériaux 2nd-oeuvre,5
-,Équipements Industriels,5
-,Restauration - Hôtellerie,5
-,Fournitures de Bureau,5
-,Commerces & Marchés,5
-,Matériel Médical,5
+42,Matériel Agricole,5
+43,Transport - Manutention,5
+44,BTP - Chantier Gros-oeuvre,5
+45,Outillage - Matériaux 2nd-oeuvre,5
+46,Équipements Industriels,5
+47,Restauration - Hôtellerie,5
+48,Fournitures de Bureau,5
+49,Commerces & Marchés,5
+50,Matériel Médical,5
 
-,Autres,
+51,Autres,

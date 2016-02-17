@@ -55,7 +55,7 @@
     <Key>
       <PropertyRef Name="Id" />
     </Key>
-    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Id" Type="int" Nullable="false" />
     <Property Name="Nom" Type="nvarchar(max)" Nullable="false" />
     <Property Name="ParentId" Type="int" Nullable="true" />
   </EntityType>
@@ -68,12 +68,14 @@
     <Property Name="FichierTypeId" Type="int" Nullable="false" />
     <Property Name="Chemin" Type="nvarchar(max)" Nullable="false" />
     <Property Name="Titre" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="url" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="contentType" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
   <EntityType Name="FichierTypeSet">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
-    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Id" Type="int" Nullable="false" />
     <Property Name="Nom" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
   <Association Name="UtilisateurOffre">
@@ -205,7 +207,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="None" />
           <Property Name="Nom" Type="String" Nullable="false" />
           <Property Name="ParentId" Type="Int32" Nullable="true" />
         </EntityType>
@@ -219,6 +221,8 @@
           <Property Name="FichierTypeId" Type="Int32" Nullable="false" />
           <Property Name="Chemin" Type="String" Nullable="false" />
           <Property Name="Titre" Type="String" Nullable="false" />
+          <Property Name="url" Type="String" Nullable="false" />
+          <Property Name="contentType" Type="String" Nullable="false" />
         </EntityType>
         <Association Name="OffreFichier">
           <End Type="Model.Offre" Role="Offre" Multiplicity="1" />
@@ -248,7 +252,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="None" />
           <Property Name="Nom" Type="String" Nullable="false" cg:SetterAccess="Public" />
         </EntityType>
         <Association Name="FichierFichierType">
@@ -319,6 +323,8 @@
           <ScalarProperty Name="FichierTypeId" ColumnName="FichierTypeId" />
           <ScalarProperty Name="Chemin" ColumnName="Chemin" />
           <ScalarProperty Name="Titre" ColumnName="Titre" />
+          <ScalarProperty Name="url" ColumnName="url" />
+          <ScalarProperty Name="contentType" ColumnName="contentType" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
