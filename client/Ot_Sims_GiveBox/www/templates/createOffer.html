@@ -13,7 +13,7 @@
 					<div class="input-label balanced offer-subtitle">
 						Catégorie
 					</div>
-					<select ng-model="offer.categorie">
+					<select ng-model="offer.categorie" id="selectCategories">
 						<option selected value="0">
                                 Toutes catégories
                             </option>
@@ -325,10 +325,14 @@
 					Créer votre offre
 				</button>
 			</div>
-
-
 		</form>
 		</div>
+
+<!--
+		<div class="row">
+				{{message}}
+		</div>
+-->
 	</div>
   </ion-content>
 </ion-view>

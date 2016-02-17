@@ -29,6 +29,35 @@ angular.module('starter.controllers.CreateOffer', [
 		$scope.modal.remove()
 	};
 
+	searchCategorie = function(){
+		var req = {
+			 method: 'GET',
+			 url: 'http://yoda.rispal.info/givebox/api/categories'
+		}
+			$http(req).then(function(dataServer){
+				$scope.message = dataServer;
+
+				var elementSelect = document.getElementById("selectCategories");
+
+				console.log(dataServer.data.length);
+				for(var i = 0; i< dataServer.data.length; i++){
+					var elementCat = dataServer.data[i];
+					console.log(elementCat.Id + " ; " + elementCat.ParentId);
+
+					if(elementCat.ParentId == null){
+							elementSelect += "<option style=\"background-color:#dcdcc3;\" value=" + elementCat.Id + ">  "+ "-- VEHICULES --    </option>"
+					}
+
+				}
+
+			}, function(data){
+					console.log("Problème de réception de la requête.");
+					$scope.message = data;
+			});
+	}
+
+	//searchCategorie();
+
 
 	// Create and send a request to create an offer
   $scope.sendNewOfferRequest = function(offer) {
@@ -185,6 +214,4 @@ $scope.recordAVideo = function() {
 
 		navigator.geolocation.getCurrentPosition(onSuccess, onError);
 	}
-
-
 });
