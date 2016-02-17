@@ -84,6 +84,16 @@
 /********/
 /* CREATE OFFER */
 /********/
+.offer-subtitle {
+  font-family: 'Lobster';
+  font-size: 25px !important;
+}
+
+.offer-textInput {
+  font-family: 'Lobster';
+  font-size: 20px !important;
+}
+
 .generalCreateOfferButton{
   border-radius: 25px;
   font-family:'Raleway',sans-serif;

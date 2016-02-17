@@ -106,50 +106,36 @@ angular.module('starter.controllers.CreateOffer', [
 
 	$scope.importAPhoto = function() {
 		var options = {
-			allowEdit: false,
+			allowEdit: true,
 			sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
-			encodingType: Camera.EncodingType.JPEG
+			encodingType: Camera.EncodingType.JPEG,
+			saveToPhotoAlbum: false
 		};
 
 		$cordovaCamera.getPicture(options).then(function(imageURI) {
-
-
 			console.log(imageURI);
 			$scope.allImages.push({'src' : imageURI});
-
 		}, function(err) {
-			// error
+			console.log("Erreur pour importer une photo : " + err);
 		});
-	}
+	};
 
 	$scope.takeAPhoto = function() {
-		var options = { limit: 1	}
-
-		var captureSuccess = function(mediaFiles) {
-			var name = mediaFiles[0].fullPath;
-			console.log(name);
-			$scope.allImages.push({'src' : name});
-
-			/*
-			for (i = 0, len = mediaFiles.length; i < len; i += 1) {
-
-					//$scope.allImages.push({'src' : mediaFiles[i].fullPath});
-					console.log('adding');
-					$scope.allImages.push({'src' : 'file:///storage/emulated/0/Pictures/1455615517315.jpg'})
-					//$scope.allImagesObject.push(mediaFiles[i]);
-			    // do something interesting with the file
-			}
-			*/
-		}
-
-		// capture error callback
-		var captureError = function(error) {
-			navigator.notification.alert('Error code: ' + error.code, null, 'Capture Error');
+		var options = {
+			allowEdit: true,
+			sourceType: Camera.PictureSourceType.CAMERA,
+			encodingType: Camera.EncodingType.JPEG,
+			saveToPhotoAlbum: true
 		};
 
-		navigator.device.capture.captureImage(captureSuccess, captureError, options);
-
+		$cordovaCamera.getPicture(options).then(function(imageURI) {
+			console.log(imageURI);
+			$scope.allImages.push({'src' : imageURI});
+		}, function(err) {
+			console.log("Erreur pour prendre une photo : " + err);
+		});
 	};
+
 
 $scope.recordAVideo = function() {
 		var options = {	}

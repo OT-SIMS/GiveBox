@@ -10,7 +10,7 @@
 		<form novalidate>
 			<div class="row">
 				<label class="item item-input item-select spaceTop col">
-					<div class="input-label">
+					<div class="input-label balanced offer-subtitle">
 						Catégorie
 					</div>
 					<select ng-model="offer.categorie">
@@ -266,18 +266,18 @@
 			</div>
 			<div class="row">
 				<label class="item item-input col createOfferLabel spaceTop">
-					<input type="text" class="createOfferInput" ng-model="offer.title" placeholder="Titre de votre offre">
+					<input type="text" class="createOfferInput offer-textInput" ng-model="offer.title" placeholder="Titre de votre offre">
 				</label>
 			</div>
 			<div class="row">
 				<label class="item item-input col createOfferLabel spaceTop">
-					<input type="text" class="createOfferInput"  ng-model="offer.description" placeholder="Description de votre offre">
+					<input type="text" class="createOfferInput offer-textInput"  ng-model="offer.description" placeholder="Description de votre offre">
 				</label>
 			</div>
 			<div class="row">
 				<div class="item createOfferLabel col spaceTop">
 					<div class="row">
-						<label class="col" >Vos photos</label>
+						<label class="col balanced offer-subtitle" >Vos photos</label>
 					</div>
 					<a class="item item-list-detail">
 						<ion-scroll direction="x">
@@ -303,7 +303,7 @@
 			<div class="row">
 				<div class="item createOfferLabel col spaceTop">
 					<div class="row">
-						<label class="col" >Vos vidéos</label>
+						<label class="col balanced offer-subtitle" >Vos vidéos</label>
 					</div>
 					<div class="row" id="offerImages">
 
@@ -326,9 +326,6 @@
 				</button>
 			</div>
 
-			<div class="row">
-				{{message}}
-			</div>
 
 		</form>
 		</div>
