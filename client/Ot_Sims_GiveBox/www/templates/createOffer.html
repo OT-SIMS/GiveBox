@@ -9,236 +9,16 @@
 		<div class="col">
 		<form novalidate>
 			<div class="row">
-				<label class="item item-input item-select spaceTop col">
+				<label class="item item-input item-select createOfferLabel spaceTop col" id="categorieLabel">
 					<div class="input-label balanced offer-subtitle">
 						Catégorie
 					</div>
-					<select ng-model="offer.categorie" id="selectCategories">
-						<option selected value="0">
-                                Toutes catégories
-                            </option>
-						<option style="background-color:#dcdcc3;" value="1">
-                            -- VEHICULES --
-                            </option>
-                        <option value="2">
-                                Voitures
-                            </option>
-                        <option value="3">
-                                Motos
-                            </option>
-                        <option value="4">
-                                Caravaning
-                            </option>
-                        <option value="5">
-                                Utilitaires
-                            </option>
-                        <option value="6">
-                                Equipement Auto
-                            </option>
-                        <option value="44">
-                                Equipement Moto
-                            </option>
-                        <option value="50">
-                                Equipement Caravaning
-                            </option>
-                        <option value="7">
-                                Nautisme
-                            </option>
-                        <option value="51">
-                                Equipement Nautisme
-                            </option>
-
-                            <option style="background-color:#dcdcc3;" value="8">
-                            -- IMMOBILIER --
-                            </option>
-                        <option value="9">
-                                Ventes immobilières
-                            </option>
-                        <option value="10">
-                                Locations
-                            </option>
-                        <option value="11">
-                                Colocations
-                            </option>
-                        <option value="13">
-                                Bureaux &amp; Commerces
-                            </option>
-
-                            <option style="background-color:#dcdcc3;" value="66">
-                            -- VACANCES --
-                            </option>
-                        <option value="12">
-                                Locations &amp; Gîtes
-                            </option>
-                        <option value="67">
-                                Chambres d'hôtes
-                            </option>
-                        <option value="68">
-                                Campings
-                            </option>
-                        <option value="69">
-                                Hôtels
-                            </option>
-                        <option value="70">
-                                Hébergements insolites
-                            </option>
-
-                            <option style="background-color:#dcdcc3;" value="14">
-                            -- MULTIMEDIA --
-                            </option>
-                        <option value="15">
-                                Informatique
-                            </option>
-                        <option value="43">
-                                Consoles &amp; Jeux vidéo
-                            </option>
-                        <option value="16">
-                                Image &amp; Son
-                            </option>
-                        <option value="17">
-                                Téléphonie
-                            </option>
-
-                            <option style="background-color:#dcdcc3;" value="18">
-                            -- MAISON --
-                            </option>
-                        <option value="19">
-                                Ameublement
-                            </option>
-                        <option value="20">
-                                Electroménager
-                            </option>
-                        <option value="45">
-                                Arts de la table
-                            </option>
-                        <option value="39">
-                                Décoration
-                            </option>
-                        <option value="46">
-                                Linge de maison
-                            </option>
-                        <option value="21">
-                                Bricolage
-                            </option>
-                        <option value="52">
-                                Jardinage
-                            </option>
-                        <option value="22">
-                                Vêtements
-                            </option>
-                        <option value="53">
-                                Chaussures
-                            </option>
-                        <option value="47">
-                                Accessoires &amp; Bagagerie
-                            </option>
-                        <option value="42">
-                                Montres &amp; Bijoux
-                            </option>
-                        <option value="23">
-                                Equipement bébé
-                            </option>
-                        <option value="54">
-                                Vêtements bébé
-                            </option>
-
-                            <option style="background-color:#dcdcc3;" value="24">
-                            -- LOISIRS --
-                            </option>
-                        <option value="25">
-                                DVD / Films
-                            </option>
-                        <option value="26">
-                                CD / Musique
-                            </option>
-                        <option value="27">
-                                Livres
-                            </option>
-                        <option value="28">
-                                Animaux
-                            </option>
-                        <option value="55">
-                                Vélos
-                            </option>
-                        <option value="29">
-                                Sports &amp; Hobbies
-                            </option>
-                        <option value="30">
-                                Instruments de musique
-                            </option>
-                        <option value="40">
-                                Collection
-                            </option>
-                        <option value="41">
-                                Jeux &amp; Jouets
-                            </option>
-                        <option value="48">
-                                Vins &amp; Gastronomie
-                            </option>
-
-                            <option style="background-color:#dcdcc3;" value="56">
-                            -- MATERIEL PROFESSIONNEL --
-                            </option>
-                        <option value="57">
-                                Matériel Agricole
-                            </option>
-                        <option value="58">
-                                Transport - Manutention
-                            </option>
-                        <option value="59">
-                                BTP - Chantier Gros-oeuvre
-                            </option>
-                        <option value="60">
-                                Outillage - Matériaux 2nd-oeuvre
-                            </option>
-                        <option value="32">
-                                Équipements Industriels
-                            </option>
-                        <option value="61">
-                                Restauration - Hôtellerie
-                            </option>
-                        <option value="62">
-                                Fournitures de Bureau
-                            </option>
-                        <option value="63">
-                                Commerces &amp; Marchés
-                            </option>
-                        <option value="64">
-                                Matériel Médical
-                            </option>
-
-                            <option style="background-color:#dcdcc3;" value="31">
-                            -- SERVICES --
-                            </option>
-                        <option value="34">
-                                Prestations de services
-                            </option>
-                        <option value="35">
-                                Billetterie
-                            </option>
-                        <option value="49">
-                                Evénements
-                            </option>
-                        <option value="36">
-                                Cours particuliers
-                            </option>
-                        <option value="65">
-                                Covoiturage
-                            </option>
-
-
-                                <option style="background-color:#dcdcc3;" value="37">
-                                    --
-                                </option>
-
-                        <option value="38">
-                                Autres
-                            </option>
-					</select>
+					<select ng-model="offer.categorie" ng-options="categorie.name group by categorie.parent for categorie in categories">
+    </select>
 				</label>
 			</div>
 			<div class="row">
-				<label class="item col spaceTop">
+				<label class="item col createOfferLabel spaceTop">
 					<div id="latitude">
 						latitude : 0
 					</div>
@@ -249,28 +29,14 @@
 						GPS
 					</button>
 				</label>
-				<!--
-				<label class="item item-input item-select spaceTop col col-50">
-
-
-					<div class="input-label">
-						Localisation
-					</div>
-					<select>
-						<option>Paris</option>
-						<option selected>Lyon</option>
-						<option>Bordeaux</option>
-					</select>
-				</label>
-				-->
 			</div>
 			<div class="row">
-				<label class="item item-input col createOfferLabel spaceTop">
+				<label class="item item-input col createOfferLabel spaceTop" id="titleLabel">
 					<input type="text" class="createOfferInput offer-textInput" ng-model="offer.title" placeholder="Titre de votre offre">
 				</label>
 			</div>
 			<div class="row">
-				<label class="item item-input col createOfferLabel spaceTop">
+				<label class="item item-input col createOfferLabel spaceTop" id="descriptionLabel">
 					<input type="text" class="createOfferInput offer-textInput"  ng-model="offer.description" placeholder="Description de votre offre">
 				</label>
 			</div>
@@ -328,11 +94,21 @@
 		</form>
 		</div>
 
-<!--
+		<!--  
 		<div class="row">
-				{{message}}
+			<button class="button button-balanced item-icon-right generalCreateOfferButton spaceTop" id="createOfferButton" ng-click="showSpinner()">
+				<i class="icon ion-android-add"></i>
+				Créer votre offre
+			</button>
 		</div>
--->
+		-->
+
 	</div>
   </ion-content>
+
+	<script id="templates/loading.html" type="text/ng-template">
+		<ion-spinner class="light"></ion-spinner>
+		<br />
+		<span>Envoi des informations ...</span>
+	</script>
 </ion-view>

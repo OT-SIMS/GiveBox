@@ -10,7 +10,8 @@ angular.module('starter', [
   'ngCordova',
   'starter.controllers.Home',
   'starter.controllers.CreateOffer',
-  'starter.controllers.Menu'
+  'starter.controllers.Menu',
+  'underscore'
 ])
 
 .run(function($ionicPlatform) {

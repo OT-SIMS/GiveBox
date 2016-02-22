@@ -93,6 +93,26 @@
 /********/
 /* CREATE OFFER */
 /********/
+/*
+input[type=text]
+{
+    background-color: #33CD5F;
+    border:solid 1px #BFBDBD;
+
+    color: #979797;
+    height: 28px;
+    padding-left:10px;
+    width: 191px;
+    box-shadow: 2px 2px 0 #828181 inset;
+}
+*/
+
+.toFill {
+  /*background-color: #33CD5F;*/
+  border-color: red;
+  /*color : #33CD5F;*/
+}
+
 .offer-subtitle {
   font-family: 'Lobster';
   font-size: 25px !important;
@@ -168,5 +188,28 @@
 }
 .wdith.max {
   width:100% !important;
+}
+/********/
+
+
+/********/
+/* LOADING */
+/********/
+.loading{
+  background-color: #33CD5F !important;
+}
+
+.spinner.light svg {
+  stroke: #fff !important;
+  fill: #fff !important;
+}
+
+/********/
+
+/********/
+/* Offer Popup */
+/********/
+.offerAlert .button {
+    background-color: #33CD5F !important;
 }
 /********/

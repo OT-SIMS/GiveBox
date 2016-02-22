@@ -1,7 +1,7 @@
 angular.module('starter.controllers.CreateOffer', [
 ])
 
-.controller('CreateOfferCtrl', function($scope, $http, $ionicModal, $cordovaCamera, $cordovaCapture, $cordovaGeolocation) {
+.controller('CreateOfferCtrl', function($scope, $http, $ionicModal, $cordovaCamera, $cordovaCapture, $cordovaGeolocation, $ionicLoading, $ionicPopup, $location) {
 
 	$scope.allImages = [
 	];
@@ -29,42 +29,130 @@ angular.module('starter.controllers.CreateOffer', [
 		$scope.modal.remove()
 	};
 
+	$scope.showSpinner = function() {
+    $ionicLoading.show({
+      templateUrl:"templates/loading.html"
+    });
+  };
+  $scope.hideSpinner = function(){
+    $ionicLoading.hide();
+  };
+
+	// An alert dialog
+ $scope.showAlert = function(title, message) {
+   var alertPopup = $ionicPopup.alert({
+     title: title,
+     template: message,
+		 cssClass: 'offerAlert'
+   });
+
+   alertPopup.then(function(res) {
+   });
+ };
+
+	/**
+	 * Fills the categories selection from the result from the server.
+	 */
 	searchCategorie = function(){
 		var req = {
 			 method: 'GET',
 			 url: 'http://yoda.rispal.info/givebox/api/categories'
 		}
-			$http(req).then(function(dataServer){
-				$scope.message = dataServer;
 
-				var elementSelect = document.getElementById("selectCategories");
+		$http(req).then(function(dataServer){
+			$scope.categories = [];
 
-				console.log(dataServer.data.length);
-				for(var i = 0; i< dataServer.data.length; i++){
-					var elementCat = dataServer.data[i];
-					console.log(elementCat.Id + " ; " + elementCat.ParentId);
+			for(var i = 0; i< dataServer.data.length; i++){
+				var elementCat = dataServer.data[i];
 
-					if(elementCat.ParentId == null){
-							elementSelect += "<option style=\"background-color:#dcdcc3;\" value=" + elementCat.Id + ">  "+ "-- VEHICULES --    </option>"
-					}
-
+				if(elementCat.ParentId != null){
+					var parentCategorie = _.findWhere(dataServer.data, {Id: elementCat.ParentId});
+					$scope.categories.push({name: elementCat.Nom, Id: elementCat.Id, parent: parentCategorie.Nom});
 				}
 
-			}, function(data){
-					console.log("Problème de réception de la requête.");
-					$scope.message = data;
-			});
+			}
+
+		}, function(data){
+				console.log("Problème de réception de la requête.");
+				$scope.message = data;
+		});
 	}
 
-	//searchCategorie();
+	searchCategorie();
 
+	/*
+	 * Configure the form to its normal state (with no error messages).
+	 */
+	stateForm = function(normal){
+		if(normal) {
+			document.getElementById("titleLabel").className = document.getElementById("titleLabel").className.replace( /(?:^|\s)toFill(?!\S)/g , '' );
+			document.getElementById("descriptionLabel").className = document.getElementById("descriptionLabel").className.replace( /(?:^|\s)toFill(?!\S)/g , '' );
+			document.getElementById("categorieLabel").className = document.getElementById("descriptionLabel").className.replace( /(?:^|\s)toFill(?!\S)/g , '' );
+		}else{
+			document.getElementById("titleLabel").className += " toFill";
+			document.getElementById("descriptionLabel").className += " toFill";
+			document.getElementById("categorieLabel").className += " toFill";
+		}
+
+	}
+
+	sleep = function(timeInMillis) {
+	  //do some things
+	  setTimeout(continueExecution, timeInMillis) //wait timeInMillis milliseconds before continuing
+	}
+
+	continueExecution = function () {
+	}
+
+	$scope.clearOfferScope = function() {
+		$scope.title = undefined;
+		$scope.description = undefined;
+		$scope.categorie = undefined;
+	};
 
 	// Create and send a request to create an offer
   $scope.sendNewOfferRequest = function(offer) {
+		var sendingOk = true;
+		var  nbSentPictures = 0;
+		var nbFailedSentPictures = 0;
+
+
+
+		if(offer == undefined){
+			stateForm(false);
+			sendingOk = false;
+		}else {
+			stateForm(true);
+
+			if(offer.title == undefined || offer.title == ''){
+				document.getElementById("titleLabel").className += " toFill";
+				sendingOk = false;
+			}
+
+			if (offer.description == undefined || offer.description == '') {
+				document.getElementById("descriptionLabel").className += " toFill";
+				sendingOk = false;
+			}
+
+			if (offer.categorie == undefined) {
+				console.log("categorie pas bon");
+				document.getElementById("categorieLabel").className += " toFill";
+				sendingOk = false;
+			}
+
+		}
+
+		if(!sendingOk){
+			$scope.showAlert('Offre incomplète !', 'Il manque des informations dans votre offre.');
+			return;
+		}
+
+		$scope.showSpinner();
+
 
 		var newOffer = {
 			"UtilisateurId": 1,
-			"CategorieId":1,
+			"CategorieId":offer.categorie.Id,
 			"Titre": offer.title,
 			"Description": offer.description,
 			"Latitude": 1,
@@ -83,13 +171,29 @@ angular.module('starter.controllers.CreateOffer', [
 
 		$http(reqJson).then(function(dataServer){
 				$scope.message = dataServer;
-				//todo : .../apt/offres/id
 				console.log(dataServer.data.Id);
 
+				/*
+				 * Function called when the image has just been successfully uploaded.
+				 */
 				var win = function (r) {
 				    console.log("Code = " + r.responseCode);
 				    console.log("Response = " + r.response);
 				    console.log("Sent = " + r.bytesSent);
+						nbSentPictures = nbSentPictures + 1;
+
+						if(nbSentPictures != $scope.allImages.length){
+							if(nbFailedSentPictures != 0){
+								$scope.hideSpinner();
+								$scope.showAlert('Offre non créée !', 'Il y a eu un problème avec le serveur, veuillez réessayer ultérieurement.');
+							}
+							//else : do nothing and wait for another picture to be done.
+						}else{
+							$scope.hideSpinner();
+							$scope.clearOfferScope();
+							$scope.showAlert('Offre créée !', 'Votre offre a été créée avec succès.');
+							$location.path("/home");
+						}
 				}
 
 				var fail = function (error) {
@@ -97,6 +201,7 @@ angular.module('starter.controllers.CreateOffer', [
 				    console.log("upload error source " + error.source);
 				    console.log("upload error target " + error.target);
 						console.log(error);
+						nbFailedSentPictures = nbFailedSentPictures + 1;
 				}
 
 				//Send each images to the server.
@@ -122,20 +227,25 @@ angular.module('starter.controllers.CreateOffer', [
 
 						var ft = new FileTransfer();
 						//dataServer.data.Id
+						ft.onprogress = function(progressEvent) {
+						    if (progressEvent.lengthComputable) {
+									console.log(progressEvent.loaded / progressEvent.total);
+						    } else {
+						    }
+						};
 						ft.upload($scope.allImages[i].src, encodeURI("http://yoda.rispal.info/givebox/api/fichiers/" + dataServer.data.Id), win, fail, options);
 				}
-
-
 		}, function(data){
 			console.log("Problème d'envoi de la requête.");
 			alert( "Problème d'envoi au serveur: " + JSON.stringify({data: data}));
 		});
 
+		//Coming here : the spinner is still here while pictures are being uploaded.
   };
 
 	$scope.importAPhoto = function() {
 		var options = {
-			allowEdit: true,
+			allowEdit: false,
 			sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
 			encodingType: Camera.EncodingType.JPEG,
 			saveToPhotoAlbum: false
