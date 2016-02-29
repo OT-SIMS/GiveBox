@@ -10,6 +10,9 @@
 .green {
   color: #33CD5F !important;
 }
+.right {
+  text-align: right !important;
+}
 .my-bar{
   border-color: #33CD5F !important;
 }
@@ -29,6 +32,9 @@
 }
 .my-clear-button{
   color: grey;
+}
+#donationsDiv{
+  margin-top: 40px;
 }
 .itemDiv{
   text-align: center;
@@ -213,3 +219,14 @@ input[type=text]
     background-color: #33CD5F !important;
 }
 /********/
+
+/*********/
+/* Offer */
+/*********/
+#offerHeaderBar{
+  width: 100%;
+}
+#offerImg{
+  width: 100%;
+  height:300px;
+}

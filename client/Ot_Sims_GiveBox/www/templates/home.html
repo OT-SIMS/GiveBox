@@ -19,7 +19,8 @@
           <ion-list>
             <ion-item class="my-items" ng-repeat="item in items" ng-show="$odd">
               <!--<img ng-src="{{item.img}}">-->
-              <img ng-src="{{item.Fichier[0].url}}">
+              <img ng-src="{{item.Fichier[0].url}}" ng-if="item.Fichier[0] != null" ng-click="openOffer(item)">
+              <img ng-src="img/no_img.jpg" ng-if="item.Fichier[0] == null" ng-click="openOffer(item)">
             </ion-item>
           </ion-list>
         </div>
@@ -27,7 +28,8 @@
           <ion-list>
             <ion-item class="my-items" ng-repeat="item in items" ng-show="$even">
               <!--<img ng-src="{{item.img}}">-->
-              <img ng-src="{{item.Fichier[0].url}}">
+              <img ng-src="{{item.Fichier[0].url}}" ng-if="item.Fichier[0] != null" ng-click="openOffer(item)">
+              <img ng-src="img/no_img.jpg" ng-if="item.Fichier[0] == null" ng-click="openOffer(item)">
             </ion-item>
           </ion-list>
         </div>
@@ -46,11 +48,11 @@
     <div class="fixed-outside">
       <div class="row">
         <div class="text-center">
-          <button class="button button-balanced center" id="giveYourStuffButton" ui-sref="app.createOffer">
+          <a class="button button-balanced center" id="giveYourStuffButton" href="#/app/createOffer">
             <p id="giveYourStuffContent">
               Give Your Stuff<i class="fa fa-camera-retro" id="giveYourStuffIcon"></i>
             </p>
-          </button>
+          </a>
         </div>
       </div>
     </div>

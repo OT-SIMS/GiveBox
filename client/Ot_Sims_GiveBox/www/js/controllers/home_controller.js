@@ -15,6 +15,7 @@ angular.module('starter.controllers.Home', [
     $http(req)
       .then(function(response){
         $scope.items=response.data;
+        console.log(response.data);
       }, function(response){
         alert( "Problème d'envoi au serveur: " + JSON.stringify({response: response}));
       });
@@ -44,6 +45,21 @@ angular.module('starter.controllers.Home', [
   }
 
   $scope.getAllOffers();
+
+  $ionicModal.fromTemplateUrl('templates/offer.html', {
+    scope: $scope
+  }).then(function(modal) {
+    $scope.modal = modal;
+  });
+
+  $scope.openOffer = function(offer){
+    $scope.modalData  = offer;
+    $scope.modal.show();
+  }
+
+  $scope.closeOffer = function() {
+    $scope.modal.hide();
+  };
 
 
   /*$scope.items = [

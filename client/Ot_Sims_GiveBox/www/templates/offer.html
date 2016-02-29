@@ -1,0 +1,22 @@
+<ion-modal-view>
+  <ion-header-bar class="my-bar">
+    <div class="buttons">
+      <button class="button button-clear ion-ios-heart-outline green" ng-click=""></button>
+    </div>
+    <h1 class="title"></h1>
+    <div class="buttons">
+      <button class="button button-clear right green" ng-click="closeOffer()">Close</button>
+    </div>
+  </ion-header-bar>
+  <ion-content>
+    <ion-slide-box>
+      <ion-slide ng-repeat="image in modalData.Fichier">
+          <div class="">
+              <img id="offerImg" ng-src="{{image.url}}">
+         </div>
+      </ion-slide>
+    </ion-slide-box>
+    <h3 class="title">{{modalData.Titre}}</h3>
+    <p>{{modelData.Description}}</p>
+  </ion-content>
+</ion-modal-view>
