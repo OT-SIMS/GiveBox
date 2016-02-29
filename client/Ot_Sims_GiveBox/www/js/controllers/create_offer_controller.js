@@ -309,8 +309,8 @@ $scope.recordAVideo = function() {
 				  'Speed: '             + position.coords.speed             + '\n' +
 				  'Timestamp: '         + position.timestamp                + '\n');
 			*/
-			document.getElementById("latitude").innerHTML = "latitude" + position.coords.latitude;
-			document.getElementById("longitude").innerHTML = "longitude" + position.coords.longitude;
+			$scope.latitude = position.coords.latitude;
+			$scope.longitude = position.coords.longitude;
 		};
 
 
@@ -323,5 +323,30 @@ $scope.recordAVideo = function() {
 		}
 
 		navigator.geolocation.getCurrentPosition(onSuccess, onError);
+	};
+
+	$scope.convertCoordinates = function() {
+		console.log("convertCoordinates");
+
+
+		var options = {
+			 method: 'GET',
+			 url: 'maps.googleapis.com'
+		}
+
+		var params = {};
+
+
+
+		var latParam = 'params.1d' + $scope.latitude + '=\"\"';
+		//var longParam = 'options.2d' + $scope.longitude + '=\"\"';
+		console.log(latParam);
+
+		eval(latParam);
+		//eval(longParam);
+
+		options.params = params;
+		console.log(options);
+
 	}
 });
