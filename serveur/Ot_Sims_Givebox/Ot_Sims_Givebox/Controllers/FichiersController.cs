@@ -78,7 +78,9 @@ namespace Ot_Sims_Givebox.Controllers
             }
             catch (System.Exception e)
             {
-                return new HttpResponseMessage(HttpStatusCode.InternalServerError);
+                HttpResponseMessage err = new HttpResponseMessage(HttpStatusCode.InternalServerError);
+                err.Content = new StringContent(e.ToString());
+                return err;
             }
         }
     }

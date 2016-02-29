@@ -22,6 +22,6 @@ bulk INSERT [dbo].UtilisateurSet
 from 'C:\Users\Simon\Documents\GitHub\GiveBox\sqlRequest\importUtilisateur.txt'
 with(FIRSTROW = 2, keepnulls, FIELDTERMINATOR = ',' , ROWTERMINATOR = '\n');
 
-select * from [dbo].utilisateurSet;
+select * from [dbo].CategorieSet;
  
  

@@ -27,18 +27,25 @@ namespace Ot_Sims_Givebox.Controllers
 
         //GET LOCALISATION : api/Offres/longitude/lattitude/rayon
         [ResponseType(typeof(Offre))]
-        public IHttpActionResult GetOffre2(double lgt, double latt, double r = 1)
+        public IHttpActionResult GetOffre(double lgt, double latt, double r = 1)
         {
             List<Offre> resultat = new List<Offre>();
 
-            foreach (var offres3 in db.OffreSet)
+            try
             {
-                if ((lgt - offres3.Longitude) * (lgt - offres3.Longitude) + (latt - offres3.Latitude) * (latt - offres3.Latitude) <= r * r)
+                foreach (var offres3 in db.OffreSet)
                 {
-                    resultat.Add(offres3);
+                    if ((lgt - offres3.Longitude) * (lgt - offres3.Longitude) + (latt - offres3.Latitude) * (latt - offres3.Latitude) <= r * r)
+                    {
+                        resultat.Add(offres3);
+                    }
                 }
+                return Ok(resultat);
             }
-            return Ok(resultat);
+            catch (Exception e)
+            {
+                return InternalServerError(e);
+            }
         }
 
         // GET: api/Offres/5
@@ -46,28 +53,34 @@ namespace Ot_Sims_Givebox.Controllers
         public async Task<IHttpActionResult> GetOffre(string id)
         {
             int idint;
-            if (Int32.TryParse(id, out idint))
+            try
             {
-                Offre offre = await db.OffreSet.FindAsync(idint);
-                if (offre == null)
+                if (Int32.TryParse(id, out idint))
                 {
-                    var OffreFiltre2 = from offres2 in db.OffreSet
-                                       where offres2.Titre.Contains(id) | offres2.Description.Contains(id)
-                                       select offres2;
-                    return Ok(OffreFiltre2);
-                    //return NotFound();
+                    Offre offre = await db.OffreSet.FindAsync(idint);
+                    if (offre == null)
+                    {
+                        var OffreFiltre2 = from offres2 in db.OffreSet
+                                           where offres2.Titre.Contains(id) | offres2.Description.Contains(id)
+                                           select offres2;
+                        return Ok(OffreFiltre2);
+                        //return NotFound();
+                    }
+
+                    return Ok(offre);
                 }
-
-                return Ok(offre);
+                else
+                {
+                    var OffreFiltre = from offres in db.OffreSet
+                                      where offres.Titre.Contains(id) | offres.Description.Contains(id)
+                                      select offres;
+                    return Ok(OffreFiltre);
+                }
             }
-            else
+            catch (Exception e)
             {
-                var OffreFiltre = from offres in db.OffreSet
-                                  where offres.Titre.Contains(id) | offres.Description.Contains(id)
-                                  select offres;
-                return Ok(OffreFiltre);
+                return InternalServerError(e);
             }
-
         }
 
         // PUT: api/Offres/5
@@ -109,18 +122,25 @@ namespace Ot_Sims_Givebox.Controllers
         [ResponseType(typeof(Offre))]
         public async Task<IHttpActionResult> PostOffre([FromBody] Offre offre)
         {
-            if (!ModelState.IsValid)
+            try
             {
-                return BadRequest(ModelState);
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+
+                db.OffreSet.Add(offre);
+                await db.SaveChangesAsync();
+                //Offre offre2 = await db.OffreSet.FindAsync(offre.Id);
+                return CreatedAtRoute("DefaultApi", new { id = offre.Id }, offre);
+            }
+            catch (Exception e)
+            {
+                return InternalServerError(e);
             }
 
-            db.OffreSet.Add(offre);
-            await db.SaveChangesAsync();
-            //Offre offre2 = await db.OffreSet.FindAsync(offre.Id);
-            return CreatedAtRoute("DefaultApi", new { id = offre.Id }, offre);
-
         }
-       
+
         // DELETE: api/Offres/5
         [ResponseType(typeof(Offre))]
         public async Task<IHttpActionResult> DeleteOffre(int id)
