@@ -17,9 +17,7 @@ namespace Ot_Sims_Givebox
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
-
             );
-            
         }
     }
 }

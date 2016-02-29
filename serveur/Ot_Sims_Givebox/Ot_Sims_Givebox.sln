@@ -5,7 +5,7 @@ VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ot_Sims_Givebox", "Ot_Sims_Givebox\Ot_Sims_Givebox.csproj", "{134F01F5-B60B-4DA4-AE1B-E524D7825D62}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ot_Sims_Givebox.Tests", "Ot_Sims_Givebox.Tests\Ot_Sims_Givebox.Tests.csproj", "{1482E940-D558-4AAD-98E7-33F953FD7CF9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ot_Sims_Givebox_2", "Ot_Sims_Givebox_2\Ot_Sims_Givebox_2.csproj", "{08004F71-7474-4ACB-9A3F-F95F80000C01}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{134F01F5-B60B-4DA4-AE1B-E524D7825D62}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{134F01F5-B60B-4DA4-AE1B-E524D7825D62}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{134F01F5-B60B-4DA4-AE1B-E524D7825D62}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1482E940-D558-4AAD-98E7-33F953FD7CF9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1482E940-D558-4AAD-98E7-33F953FD7CF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1482E940-D558-4AAD-98E7-33F953FD7CF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1482E940-D558-4AAD-98E7-33F953FD7CF9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{08004F71-7474-4ACB-9A3F-F95F80000C01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{08004F71-7474-4ACB-9A3F-F95F80000C01}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{08004F71-7474-4ACB-9A3F-F95F80000C01}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{08004F71-7474-4ACB-9A3F-F95F80000C01}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
