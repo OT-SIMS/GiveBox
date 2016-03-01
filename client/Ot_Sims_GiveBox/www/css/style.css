@@ -1,4 +1,4 @@
-/* Empty. Add your own CSS if you like */
+/* STYLE */
 
 /********/
 /* MENU */
@@ -18,6 +18,18 @@
 }
 .my-width{
   width: 70% !important;
+}
+.my-background-green{
+  background-color: #33CD5F;
+}
+.my-background-white{
+  background-color: #FFFFFF;
+}
+.no-border{
+  border:none !important;
+}
+.white{
+  color: #FFFFFF;
 }
 /********/
 
@@ -237,4 +249,15 @@ input[type=text]
 }
 .my-margin-left{
   margin-left: 5px;
+}
+.my-icon-size{
+  font-size: 30px !important;
+}
+
+/***********/
+/* PROFILE */
+/***********/
+.my-button-active{
+  border-bottom: solid #33CD5F 3px !important;
+  font-weight: bold;
 }

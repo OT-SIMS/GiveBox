@@ -261,13 +261,14 @@
     <Compile Include="Migrations\201603011454053_Initial.Designer.cs">
       <DependentUpon>201603011454053_Initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="helper\LevenShtein.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Categorie.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Class1.cs" />
+    <Compile Include="Models\Prio.cs" />
     <Compile Include="Models\Fichier.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
