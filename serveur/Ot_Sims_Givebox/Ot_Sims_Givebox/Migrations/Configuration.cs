@@ -21,24 +21,24 @@ namespace Ot_Sims_Givebox.Migrations
 
             var user = new ApplicationUser()
             {
-             
-                Email = "simon.@rispal.info",
-                EmailConfirmed = true
+                Id = "superUser",
+                Email = "simon@rispal.info",
+                EmailConfirmed = true,
+                UserName = "simon@rispal.info"
             };
 
             manager.Create(user, "Azerty2302");
-            //  This method will be called after migrating to the latest version.
 
-            //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
-            //  to avoid creating duplicate seed data. E.g.
-            //
-            //string email =  "feitor@hotmail.fr";
-            //    context.Users.AddOrUpdate(
-            //      p => p.Email,
-            //      new ApplicationUser { Email = email, UserName = email}
+            var user2 = new ApplicationUser()
+            {
+                Id = "normalUser",
+                Email = "robert@rispal.info",
+                EmailConfirmed = true,
+                UserName = "robert@rispal.info"
+            };
 
-            //    );
-            //
+            manager.Create(user2, "Azerty2302");
+            
             var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new ApplicationDbContext()));
 
             if (roleManager.Roles.Count() == 0)
@@ -49,9 +49,10 @@ namespace Ot_Sims_Givebox.Migrations
             }
 
 
-            var adminUser = manager.FindByEmail("simon.@rispal.info");
-
+            var adminUser = manager.FindByName("simon@rispal.info");
+            var normalUser = manager.FindByName("robert@rispal.info");
             manager.AddToRoles(adminUser.Id, new string[] { "SuperAdmin", "Admin" });
+            manager.AddToRoles(normalUser.Id, new string[] { "User" });
         }
     }
 }

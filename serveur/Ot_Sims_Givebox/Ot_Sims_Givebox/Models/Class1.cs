@@ -8,7 +8,7 @@ namespace Ot_Sims_Givebox.Models
 
     public partial class Offre
     {
-        public int prio { get; set; } = 0;
+        public int prio { get; set; }
     }
 
 }
