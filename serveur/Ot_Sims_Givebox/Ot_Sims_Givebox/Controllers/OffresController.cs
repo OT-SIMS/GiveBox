@@ -71,10 +71,75 @@ namespace Ot_Sims_Givebox.Controllers
                 }
                 else
                 {
-                    var OffreFiltre = from offres in db.OffreSet
-                                      where offres.Titre.Contains(id) | offres.Description.Contains(id)
-                                      select offres;
-                    return Ok(OffreFiltre);
+                    IQueryable<Offre> OffreFiltre = null;
+                    Dictionary<int, Offre> dictionnaire = new Dictionary<int, Offre>();
+                    if (id.Contains(' '))
+                    {
+                        string[] idparts = id.Split(' ');
+                        foreach (string idpart in idparts)
+                        {
+                            char s = 's';
+                            char x = 'x';
+                            if (s == idpart[idpart.Length - 1] | x == idpart[idpart.Length - 1])
+                            {
+                                string idpart2 = idpart.Substring(0, id.Length - 1);
+                                OffreFiltre = from offres in db.OffreSet
+                                              where offres.Titre.Contains(idpart2) | offres.Description.Contains(idpart2)
+                                              select offres;
+                                foreach (Offre offreF in OffreFiltre)
+                                {
+                                    if (dictionnaire.ContainsKey(offreF.Id))
+                                    {
+                                       offreF.prio = offreF.prio + 1;
+                                    }
+                                    else
+                                    {
+                                        dictionnaire.Add(offreF.Id, offreF);
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                OffreFiltre = from offres in db.OffreSet
+                                              where offres.Titre.Contains(idpart) | offres.Description.Contains(idpart)
+                                              select offres;
+                                foreach (Offre offreF in OffreFiltre)
+                                {
+                                    if (dictionnaire.ContainsKey(offreF.Id))
+                                    {
+                                       offreF.prio = offreF.prio + 1;
+                                    }
+                                    else
+                                    {
+                                        dictionnaire.Add(offreF.Id, offreF);
+                                    }
+                                }
+                              
+                            }
+                        }
+                        return Ok(dictionnaire);
+                    }
+                    else
+                    {
+                        char s = 's';
+                        char x = 'x';
+                        if (s == id[id.Length - 1] | x == id[id.Length - 1])
+                        {
+                            id = id.Substring(0, id.Length - 1);
+                            OffreFiltre = from offres in db.OffreSet
+                                              where offres.Titre.Contains(id) | offres.Description.Contains(id)
+                                              select offres;
+                        }
+                        else
+                        {
+                           OffreFiltre = from offres in db.OffreSet
+                                              where offres.Titre.Contains(id) | offres.Description.Contains(id)
+                                              select offres;
+                        }
+
+                        return Ok(OffreFiltre);
+                    }
+
                 }
             }
             catch (Exception e)
@@ -82,7 +147,6 @@ namespace Ot_Sims_Givebox.Controllers
                 return InternalServerError(e);
             }
         }
-
         // PUT: api/Offres/5
         [ResponseType(typeof(void))]
         public async Task<IHttpActionResult> PutOffre(int id, Offre offre)

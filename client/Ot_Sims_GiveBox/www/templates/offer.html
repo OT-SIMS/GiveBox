@@ -1,7 +1,8 @@
 <ion-modal-view>
-  <ion-header-bar class="my-bar">
+  <ion-header-bar class="bar-stable my-bar">
     <div class="buttons">
       <button class="button button-clear ion-ios-heart-outline green" ng-click=""></button>
+      <button class="button button-clear ion-android-share-alt green my-margin" ng-click=""></button>
     </div>
     <h1 class="title"></h1>
     <div class="buttons">
@@ -9,14 +10,37 @@
     </div>
   </ion-header-bar>
   <ion-content>
-    <ion-slide-box>
-      <ion-slide ng-repeat="image in modalData.Fichier">
-          <div class="">
-              <img id="offerImg" ng-src="{{image.url}}">
-         </div>
-      </ion-slide>
-    </ion-slide-box>
-    <h3 class="title">{{modalData.Titre}}</h3>
-    <p>{{modelData.Description}}</p>
+    <div class="list card my-card">
+      <div class="item item-avatar">
+        <img>
+        <h2>{{modalData.Utilisateur.Nom}}</h2>
+        <p>En cours</p>
+      </div>
+
+      <div class="item item-body">
+        <h3>{{modalData.Titre}}</h3>
+        <ion-slide-box>
+          <ion-slide ng-repeat="image in modalData.Fichier">
+            <img id="offerImg" class="full-image" ng-src="{{image.url}}">
+          </ion-slide>
+        </ion-slide-box>
+        <p>
+          {{modalData.Description}}
+        </p>
+        <p>
+          <i class="icon ion-location my-margin"></i>{{modalData.Latitude}}, {{modalData.Longitude}}
+        </p>
+        <!--<p>
+          <a href="#" class="subdued">1 Like</a>
+          <a href="#" class="subdued">5 Comments</a>
+        </p>-->
+      </div>
+    </div>
+    <br>
   </ion-content>
+  <div class="bar bar-footer">
+    <a class="button icon-left ion-help-circled button-outline button-balanced my-margin-left">Ask a question</a>
+
+    <a class="button icon-left ion-android-contact button-balanced my-margin-right">Contact advertiser</a>
+  </div>
 </ion-modal-view>

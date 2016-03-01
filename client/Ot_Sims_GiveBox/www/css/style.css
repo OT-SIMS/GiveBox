@@ -24,17 +24,11 @@
 /********/
 /* HOME */
 /********/
-.my-margin{
-  padding-bottom: 20px !important;
-}
 .width-max{
   width:100%;
 }
 .my-clear-button{
   color: grey;
-}
-#donationsDiv{
-  margin-top: 40px;
 }
 .itemDiv{
   text-align: center;
@@ -94,7 +88,6 @@
   margin-top: 12px;
 }
 /********/
-
 
 /********/
 /* CREATE OFFER */
@@ -228,5 +221,20 @@ input[type=text]
 }
 #offerImg{
   width: 100%;
-  height:300px;
+  max-height:280px;
+}
+.my-margin{
+  margin-right: 10px;
+}
+.my-grey{
+  color: #848484;
+}
+.my-card{
+  margin-bottom: 10px;
+}
+.my-margin-right{
+  margin-right: 5px;
+}
+.my-margin-left{
+  margin-left: 5px;
 }
