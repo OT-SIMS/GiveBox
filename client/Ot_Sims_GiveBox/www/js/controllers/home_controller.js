@@ -15,7 +15,6 @@ angular.module('starter.controllers.Home', [
     $http(req)
       .then(function(response){
         $scope.items=response.data;
-        console.log(response.data);
       }, function(response){
         alert( "Problème d'envoi au serveur: " + JSON.stringify({response: response}));
       });
