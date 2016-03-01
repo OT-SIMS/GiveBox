@@ -72,7 +72,7 @@ namespace Ot_Sims_Givebox.Controllers
                 else
                 {
                     IQueryable<Offre> OffreFiltre = null;
-                    Dictionary<int, IQueryable<Offre>> dictionnaire = new Dictionary<int, IQueryable<Offre>>();
+                    Dictionary<int, Offre> dictionnaire = new Dictionary<int, Offre>();
                     if (id.Contains(' '))
                     {
                         string[] idparts = id.Split(' ');
@@ -90,11 +90,11 @@ namespace Ot_Sims_Givebox.Controllers
                                 {
                                     if (dictionnaire.ContainsKey(offreF.Id))
                                     {
-                                        offreF.prio = offreF.prio + 1;
+                                       offreF.prio = offreF.prio + 1;
                                     }
                                     else
                                     {
-                                        dictionnaire.Add(offreF.Id, OffreFiltre);
+                                        dictionnaire.Add(offreF.Id, offreF);
                                     }
                                 }
                             }
@@ -107,11 +107,11 @@ namespace Ot_Sims_Givebox.Controllers
                                 {
                                     if (dictionnaire.ContainsKey(offreF.Id))
                                     {
-                                        offreF.prio = offreF.prio + 1;
+                                       offreF.prio = offreF.prio + 1;
                                     }
                                     else
                                     {
-                                        dictionnaire.Add(offreF.Id, OffreFiltre);
+                                        dictionnaire.Add(offreF.Id, offreF);
                                     }
                                 }
                               
