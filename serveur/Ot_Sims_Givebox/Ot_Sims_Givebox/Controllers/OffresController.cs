@@ -76,13 +76,14 @@ namespace Ot_Sims_Givebox.Controllers
                     if (id.Contains(' '))
                     {
                         string[] idparts = id.Split(' ');
+                        bool premiermot = true;
                         foreach (string idpart in idparts)
                         {
                             char s = 's';
                             char x = 'x';
                             if (s == idpart[idpart.Length - 1] | x == idpart[idpart.Length - 1])
                             {
-                                string idpart2 = idpart.Substring(0, id.Length - 1);
+                                string idpart2 = idpart.Substring(0, idpart.Length - 1);
                                 OffreFiltre = from offres in db.OffreSet
                                               where offres.Titre.Contains(idpart2) | offres.Description.Contains(idpart2)
                                               select offres;
@@ -90,11 +91,25 @@ namespace Ot_Sims_Givebox.Controllers
                                 {
                                     if (dictionnaire.ContainsKey(offreF.Id))
                                     {
-                                       offreF.prio = offreF.prio + 1;
+                                        if (idpart.Length >= 2)
+                                        {
+                                            offreF.prio = offreF.prio + 1;
+                                        }
                                     }
                                     else
                                     {
                                         dictionnaire.Add(offreF.Id, offreF);
+                                        if (idpart.Length >= 2)
+                                        {
+                                            if (premiermot == true)
+                                            {
+                                                offreF.prio = offreF.prio + 2;
+                                            }
+                                            else
+                                            {
+                                                offreF.prio = offreF.prio + 1;
+                                            }
+                                        }
                                     }
                                 }
                             }
@@ -116,6 +131,7 @@ namespace Ot_Sims_Givebox.Controllers
                                 }
                               
                             }
+                            premiermot = false;
                         }
                         return Ok(dictionnaire);
                     }
