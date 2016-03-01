@@ -12,6 +12,7 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using Ot_Sims_Givebox.Models;
 using System.Web;
+using Ot_Sims_Givebox.helper;
 
 namespace Ot_Sims_Givebox.Controllers
 {
@@ -71,7 +72,8 @@ namespace Ot_Sims_Givebox.Controllers
                 }
                 else
                 {
-                    IQueryable<Offre> OffreFiltre = null;
+                    double seuil = 0.7;
+                   // IQueryable<Offre> OffreFiltre = null;
                     Dictionary<int, Offre> dictionnaire = new Dictionary<int, Offre>();
                     if (id.Contains(' '))
                     {
@@ -79,83 +81,129 @@ namespace Ot_Sims_Givebox.Controllers
                         bool premiermot = true;
                         foreach (string idpart in idparts)
                         {
-                            char s = 's';
-                            char x = 'x';
-                            if (s == idpart[idpart.Length - 1] | x == idpart[idpart.Length - 1])
+                            //char s = 's';
+                            //char x = 'x';
+                            //if (s == idpart[idpart.Length - 1] | x == idpart[idpart.Length - 1])
+                            //{
+                            //    string idpart2 = idpart.Substring(0, idpart.Length - 1);
+                            //    OffreFiltre = from offres in db.OffreSet
+                            //                  where offres.Titre.Contains(idpart2) | offres.Description.Contains(idpart2)
+                            //                  select offres;
+                            //    foreach (Offre offreF in OffreFiltre)
+                            //    {
+                            //        if (dictionnaire.ContainsKey(offreF.Id))
+                            //        {
+                            //            if (idpart.Length >= 2)
+                            //            {
+                            //                offreF.prio = offreF.prio + 1;
+                            //            }
+                            //        }
+                            //        else
+                            //        {
+                            //            dictionnaire.Add(offreF.Id, offreF);
+                            //            if (idpart.Length >= 2)
+                            //            {
+                            //                if (premiermot == true)
+                            //                {
+                            //                    offreF.prio = offreF.prio + 2;
+                            //                }
+                            //                else
+                            //                {
+                            //                    offreF.prio = offreF.prio + 1;
+                            //                }
+                            //            }
+                            //        }
+                            //    }
+                            //}
+                            //else
+                            //OffreFiltre = from offres in db.OffreSet
+                            //              where offres.Titre.Contains(idpart) | offres.Description.Contains(idpart)
+                            //              select offres;
+
+                            foreach (Offre offre in db.OffreSet)
                             {
-                                string idpart2 = idpart.Substring(0, idpart.Length - 1);
-                                OffreFiltre = from offres in db.OffreSet
-                                              where offres.Titre.Contains(idpart2) | offres.Description.Contains(idpart2)
-                                              select offres;
-                                foreach (Offre offreF in OffreFiltre)
+                                if (offre.Titre.Contains(' '))
                                 {
-                                    if (dictionnaire.ContainsKey(offreF.Id))
+                                    string[] id2s = offre.Titre.Split(' ');
+                                    foreach (string id2 in id2s)
                                     {
-                                        if (idpart.Length >= 2)
+                                        double coef = Levenshtein.ComputeCorrelation(idpart, id2, false);
+                                        if (coef > seuil)
                                         {
-                                            offreF.prio = offreF.prio + 1;
+                                            if (!dictionnaire.ContainsKey(offre.Id))
+                                            {
+                                                dictionnaire.Add(offre.Id, offre);
+                                                offre.prio = coef;
+                                            }
                                         }
                                     }
-                                    else
+                                }
+                                else
+                                {
+                                    double coef = Levenshtein.ComputeCorrelation(id, offre.Titre, false);
+                                    if (coef > seuil)
                                     {
-                                        dictionnaire.Add(offreF.Id, offreF);
-                                        if (idpart.Length >= 2)
+                                        if (!dictionnaire.ContainsKey(offre.Id))
                                         {
+                                            dictionnaire.Add(offre.Id, offre);
                                             if (premiermot == true)
                                             {
-                                                offreF.prio = offreF.prio + 2;
+                                                offre.prio = 2 * coef;
                                             }
                                             else
                                             {
-                                                offreF.prio = offreF.prio + 1;
+                                                offre.prio = 2 * coef;
                                             }
+                                        }
+                                        else
+                                        {
+                                            offre.prio = offre.prio + coef;
+                                        }
+                                    }
+                                }
+                            }
+
+                            premiermot = false;
+                        }
+                    }
+                    else
+                    {
+                        foreach (Offre offre in db.OffreSet)
+                        {
+                            if (offre.Titre.Contains(' '))
+                            {
+                                string[] id2s = offre.Titre.Split(' ');
+                                foreach (string id2 in id2s)
+                                {
+                                    double coef = Levenshtein.ComputeCorrelation(id, id2, false);
+                                    if (coef > seuil)
+                                    {
+                                        if (!dictionnaire.ContainsKey(offre.Id))
+                                        {
+                                            dictionnaire.Add(offre.Id, offre);
+                                            offre.prio = coef;
                                         }
                                     }
                                 }
                             }
                             else
                             {
-                                OffreFiltre = from offres in db.OffreSet
-                                              where offres.Titre.Contains(idpart) | offres.Description.Contains(idpart)
-                                              select offres;
-                                foreach (Offre offreF in OffreFiltre)
+                                double coef = Levenshtein.ComputeCorrelation(id, offre.Titre, false);
+                                if (coef > seuil)
                                 {
-                                    if (dictionnaire.ContainsKey(offreF.Id))
+                                    if (!dictionnaire.ContainsKey(offre.Id))
                                     {
-                                       offreF.prio = offreF.prio + 1;
-                                    }
-                                    else
-                                    {
-                                        dictionnaire.Add(offreF.Id, offreF);
+                                        dictionnaire.Add(offre.Id, offre);
+                                        offre.prio = coef;
                                     }
                                 }
-                              
                             }
-                            premiermot = false;
                         }
-                        return Ok(dictionnaire);
+                        //OffreFiltre = from offres in db.OffreSet
+                        //              where offres.Titre.Contains(id) | offres.Description.Contains(id)
+                        //              select offres;
                     }
-                    else
-                    {
-                        char s = 's';
-                        char x = 'x';
-                        if (s == id[id.Length - 1] | x == id[id.Length - 1])
-                        {
-                            id = id.Substring(0, id.Length - 1);
-                            OffreFiltre = from offres in db.OffreSet
-                                              where offres.Titre.Contains(id) | offres.Description.Contains(id)
-                                              select offres;
-                        }
-                        else
-                        {
-                           OffreFiltre = from offres in db.OffreSet
-                                              where offres.Titre.Contains(id) | offres.Description.Contains(id)
-                                              select offres;
-                        }
-
-                        return Ok(OffreFiltre);
-                    }
-
+                    return Ok(dictionnaire);
                 }
             }
             catch (Exception e)
