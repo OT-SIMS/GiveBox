@@ -1,15 +1,10 @@
 angular.module('starter.controllers.Menu', [
 ])
 
-.controller('MenuCtrl', function($scope, $http, $ionicModal, $cordovaCamera, $cordovaCapture, $cordovaGeolocation, $location){
+.controller('MenuCtrl', function($scope, $state, $http, $ionicModal, $cordovaCamera, $cordovaCapture, $cordovaGeolocation, $location){
 
-  /*console.log($location.url());
-  if($location.url()=='/app/home'){
-    $scope.searchButton=true;
-  }
-  else{
-    $scope.searchButton=false;
-  }*/
+  $scope.$state = $state;
+
   $scope.vm = {
     myValue: false,
     toggle: function() {
@@ -17,5 +12,19 @@ angular.module('starter.controllers.Menu', [
     }
   };
 
-  }
-);
+  $ionicModal.fromTemplateUrl('templates/profile.html', {
+    scope: $scope
+  }).then(function(modal) {
+    $scope.modal = modal;
+  });
+
+  $scope.openProfile = function(){
+    //$scope.modalData  = offer;
+    $scope.modal.show();
+  };
+
+  $scope.closeProfile = function() {
+    $scope.modal.hide();
+  };
+
+});
