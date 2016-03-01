@@ -1,5 +1,5 @@
 <ion-view hide-nav-bar="vm.myValue">
-  <ion-header-bar class="bar bar-header my-bar item-input-inset my-search-header" ng-show="vm.myValue">
+  <ion-header-bar class="bar bar-header bar-stable my-bar item-input-inset my-search-header" ng-show="vm.myValue">
     <label class="item-input-wrapper">
       <i class="icon ion-ios-search placeholder-icon"></i>
       <form class="width-max" novalidate ng-submit="keyWordsResearch(keyword)">
@@ -48,7 +48,7 @@
     <div class="fixed-outside">
       <div class="row">
         <div class="text-center">
-          <a class="button button-balanced center" id="giveYourStuffButton" href="#/app/createOffer">
+          <a class="button button-balanced center" id="giveYourStuffButton" menu-close href="#/app/createOffer">
             <p id="giveYourStuffContent">
               Give Your Stuff<i class="fa fa-camera-retro" id="giveYourStuffIcon"></i>
             </p>
