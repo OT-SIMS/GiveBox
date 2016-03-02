@@ -1,2 +1,7 @@
 Id,UtilisateurId,Titre,Descritption,Latitude,Longitude,CategorieId
-,1,Test,desc,1,1,25 
+,1,Test,desc,1,1,25
+,1,velo rouge,ceci est un velo rouge, 100,100,7
+,1,rouge a levres, ceci est un rouge a levres, 200,200,28
+,1,velo bleu, ceci est un velo bleu, 150,150,7
+,1,velos bleus, ceci sont DEUX velos bleus, 150,150,7
+,1, bleu blanc rouge, ceci est un test chiant, 150,150,10
