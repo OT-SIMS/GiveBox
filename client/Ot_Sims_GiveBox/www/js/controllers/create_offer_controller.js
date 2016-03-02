@@ -76,8 +76,17 @@ angular.module('starter.controllers.CreateOffer', [
 				console.log("Problème de réception de la requête.");
 				$scope.message = data;
 		});
+	};
+
+	initController = function(){
+		$scope.offer = {};
+		$scope.postcode = "00000";
+
+		//$scope.regexPostalCode = new RegExp("[0-9]*");
+		$scope.regexPostalCode = /[0-9]*/;
 	}
 
+	initController();
 	searchCategorie();
 
 	/*
@@ -87,11 +96,13 @@ angular.module('starter.controllers.CreateOffer', [
 		if(normal) {
 			document.getElementById("titleLabel").className = document.getElementById("titleLabel").className.replace( /(?:^|\s)toFill(?!\S)/g , '' );
 			document.getElementById("descriptionLabel").className = document.getElementById("descriptionLabel").className.replace( /(?:^|\s)toFill(?!\S)/g , '' );
-			document.getElementById("categorieLabel").className = document.getElementById("descriptionLabel").className.replace( /(?:^|\s)toFill(?!\S)/g , '' );
+			document.getElementById("categorieLabel").className = document.getElementById("categorieLabel").className.replace( /(?:^|\s)toFill(?!\S)/g , '' );
+			document.getElementById("picturesLabel").className = document.getElementById("picturesLabel").className.replace( /(?:^|\s)toFill(?!\S)/g , '' );
 		}else{
 			document.getElementById("titleLabel").className += " toFill";
 			document.getElementById("descriptionLabel").className += " toFill";
 			document.getElementById("categorieLabel").className += " toFill";
+			document.getElementById("picturesLabel").className += " toFill";
 		}
 
 	}
@@ -118,29 +129,36 @@ angular.module('starter.controllers.CreateOffer', [
 
 
 
-		if(offer == undefined){
+		/*
+		if($scope.offer == ''){
 			stateForm(false);
 			sendingOk = false;
 		}else {
-			stateForm(true);
-
-			if(offer.title == undefined || offer.title == ''){
-				document.getElementById("titleLabel").className += " toFill";
-				sendingOk = false;
-			}
-
-			if (offer.description == undefined || offer.description == '') {
-				document.getElementById("descriptionLabel").className += " toFill";
-				sendingOk = false;
-			}
-
-			if (offer.categorie == undefined) {
-				console.log("categorie pas bon");
-				document.getElementById("categorieLabel").className += " toFill";
-				sendingOk = false;
-			}
-
 		}
+		*/
+
+		stateForm(true);
+
+		if(offer.title == undefined || offer.title == ''){
+			document.getElementById("titleLabel").className += " toFill";
+			sendingOk = false;
+		}
+
+		if (offer.description == undefined || offer.description == '') {
+			document.getElementById("descriptionLabel").className += " toFill";
+			sendingOk = false;
+		}
+
+		if (offer.categorie == undefined) {
+			document.getElementById("categorieLabel").className += " toFill";
+			sendingOk = false;
+		}
+
+		if($scope.allImages.length == 0){
+			document.getElementById("picturesLabel").className += " toFill";
+			sendingOk = false;
+		}
+
 
 		if(!sendingOk){
 			$scope.showAlert('Offre incomplète !', 'Il manque des informations dans votre offre.');
@@ -152,11 +170,13 @@ angular.module('starter.controllers.CreateOffer', [
 
 		var newOffer = {
 			"UtilisateurId": 1,
-			"CategorieId":offer.categorie.Id,
-			"Titre": offer.title,
-			"Description": offer.description,
-			"Latitude": 1,
-			"Longitude": 1
+			"CategorieId":$scope.offer.categorie.Id,
+			"Titre": $scope.offer.title,
+			"Description": $scope.offer.description,
+			"Latitude": $scope.latitude,
+			"Longitude": $scope.longitude,
+			"CodePostal": $scope.postcode,
+			"Ville": $scope.town
 		};
 
 		var reqJson = {
@@ -308,9 +328,12 @@ $scope.recordAVideo = function() {
 				  'Heading: '           + position.coords.heading           + '\n' +
 				  'Speed: '             + position.coords.speed             + '\n' +
 				  'Timestamp: '         + position.timestamp                + '\n');
-			*/
+				*/
+
 			$scope.latitude = position.coords.latitude;
 			$scope.longitude = position.coords.longitude;
+
+			$scope.convertCoordinates();
 		};
 
 
@@ -323,30 +346,121 @@ $scope.recordAVideo = function() {
 		}
 
 		navigator.geolocation.getCurrentPosition(onSuccess, onError);
+
+
 	};
 
-	$scope.convertCoordinates = function() {
-		console.log("convertCoordinates");
-
+	$scope.findLocalityFromPostcode = function(postcode) {
+		//https://maps.googleapis.com/maps/api/geocode/json?components=postal_code:69100|country:France
 
 		var options = {
 			 method: 'GET',
-			 url: 'maps.googleapis.com'
+			 //url: 'http://nominatim.openstreetmap.org/reverse'
+			 url: 'https://maps.googleapis.com/maps/api/geocode/json'
+		};
+
+		var params = {};
+
+		params.components = 'postal_code:' + postcode + '|country:France';
+
+		options.params = params;
+
+		$http(options).then(function(dataServer){
+				$scope.cities = [];
+
+				var results = dataServer.data.results;
+				_.each(results, function(result){
+
+						var loc = _.property('postcode_localities')(result);
+						if(loc == undefined) {
+							var addressComponents = _.property('address_components')(result);
+
+							if(addressComponents != undefined){
+								_.each(addressComponents, function(element){
+									if(_.contains(element.types, "locality")){
+										$scope.town = element.long_name
+
+										$scope.cities.push($scope.town);
+									}
+								});
+							}
+
+						}else{
+							var localties = result.postcode_localities;
+							_.each(localties, function(city) {
+								$scope.cities.push(city);
+							})
+
+						}
+
+				});
+
+				/*
+				if(_.contains(result0),"postcode_localities"){
+					$scope.geolog = result0;
+					console.log("postcode_localities");
+					$scope.cities = result0.postcode_localities;
+				}else{
+					$scope.cities=[];
+					$scope.cities.push(result0.long_name);
+					console.log(result0.long_name);
+				}
+				*/
+
+		}, function(data){
+			console.log("Problème d'envoi de la requête.");
+			alert( "Problème d'envoi au serveur: " + JSON.stringify({data: data}));
+		});
+
+	};
+
+	$scope.convertCoordinates = function() {
+		//TODO : https://maps.googleapis.com/maps/api/geocode/json?latlng=45.781822,4.873107
+
+		var options = {
+			 method: 'GET',
+			 //url: 'http://nominatim.openstreetmap.org/reverse'
+			 url: 'https://maps.googleapis.com/maps/api/geocode/json'
 		}
 
 		var params = {};
 
 
-
-		var latParam = 'params.1d' + $scope.latitude + '=\"\"';
-		//var longParam = 'options.2d' + $scope.longitude + '=\"\"';
-		console.log(latParam);
-
-		eval(latParam);
-		//eval(longParam);
+		params.format = 'json';
+		params.latlng = $scope.latitude + ',' + $scope.longitude;
 
 		options.params = params;
-		console.log(options);
 
+
+		$http(options).then(function(dataServer){
+			//$scope.geolog = dataServer.data.results[0].address_components;
+
+
+			var address_components = dataServer.data.results[0].address_components;
+
+			_.each(address_components, function(element){
+				if(_.contains(element.types, "postal_code")){
+					console.log($scope.postcode);
+					$scope.postcode = element.long_name;
+					console.log($scope.postcode);
+				}
+				else if(_.contains(element.types, "locality")){
+					$scope.town = element.long_name
+					$scope.cities = [];
+					$scope.cities.push($scope.town);
+				}
+			});
+
+
+
+			//$scope.postcode = dataServer.data.address.postcode;
+			//$scope.town = dataServer.data.address.town;
+
+		}, function(data){
+			console.log("Problème d'envoi de la requête.");
+			alert( "Problème d'envoi au serveur: " + JSON.stringify({data: data}));
+		});
 	}
+
+
 });
