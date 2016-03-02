@@ -328,7 +328,7 @@ namespace Ot_Sims_Givebox.Controllers
             {
                 return BadRequest(ModelState);
             }
-
+             //création de l'utilisateur dans la vase authentification 
             var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
 
             IdentityResult result = await UserManager.CreateAsync(user, model.Password);
@@ -338,6 +338,7 @@ namespace Ot_Sims_Givebox.Controllers
                 return GetErrorResult(result);
             }
 
+           
             return Ok();
         }
 

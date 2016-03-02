@@ -27,6 +27,10 @@ with(FIRSTROW = 2, keepnulls, FIELDTERMINATOR = '','' , ROWTERMINATOR = ''\n'');
 
 bulk INSERT [dbo].UtilisateurSet
 from '''+@path+'\GitHub\GiveBox\sqlRequest\importUtilisateur.txt''
+with(FIRSTROW = 2, keepnulls, FIELDTERMINATOR = '','' , ROWTERMINATOR = ''\n'');
+
+bulk INSERT [dbo].OffreSet
+from '''+@path +'\GitHub\GiveBox\sqlRequest\importOffre.txt''
 with(FIRSTROW = 2, keepnulls, FIELDTERMINATOR = '','' , ROWTERMINATOR = ''\n'');'
 
 exec(@sql)

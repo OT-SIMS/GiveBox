@@ -8,10 +8,7 @@ serveur/Ot_Sims_Givebox/Ot_Sims_Givebox/Models/Model.edmx.sql
 serveur/Ot_Sims_Givebox/.vs/config/applicationhost.config
 serveur/Ot_Sims_Givebox/Ot_Sims_Givebox/App_Data
 serveur/Ot_Sims_Givebox/Ot_Sims_Givebox/Images
-
 serveur/WebApplication4/
-
-
 serveur/Ot_Sims_Givebox/Ot_Sims_Givebox_2/bin/**
 *.dll
 serveur/Ot_Sims_Givebox/Ot_Sims_Givebox_2/Web.Debug.config
