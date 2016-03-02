@@ -14,39 +14,64 @@
 						Catégorie
 					</div>
 					<select ng-model="offer.categorie" ng-options="categorie.name group by categorie.parent for categorie in categories">
+						<option value="">-- Choisir une catégorie --</option>
     			</select>
 				</label>
 			</div>
-			<div class="row">
-				<label class="item col createOfferLabel spaceTop">
-					<div>
-						{{latitude}}
-					</div>
-					<div>
-						{{longitude}}
-					</div>
-					<button class="button button-balanced" ng-click="updatePosition()">
-						GPS
-					</button>
-				</label>
 
-				<button class="button button-balanced" ng-click="convertCoordinates()">
-					Convert
-				</button>
-				
+			<div class="row">
+				<label class="item col createOfferLabel spaceTop" id="locLabel">
+
+					<div class="row">
+						<div class="col col-50 balanced offer-subtitle">
+							Ma position
+						</div>
+
+						<button class="col col-50 button button-balanced generalCreateOfferButton text-center" ng-click="updatePosition()">
+							Utiliser mon GPS
+						</button>
+					</div>
+
+
+					<label class="item item-input">
+				    <div class="input-label">
+				      Code Postal
+				    </div>
+						<!--
+						<input type="text" class="createOfferInput offer-textInput" ng-model="postcode" ng-change="findLocalityFromPostcode()" ng-pattern="regexPostalCode" placeholder="{{postcode}}"></input>
+					-->
+						<input id="postalCodeInput" type="text" class="createOfferInput offer-textInput" ng-model="offer.postcode" ng-change="findLocalityFromPostcode()"></input>
+
+					</label>
+
+
+					<label class="item item-input item-select">
+				    <div class="input-label">
+				      Ville
+				    </div>
+						<select ng-model="offer.town" ng-options="city for city in cities">
+							<option value="">-- Votre ville --</option>
+						</select>
+				  </label>
+
+
+
+
+					</label>
 			</div>
+
 			<div class="row">
 				<label class="item item-input col createOfferLabel spaceTop" id="titleLabel">
-					<input type="text" class="createOfferInput offer-textInput" ng-model="offer.title" placeholder="Titre de votre offre">
+					<input type="text" class="createOfferInput offer-textInput" ng-model="offer.title" placeholder="Titre de votre offre"></input>
 				</label>
 			</div>
 			<div class="row">
 				<label class="item item-input col createOfferLabel spaceTop" id="descriptionLabel">
-					<input type="text" class="createOfferInput offer-textInput"  ng-model="offer.description" placeholder="Description de votre offre">
+					<input type="text" class="createOfferInput offer-textInput"  ng-model="offer.description" placeholder="Description de votre offre"></input>
 				</label>
 			</div>
 			<div class="row">
-				<div class="item createOfferLabel col spaceTop">
+				<div class="item createOfferLabel col spaceTop" id="picturesLabel">
 					<div class="row">
 						<label class="col balanced offer-subtitle" >Vos photos</label>
 					</div>
@@ -99,14 +124,9 @@
 		</form>
 		</div>
 
-		<!--
-		<div class="row">
-			<button class="button button-balanced item-icon-right generalCreateOfferButton spaceTop" id="createOfferButton" ng-click="showSpinner()">
-				<i class="icon ion-android-add"></i>
-				Créer votre offre
-			</button>
+		<div>
+			{{geolog}}
 		</div>
-		-->
 
 	</div>
   </ion-content>
