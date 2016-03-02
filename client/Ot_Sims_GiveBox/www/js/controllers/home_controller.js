@@ -45,6 +45,21 @@ angular.module('starter.controllers.Home', [
 
   $scope.getAllOffers();
 
+  $ionicModal.fromTemplateUrl('templates/offer.html', {
+    scope: $scope
+  }).then(function(modal) {
+    $scope.modal = modal;
+  });
+
+  $scope.openOffer = function(offer){
+    $scope.modalData  = offer;
+    $scope.modal.show();
+  }
+
+  $scope.closeOffer = function() {
+    $scope.modal.hide();
+  };
+
 
   /*$scope.items = [
     {img: 'img/pokemon_tshirt.jpg'},

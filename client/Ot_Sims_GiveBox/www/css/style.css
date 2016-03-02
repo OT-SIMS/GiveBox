@@ -1,4 +1,4 @@
-/* Empty. Add your own CSS if you like */
+/* STYLE */
 
 /********/
 /* MENU */
@@ -10,20 +10,32 @@
 .green {
   color: #33CD5F !important;
 }
+.right {
+  text-align: right !important;
+}
 .my-bar{
   border-color: #33CD5F !important;
 }
 .my-width{
   width: 70% !important;
 }
+.my-background-green{
+  background-color: #33CD5F;
+}
+.my-background-white{
+  background-color: #FFFFFF;
+}
+.no-border{
+  border:none !important;
+}
+.white{
+  color: #FFFFFF;
+}
 /********/
 
 /********/
 /* HOME */
 /********/
-.my-margin{
-  padding-bottom: 20px !important;
-}
 .width-max{
   width:100%;
 }
@@ -88,7 +100,6 @@
   margin-top: 12px;
 }
 /********/
-
 
 /********/
 /* CREATE OFFER */
@@ -213,3 +224,44 @@ input[type=text]
     background-color: #33CD5F !important;
 }
 /********/
+
+/*********/
+/* Offer */
+/*********/
+#offerHeaderBar{
+  width: 100%;
+}
+#offerImg{
+  width: 100%;
+  max-height:280px;
+}
+.my-margin{
+  margin-right: 10px;
+}
+.my-grey{
+  color: #848484;
+}
+.my-card{
+  margin-bottom: 10px;
+}
+.my-margin-right{
+  margin-right: 5px;
+}
+.my-margin-left{
+  margin-left: 5px;
+}
+.my-icon-size{
+  font-size: 30px !important;
+}
+
+/***********/
+/* PROFILE */
+/***********/
+.my-button-active{
+  border-bottom: solid #33CD5F 3px !important;
+  font-weight: bold;
+}
+.no-product-yet{
+  padding-top: 100px;
+  text-align: center;
+}

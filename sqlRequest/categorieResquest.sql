@@ -1,3 +1,8 @@
+
+declare @path varchar(max)
+declare @sql varchar(max)
+set @path = 'C:\Users\Simon\Documents'
+
 DELETE FROM [dbo].FichierTypeSet
 DBCC CHECKIDENT ('dbo.FichierTypeSet',RESEED, 0);
 DELETE FROM [dbo].FichierSet
@@ -10,18 +15,21 @@ DELETE FROM [dbo].utilisateurSet
 DBCC CHECKIDENT ('dbo.utilisateurSet',RESEED, 0);
 
 
+
+set @sql = '
 bulk INSERT [dbo].CategorieSet
-from 'C:\Users\Simon\Documents\GitHub\GiveBox\sqlRequest\importCategorie.txt'
-with(FIRSTROW = 2, keepnulls, FIELDTERMINATOR = ',' , ROWTERMINATOR = '\n');
+from '''+@path +'\GitHub\GiveBox\sqlRequest\importCategorie.txt''
+with(FIRSTROW = 2, keepnulls, FIELDTERMINATOR = '','' , ROWTERMINATOR = ''\n'');
 
 bulk INSERT [dbo].fichierTypeSet
-from 'C:\Users\Simon\Documents\GitHub\GiveBox\sqlRequest\importFichierType.txt'
-with(FIRSTROW = 2, keepnulls, FIELDTERMINATOR = ',' , ROWTERMINATOR = '\n');
+from '''+@path+'\GitHub\GiveBox\sqlRequest\importFichierType.txt''
+with(FIRSTROW = 2, keepnulls, FIELDTERMINATOR = '','' , ROWTERMINATOR = ''\n'');
 
 bulk INSERT [dbo].UtilisateurSet
-from 'C:\Users\Simon\Documents\GitHub\GiveBox\sqlRequest\importUtilisateur.txt'
-with(FIRSTROW = 2, keepnulls, FIELDTERMINATOR = ',' , ROWTERMINATOR = '\n');
+from '''+@path+'\GitHub\GiveBox\sqlRequest\importUtilisateur.txt''
+with(FIRSTROW = 2, keepnulls, FIELDTERMINATOR = '','' , ROWTERMINATOR = ''\n'');'
 
-select * from [dbo].utilisateurSet;
+exec(@sql)
+select * from [dbo].CategorieSet;
  
  

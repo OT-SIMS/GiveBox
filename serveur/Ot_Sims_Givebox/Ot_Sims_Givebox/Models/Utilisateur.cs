@@ -16,5 +16,6 @@ namespace Ot_Sims_Givebox.Models
     {
         public int Id { get; set; }
         public string Nom { get; set; }
+        public string UserId { get; set; }
     }
 }

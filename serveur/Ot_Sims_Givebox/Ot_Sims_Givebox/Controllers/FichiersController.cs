@@ -31,7 +31,7 @@ namespace Ot_Sims_Givebox.Controllers
         // RECUPERATION DE L'IMAGE - POST
         public async Task<HttpResponseMessage> PostFichier(int id)
         {
-            string dataDirectory = "AppData/";
+            string dataDirectory = "Images/";
             if (!Request.Content.IsMimeMultipartContent())
             {
                 throw new HttpResponseException(HttpStatusCode.UnsupportedMediaType);
@@ -78,7 +78,9 @@ namespace Ot_Sims_Givebox.Controllers
             }
             catch (System.Exception e)
             {
-                return new HttpResponseMessage(HttpStatusCode.InternalServerError);
+                HttpResponseMessage err = new HttpResponseMessage(HttpStatusCode.InternalServerError);
+                err.Content = new StringContent(e.ToString());
+                return err;
             }
         }
     }

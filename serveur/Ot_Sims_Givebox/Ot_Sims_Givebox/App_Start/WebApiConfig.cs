@@ -1,7 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Web.Http;
+using Microsoft.Owin.Security.OAuth;
+using Newtonsoft.Json.Serialization;
+using System.Web.Http.Cors;
 
 namespace Ot_Sims_Givebox
 {
@@ -9,20 +13,25 @@ namespace Ot_Sims_Givebox
     {
         public static void Register(HttpConfiguration config)
         {
-            // Configuration et services API Web
-            config.EnableCors();
 
-            
+            // Configuration et services de l'API Web
+            config.EnableCors();
+      
+            // Configurer l'API Web pour utiliser uniquement l'authentification de jeton du porteur.
+            config.SuppressDefaultHostAuthentication();
+            config.Filters.Add(new HostAuthenticationFilter(OAuthDefaults.AuthenticationType));
+
             // Itinéraires de l'API Web
             config.MapHttpAttributeRoutes();
-            
+
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+
             config.Routes.MapHttpRoute(
-                name: "DefaultApi2",
+                name: "localisationApi",
                 routeTemplate: "api/{controller}/{lgt}/{latt}/{r}",
                 defaults: new { r = RouteParameter.Optional }
             );
