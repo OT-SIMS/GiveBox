@@ -80,7 +80,12 @@ angular.module('starter.controllers.CreateOffer', [
 
 	initController = function(){
 		$scope.offer = {};
-		$scope.postcode = "00000";
+		$scope.offer.title = '',
+		$scope.offer.description = '',
+		$scope.offer.postcode = "00000";
+		$scope.offer.latitude = '';
+		$scope.offer.longitude = '';
+		$scope.offer.town = '';
 
 		//$scope.regexPostalCode = new RegExp("[0-9]*");
 		$scope.regexPostalCode = /[0-9]*/;
@@ -98,11 +103,14 @@ angular.module('starter.controllers.CreateOffer', [
 			document.getElementById("descriptionLabel").className = document.getElementById("descriptionLabel").className.replace( /(?:^|\s)toFill(?!\S)/g , '' );
 			document.getElementById("categorieLabel").className = document.getElementById("categorieLabel").className.replace( /(?:^|\s)toFill(?!\S)/g , '' );
 			document.getElementById("picturesLabel").className = document.getElementById("picturesLabel").className.replace( /(?:^|\s)toFill(?!\S)/g , '' );
+			document.getElementById("locLabel").className = document.getElementById("locLabel").className.replace( /(?:^|\s)toFill(?!\S)/g , '' );
+
 		}else{
 			document.getElementById("titleLabel").className += " toFill";
 			document.getElementById("descriptionLabel").className += " toFill";
 			document.getElementById("categorieLabel").className += " toFill";
 			document.getElementById("picturesLabel").className += " toFill";
+			document.getElementById("locLabel").className += " toFill";
 		}
 
 	}
@@ -122,7 +130,7 @@ angular.module('starter.controllers.CreateOffer', [
 	};
 
 	// Create and send a request to create an offer
-  $scope.sendNewOfferRequest = function(offer) {
+  $scope.sendNewOfferRequest = function() {
 		var sendingOk = true;
 		var  nbSentPictures = 0;
 		var nbFailedSentPictures = 0;
@@ -139,17 +147,17 @@ angular.module('starter.controllers.CreateOffer', [
 
 		stateForm(true);
 
-		if(offer.title == undefined || offer.title == ''){
+		if($scope.offer.title == ''){
 			document.getElementById("titleLabel").className += " toFill";
 			sendingOk = false;
 		}
 
-		if (offer.description == undefined || offer.description == '') {
+		if ($scope.offer.description == '') {
 			document.getElementById("descriptionLabel").className += " toFill";
 			sendingOk = false;
 		}
 
-		if (offer.categorie == undefined) {
+		if ($scope.offer.categorie == undefined) {
 			document.getElementById("categorieLabel").className += " toFill";
 			sendingOk = false;
 		}
@@ -159,6 +167,12 @@ angular.module('starter.controllers.CreateOffer', [
 			sendingOk = false;
 		}
 
+		console.log("town : " + $scope.offer.town);
+		if($scope.offer.postcode == "00000" || $scope.offer.town == '' || $scope.offer.town == null){
+			document.getElementById("locLabel").className += " toFill";
+			sendingOk = false;
+
+		}
 
 		if(!sendingOk){
 			$scope.showAlert('Offre incomplète !', 'Il manque des informations dans votre offre.');
@@ -173,10 +187,10 @@ angular.module('starter.controllers.CreateOffer', [
 			"CategorieId":$scope.offer.categorie.Id,
 			"Titre": $scope.offer.title,
 			"Description": $scope.offer.description,
-			"Latitude": $scope.latitude,
-			"Longitude": $scope.longitude,
-			"CodePostal": $scope.postcode,
-			"Ville": $scope.town
+			"Latitude": $scope.offer.latitude,
+			"Longitude": $scope.offer.longitude,
+			"CodePostal": $scope.offer.postcode,
+			"Ville": $scope.offer.town
 		};
 
 		var reqJson = {
@@ -330,8 +344,8 @@ $scope.recordAVideo = function() {
 				  'Timestamp: '         + position.timestamp                + '\n');
 				*/
 
-			$scope.latitude = position.coords.latitude;
-			$scope.longitude = position.coords.longitude;
+			$scope.offer.latitude = position.coords.latitude;
+			$scope.offer.longitude = position.coords.longitude;
 
 			$scope.convertCoordinates();
 		};
@@ -350,7 +364,7 @@ $scope.recordAVideo = function() {
 
 	};
 
-	$scope.findLocalityFromPostcode = function(postcode) {
+	$scope.findLocalityFromPostcode = function() {
 		//https://maps.googleapis.com/maps/api/geocode/json?components=postal_code:69100|country:France
 
 		var options = {
@@ -361,7 +375,7 @@ $scope.recordAVideo = function() {
 
 		var params = {};
 
-		params.components = 'postal_code:' + postcode + '|country:France';
+		params.components = 'postal_code:' + $scope.offer.postcode + '|country:France';
 
 		options.params = params;
 
@@ -427,7 +441,7 @@ $scope.recordAVideo = function() {
 
 
 		params.format = 'json';
-		params.latlng = $scope.latitude + ',' + $scope.longitude;
+		params.latlng = $scope.offer.latitude + ',' + $scope.offer.longitude;
 
 		options.params = params;
 
@@ -440,9 +454,9 @@ $scope.recordAVideo = function() {
 
 			_.each(address_components, function(element){
 				if(_.contains(element.types, "postal_code")){
-					console.log($scope.postcode);
-					$scope.postcode = element.long_name;
-					console.log($scope.postcode);
+					console.log($scope.offer.postcode);
+					$scope.offer.postcode = element.long_name;
+					console.log($scope.offer.postcode);
 				}
 				else if(_.contains(element.types, "locality")){
 					$scope.town = element.long_name

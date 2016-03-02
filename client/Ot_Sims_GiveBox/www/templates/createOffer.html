@@ -14,24 +14,23 @@
 						Catégorie
 					</div>
 					<select ng-model="offer.categorie" ng-options="categorie.name group by categorie.parent for categorie in categories">
-<<<<<<< HEAD
 						<option value="">-- Choisir une catégorie --</option>
-=======
->>>>>>> 9b8ecf8c9f0d6da1d3add475fe88d39042df06cc
     			</select>
 				</label>
 			</div>
 
 			<div class="row">
-				<label class="item col createOfferLabel spaceTop">
+				<label class="item col createOfferLabel spaceTop" id="locLabel">
 
-					<div class="row balanced offer-subtitle">
-						Ma position
+					<div class="row">
+						<div class="col col-50 balanced offer-subtitle">
+							Ma position
+						</div>
+
+						<button class="col col-50 button button-balanced generalCreateOfferButton text-center" ng-click="updatePosition()">
+							Utiliser mon GPS
+						</button>
 					</div>
-
-					<button class="button button-balanced generalCreateOfferButton" ng-click="updatePosition()">
-						Utiliser mon GPS
-					</button>
 
 
 					<label class="item item-input">
@@ -41,7 +40,7 @@
 						<!--
 						<input type="text" class="createOfferInput offer-textInput" ng-model="postcode" ng-change="findLocalityFromPostcode()" ng-pattern="regexPostalCode" placeholder="{{postcode}}"></input>
 					-->
-						<input id="postalCodeInput" type="text" class="createOfferInput offer-textInput" ng-model="postcode" ng-change="findLocalityFromPostcode(postcode)" value="postcode"></input>
+						<input id="postalCodeInput" type="text" class="createOfferInput offer-textInput" ng-model="offer.postcode" ng-change="findLocalityFromPostcode()"></input>
 
 					</label>
 
@@ -50,7 +49,7 @@
 				    <div class="input-label">
 				      Ville
 				    </div>
-						<select ng-model="town" ng-options="city for city in cities">
+						<select ng-model="offer.town" ng-options="city for city in cities">
 							<option value="">-- Votre ville --</option>
 						</select>
 				  </label>
