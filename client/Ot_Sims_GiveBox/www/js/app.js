@@ -12,6 +12,7 @@ angular.module('starter', [
   'starter.controllers.CreateOffer',
   'starter.controllers.Menu',
   'starter.controllers.Offer',
+  'starter.controllers.Profile',
   'underscore'
 ])
 

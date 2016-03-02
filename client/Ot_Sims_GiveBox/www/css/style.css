@@ -261,3 +261,7 @@ input[type=text]
   border-bottom: solid #33CD5F 3px !important;
   font-weight: bold;
 }
+.no-product-yet{
+  padding-top: 100px;
+  text-align: center;
+}
