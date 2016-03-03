@@ -1,5 +1,4 @@
-angular.module('starter.controllers.Home', [
-])
+angular.module('starter.controllers.Home', [])
 
 .controller('HomeCtrl', function($scope, $http, $ionicModal, $cordovaCamera, $cordovaCapture, $cordovaGeolocation){
   $scope.getAllOffers = function(){
