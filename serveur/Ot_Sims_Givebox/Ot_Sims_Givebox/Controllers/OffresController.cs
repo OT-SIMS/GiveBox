@@ -87,7 +87,9 @@ namespace Ot_Sims_Givebox.Controllers
                         }
                         premiermot = false;
                     }
-                    return Ok(dictionnaire.ToList());
+                    var ret = new List<Offre>();
+                    ret.AddRange(dictionnaire.Values);
+                    return Ok(ret);
                 }
                 if (request != null)
                 {
