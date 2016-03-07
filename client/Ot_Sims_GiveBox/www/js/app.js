@@ -34,6 +34,10 @@ angular.module('starter', [
   $ionicPlatform.ready(function(){
     console.log(navigator.device.capture);
   });
+
+  $ionicPlatform.ready(function() {
+    $cordovaGeolocation.getCurrentPosition().then(success, error);
+  });
 })
 
 .config(function($stateProvider, $urlRouterProvider, $compileProvider) {
