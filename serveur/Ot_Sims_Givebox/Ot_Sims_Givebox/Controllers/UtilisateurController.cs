@@ -23,7 +23,8 @@ namespace Ot_Sims_Givebox.Controllers
         }
         private ModelContainer db = new ModelContainer();
 
-        public IHttpActionResult getUtilisateur()
+        [Route("Offres")]
+        public IHttpActionResult getOffre()
         {
             var utilisateur = UserHelper.getUser(User, db);
             if (utilisateur == null)
@@ -32,30 +33,47 @@ namespace Ot_Sims_Givebox.Controllers
             }
             else
             {
-                return Ok(utilisateur);
+                IQueryable<Offre> request = null;
+                request = from offres in db.OffreSet where offres.UtilisateurId.Equals(utilisateur.UserId) select offres; // sélectionne toutes les offres de l'user
+                return Ok(request);
             }
-        }
+        }   
 
-        public IHttpActionResult postUtilisateur([FromBody] UserInfo userInfo)
+
+
+    public IHttpActionResult getUtilisateur()
+    {
+        var utilisateur = UserHelper.getUser(User, db);
+        if (utilisateur == null)
         {
-            try
-            {
-
-                Utilisateur utilisateur = UserHelper.getUser(User, db);
-                if (utilisateur == null)
-                {
-                    utilisateur = new Utilisateur() { UserId = User.Identity.GetUserId() };
-                    db.UtilisateurSet.Add(utilisateur);
-                }
-                userInfo.assign(utilisateur);
-                db.SaveChanges();
-                return Ok(utilisateur);
-            }
-            catch (Exception e)
-            {
-                return InternalServerError(e);
-            }
-
+            return NotFound();
+        }
+        else
+        {
+            return Ok(utilisateur);
         }
     }
+
+    public IHttpActionResult postUtilisateur([FromBody] UserInfo userInfo)
+    {
+        try
+        {
+
+            Utilisateur utilisateur = UserHelper.getUser(User, db);
+            if (utilisateur == null)
+            {
+                utilisateur = new Utilisateur() { UserId = User.Identity.GetUserId() };
+                db.UtilisateurSet.Add(utilisateur);
+            }
+            userInfo.assign(utilisateur);
+            db.SaveChanges();
+            return Ok(utilisateur);
+        }
+        catch (Exception e)
+        {
+            return InternalServerError(e);
+        }
+
+    }
+}
 }
