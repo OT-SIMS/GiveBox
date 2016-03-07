@@ -166,7 +166,6 @@ angular.module('starter.controllers.CreateOffer', [])
 			sendingOk = false;
 		}
 
-		console.log("town : " + $scope.offer.town);
 		if($scope.offer.postcode == "00000" || $scope.offer.town == '' || $scope.offer.town == null){
 			document.getElementById("locLabel").className += " toFill";
 			sendingOk = false;
@@ -354,8 +353,8 @@ $scope.recordAVideo = function() {
 		// onError Callback receives a PositionError object
 		//
 		function onError(error) {
-			alert('code: '    + error.code    + '\n' +
-				  'message: ' + error.message + '\n');
+			console.log("error");
+			alert('code: '    + error.code    + '\n' + 'message: ' + error.message + '\n');
 		}
 
 		navigator.geolocation.getCurrentPosition(onSuccess, onError);

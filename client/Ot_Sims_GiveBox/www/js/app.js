@@ -22,6 +22,22 @@ angular.module('starter', [
   'starter.services.AuthInterceptor'
 ])
 
+.run(function($ionicPlatform) {
+  $ionicPlatform.ready(function(){
+    console.log(navigator.device.capture);
+  });
+
+  $ionicPlatform.ready(function() {
+    $cordovaGeolocation.getCurrentPosition().then(success, error);
+  });
+})
+
+
+.run(['authService', function (authService) {
+    authService.fillAuthData();
+}])
+
+
 .config(function ($httpProvider) {
     $httpProvider.interceptors.push('authInterceptorService');
 })
@@ -29,10 +45,6 @@ angular.module('starter', [
 .constant('CONFIG', {
     serverUrl: "http://localhost/givebox/"
 })
-
-.run(['authService', function (authService) {
-    authService.fillAuthData();
-}])
 
 .config(function($stateProvider, $urlRouterProvider, $compileProvider) {
   $compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|file|blob|content):|data:image\//);
