@@ -11,11 +11,9 @@ angular.module('starter.controllers.Menu', [])
     }
   };
 
-    $ionicModal.fromTemplateUrl('templates/login.html', {
-      scope: $scope
-    }).then(function(modal) {
-      $scope.modal = modal;
-    });
+
+
+
     /*
     $ionicModal.fromTemplateUrl('templates/profile.html', {
       scope: $scope
@@ -24,6 +22,16 @@ angular.module('starter.controllers.Menu', [])
     });
     */
 
+    $scope.setDefaultLoginTemplate = function() {
+      $ionicModal.fromTemplateUrl('templates/login.html', {
+        scope: $scope
+      }).then(function(modal) {
+        $scope.modal = modal;
+      });
+    }
+
+    $scope.setDefaultLoginTemplate();
+
   $scope.openProfile = function(){
     //$scope.modalData  = offer;
     $scope.modal.show();
@@ -31,6 +39,18 @@ angular.module('starter.controllers.Menu', [])
 
   $scope.closeProfile = function() {
     $scope.modal.hide();
+    $scope.setDefaultLoginTemplate();
+  };
+
+  $scope.createProfile = function() {
+    $scope.modal.hide();
+
+    $ionicModal.fromTemplateUrl('templates/createProfile.html', {
+      scope: $scope
+    }).then(function(modal) {
+      $scope.modal = modal;
+      $scope.modal.show();
+    });
   };
 
 });

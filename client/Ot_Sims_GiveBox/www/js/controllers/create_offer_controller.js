@@ -368,7 +368,7 @@ $scope.recordAVideo = function() {
 		var options = {
 			 method: 'GET',
 			 //url: 'http://nominatim.openstreetmap.org/reverse'
-			 url: 'https://maps.googleapis.com/maps/api/geocode/json'
+			 url: CONFIG.googleapis + 'geocode/json'
 		};
 
 		var params = {};

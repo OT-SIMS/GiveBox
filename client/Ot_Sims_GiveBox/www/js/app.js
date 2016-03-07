@@ -4,6 +4,8 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
+
+
 angular.module('starter', [
   'ionic',
   'ngCordova',
@@ -17,6 +19,7 @@ angular.module('starter', [
   'starter.controllers.Menu',
   'starter.controllers.Offer',
   'starter.controllers.Profile',
+  'starter.controllers.CreateProfile',
   'starter.services.Auth',
 
   'starter.services.AuthInterceptor'
@@ -38,14 +41,14 @@ angular.module('starter', [
 }])
 
 
-
 .config(function ($httpProvider) {
     $httpProvider.interceptors.push('authInterceptorService');
 })
 
 .constant('CONFIG', {
     //serverUrl: "http://localhost/givebox/"
-    serverUrl: "http://yoda.rispal.info/givebox/"
+    serverUrl: "http://yoda.rispal.info/givebox/",
+    googleapis: "https://maps.googleapis.com/maps/api/"
 })
 
 .config(function($stateProvider, $urlRouterProvider, $compileProvider) {
