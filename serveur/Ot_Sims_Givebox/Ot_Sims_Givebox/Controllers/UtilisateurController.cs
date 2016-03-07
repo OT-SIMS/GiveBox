@@ -11,6 +11,7 @@ using Ot_Sims_Givebox.helper;
 namespace Ot_Sims_Givebox.Controllers
 {
     [Authorize]
+    [RoutePrefix("api/utilisateur")]
     public class UtilisateurController : ApiController
     {
         public struct UserInfo
@@ -34,7 +35,7 @@ namespace Ot_Sims_Givebox.Controllers
             else
             {
                 IQueryable<Offre> request = null;
-                request = from offres in db.OffreSet where offres.UtilisateurId.Equals(utilisateur.UserId) select offres; // sélectionne toutes les offres de l'user
+                request = from offres in db.OffreSet where offres.UtilisateurId.Equals(utilisateur.Id) select offres; // sélectionne toutes les offres de l'user
                 return Ok(request);
             }
         }   
