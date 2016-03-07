@@ -1,5 +1,4 @@
-angular.module('starter.controllers.CreateOffer', [
-])
+angular.module('starter.controllers.CreateOffer', [])
 
 .controller('CreateOfferCtrl', function($scope, $http, $ionicModal, $cordovaCamera, $cordovaCapture, $cordovaGeolocation, $ionicLoading, $ionicPopup, $location) {
 

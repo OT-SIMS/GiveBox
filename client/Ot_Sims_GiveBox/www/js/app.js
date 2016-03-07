@@ -6,31 +6,23 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', [
   'ionic',
-  'starter.controllers',
   'ngCordova',
-  'starter.controllers.Home',
+  'underscore',
+  'LocalStorageModule',
+
   'starter.controllers.CreateOffer',
+  'starter.controllers.Home',
+  'starter.controllers.Login',
+  'starter.controllers.Main',
   'starter.controllers.Menu',
   'starter.controllers.Offer',
   'starter.controllers.Profile',
-  'underscore'
+  'starter.services.Auth',
+
+  'starter.services.AuthInterceptor'
 ])
 
 .run(function($ionicPlatform) {
-  $ionicPlatform.ready(function() {
-    // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
-    // for form inputs)
-    if (window.cordova && window.cordova.plugins.Keyboard) {
-      cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-      cordova.plugins.Keyboard.disableScroll(true);
-
-    }
-    if (window.StatusBar) {
-      // org.apache.cordova.statusbar required
-      StatusBar.styleDefault();
-    }
-  });
-
   $ionicPlatform.ready(function(){
     console.log(navigator.device.capture);
   });
@@ -38,6 +30,20 @@ angular.module('starter', [
   $ionicPlatform.ready(function() {
     $cordovaGeolocation.getCurrentPosition().then(success, error);
   });
+})
+
+
+.run(['authService', function (authService) {
+    authService.fillAuthData();
+}])
+
+
+.config(function ($httpProvider) {
+    $httpProvider.interceptors.push('authInterceptorService');
+})
+
+.constant('CONFIG', {
+    serverUrl: "http://localhost/givebox/"
 })
 
 .config(function($stateProvider, $urlRouterProvider, $compileProvider) {
@@ -49,8 +55,7 @@ angular.module('starter', [
     url: '/app',
     abstract: true,
     templateUrl: 'templates/menu.html',
-    controller: 'MenuCtrl'/*,
-    controller: 'AppCtrl'*/
+    controller: 'MenuCtrl',
   })
 
   .state('app.home', {
