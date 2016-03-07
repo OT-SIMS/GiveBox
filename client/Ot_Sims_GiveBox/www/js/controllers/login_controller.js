@@ -5,7 +5,6 @@ angular.module('starter.controllers.Login', [])
   $scope.loginData = {};
 
   $scope.doLogin = function() {
-
     authService.login($scope.loginData).then(function (response) {
       $ionicModal.fromTemplateUrl('templates/profile.html', {
         scope: $scope

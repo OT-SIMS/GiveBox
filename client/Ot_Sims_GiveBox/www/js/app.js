@@ -38,12 +38,14 @@ angular.module('starter', [
 }])
 
 
+
 .config(function ($httpProvider) {
     $httpProvider.interceptors.push('authInterceptorService');
 })
 
 .constant('CONFIG', {
-    serverUrl: "http://localhost/givebox/"
+    //serverUrl: "http://localhost/givebox/"
+    serverUrl: "http://yoda.rispal.info/givebox/"
 })
 
 .config(function($stateProvider, $urlRouterProvider, $compileProvider) {

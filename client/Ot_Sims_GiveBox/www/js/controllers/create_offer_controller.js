@@ -1,6 +1,6 @@
 angular.module('starter.controllers.CreateOffer', [])
 
-.controller('CreateOfferCtrl', function($scope, $http, $ionicModal, $cordovaCamera, $cordovaCapture, $cordovaGeolocation, $ionicLoading, $ionicPopup, $location) {
+.controller('CreateOfferCtrl', function($scope, $http, $ionicModal, $cordovaCamera, $cordovaCapture, $cordovaGeolocation, $ionicLoading, $ionicPopup, $location, CONFIG) {
 
 	$scope.allImages = [
 	];
@@ -55,7 +55,7 @@ angular.module('starter.controllers.CreateOffer', [])
 	searchCategorie = function(){
 		var req = {
 			 method: 'GET',
-			 url: 'http://yoda.rispal.info/givebox/api/categories'
+			 url: CONFIG.serverUrl + 'api/categories'
 		}
 
 		$http(req).then(function(dataServer){
@@ -193,7 +193,7 @@ angular.module('starter.controllers.CreateOffer', [])
 
 		var reqJson = {
 			 method: 'POST',
-			 url: 'http://yoda.rispal.info/givebox/api/offres',
+			 url: CONFIG.serverUrl + 'api/offres',
 			 headers: {
 			   'content-type': 'application/json',
 			   'accept': 'application/json'
@@ -265,7 +265,7 @@ angular.module('starter.controllers.CreateOffer', [])
 						    } else {
 						    }
 						};
-						ft.upload($scope.allImages[i].src, encodeURI("http://yoda.rispal.info/givebox/api/fichiers/" + dataServer.data.Id), win, fail, options);
+						ft.upload($scope.allImages[i].src, encodeURI(CONFIG.serverUrl + "api/fichiers/" + dataServer.data.Id), win, fail, options);
 				}
 		}, function(data){
 			console.log("Problème d'envoi de la requête.");
