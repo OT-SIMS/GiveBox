@@ -9,6 +9,7 @@ using System.Web.Http;
 
 namespace Ot_Sims_Givebox.Controllers
 {
+    [AllowAnonymous]
     public class CategoriesController : ApiController
     {
         private ModelContainer db = new ModelContainer();
@@ -17,6 +18,12 @@ namespace Ot_Sims_Givebox.Controllers
         public IQueryable<Categorie> GetCategorieSet()
         {
             return db.CategorieSet;
+        }
+
+        //option handler
+        public HttpResponseMessage Options()
+        {
+            return new HttpResponseMessage { StatusCode = HttpStatusCode.OK };
         }
     }
 }

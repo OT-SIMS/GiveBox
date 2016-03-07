@@ -335,9 +335,11 @@ namespace Ot_Sims_Givebox.Controllers
 
             if (!result.Succeeded)
             {
+                
                 return GetErrorResult(result);
             }
-
+            var usr = UserManager.FindByName(model.Email);
+            UserManager.AddToRoles(usr.Id, new string[] { "User" });
            
             return Ok();
         }

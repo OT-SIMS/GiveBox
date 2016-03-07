@@ -1,4 +1,5 @@
-﻿using Ot_Sims_Givebox.Models;
+﻿using Ot_Sims_Givebox.helper;
+using Ot_Sims_Givebox.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -12,9 +13,11 @@ using System.Web.Http;
 
 namespace Ot_Sims_Givebox.Controllers
 {
+    [Authorize]
     public class FichiersController : ApiController
     {
         private ModelContainer db = new ModelContainer();
+        [AllowAnonymous]
         public async Task<HttpResponseMessage> GetFichier(int id)
         {
             Fichier fichier = await db.FichierSet.FindAsync(id);
@@ -31,6 +34,12 @@ namespace Ot_Sims_Givebox.Controllers
         // RECUPERATION DE L'IMAGE - POST
         public async Task<HttpResponseMessage> PostFichier(int id)
         {
+            //vérifie que l'utilisteur soit le créateur de l'offre
+            Offre o = await db.OffreSet.FindAsync(id);
+            if (o.UtilisateurId != UserHelper.getUser(User, db).Id)
+            {
+                return new HttpResponseMessage(HttpStatusCode.Unauthorized);
+            }
             string dataDirectory = "Images/";
             if (!Request.Content.IsMimeMultipartContent())
             {
@@ -82,6 +91,13 @@ namespace Ot_Sims_Givebox.Controllers
                 err.Content = new StringContent(e.ToString());
                 return err;
             }
+        }
+
+        //option handler
+        [AllowAnonymous]
+        public HttpResponseMessage Options()
+        {
+            return new HttpResponseMessage { StatusCode = HttpStatusCode.OK };
         }
     }
 }

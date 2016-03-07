@@ -13,6 +13,7 @@ using System.Web.Http.Description;
 using Ot_Sims_Givebox.Models;
 using System.Web;
 using Ot_Sims_Givebox.helper;
+using Microsoft.AspNet.Identity;
 
 namespace Ot_Sims_Givebox.Controllers
 {
@@ -21,11 +22,7 @@ namespace Ot_Sims_Givebox.Controllers
     {
         private ModelContainer db = new ModelContainer();
 
-        //// GET: api/Offres
-        //public IQueryable<Offre> GetOffreSet()
-        //{
-        //    return db.OffreSet;
-        //}
+      
 
         //GET LOCALISATION : api/Offres?motcles=""&categorie=""&lgt=""&latt=""
         [AllowAnonymous]
@@ -126,16 +123,21 @@ namespace Ot_Sims_Givebox.Controllers
 
         // PUT: api/Offres/5
         [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutOffre(int id, Offre offre)
+        public async Task<IHttpActionResult> PutOffre(int id, [FromBody] Offre offre)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-
-            if (id != offre.Id)
+            if (id != offre.Id )
             {
                 return BadRequest();
+            }
+
+            Offre offreOrigin = await db.OffreSet.FindAsync(id);
+            if (offreOrigin.Utilisateur.UserId != User.Identity.GetUserId())
+            {
+                return Unauthorized();
             }
 
             db.Entry(offre).State = EntityState.Modified;
@@ -169,10 +171,12 @@ namespace Ot_Sims_Givebox.Controllers
                 {
                     return BadRequest(ModelState);
                 }
-
+                Utilisateur u = UserHelper.getUser(User, db);
+                
+                offre.UtilisateurId = u.Id;
                 db.OffreSet.Add(offre);
                 await db.SaveChangesAsync();
-                //Offre offre2 = await db.OffreSet.FindAsync(offre.Id);
+                
                 return CreatedAtRoute("DefaultApi", new { id = offre.Id }, offre);
             }
             catch (Exception e)
@@ -212,6 +216,7 @@ namespace Ot_Sims_Givebox.Controllers
             return db.OffreSet.Count(e => e.Id == id) > 0;
         }
 
+         [AllowAnonymous]
         //option handler
         public HttpResponseMessage Options()
         {

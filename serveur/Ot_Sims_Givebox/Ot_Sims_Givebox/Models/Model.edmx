@@ -48,9 +48,11 @@
     <Property Name="UtilisateurId" Type="int" Nullable="false" />
     <Property Name="Titre" Type="nvarchar(max)" Nullable="false" />
     <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="Latitude" Type="float" Nullable="false" />
-    <Property Name="Longitude" Type="float" Nullable="false" />
+    <Property Name="Latitude" Type="float" Nullable="true" />
+    <Property Name="Longitude" Type="float" Nullable="true" />
     <Property Name="CategorieId" Type="int" Nullable="false" />
+    <Property Name="CodePostale" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Ville" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
   <EntityType Name="CategorieSet">
     <Key>
@@ -188,10 +190,12 @@
           <NavigationProperty Name="Fichier" Relationship="Model.OffreFichier" FromRole="Offre" ToRole="Fichier" />
           <Property Name="Titre" Type="String" Nullable="false" />
           <Property Name="Description" Type="String" Nullable="false" />
-          <Property Name="Latitude" Type="Double" Nullable="false" />
-          <Property Name="Longitude" Type="Double" Nullable="false" />
+          <Property Name="Latitude" Type="Double" Nullable="true" />
+          <Property Name="Longitude" Type="Double" Nullable="true" />
           <NavigationProperty Name="Categorie" Relationship="Model.CategorieOffre" FromRole="Offre" ToRole="Categorie" />
           <Property Name="CategorieId" Type="Int32" Nullable="false" />
+          <Property Name="CodePostale" Type="String" Nullable="false" />
+          <Property Name="Ville" Type="String" Nullable="false" />
         </EntityType>
         <Association Name="UtilisateurOffre">
           <End Type="Model.Utilisateur" Role="Utilisateur" Multiplicity="1" />
@@ -306,6 +310,8 @@
           <ScalarProperty Name="Latitude" ColumnName="Latitude" />
           <ScalarProperty Name="Longitude" ColumnName="Longitude" />
           <ScalarProperty Name="CategorieId" ColumnName="CategorieId" />
+          <ScalarProperty Name="CodePostale" ColumnName="CodePostale" />
+          <ScalarProperty Name="Ville" ColumnName="Ville" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
