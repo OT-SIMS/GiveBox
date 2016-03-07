@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Http;
 using Microsoft.AspNet.Identity;
 using System.Threading.Tasks;
+using Ot_Sims_Givebox.helper;
 
 namespace Ot_Sims_Givebox.Controllers
 {
@@ -24,15 +25,14 @@ namespace Ot_Sims_Givebox.Controllers
 
         public IHttpActionResult getUtilisateur()
         {
-            string userId = User.Identity.GetUserId();
-            var utilisateurs = db.UtilisateurSet.Where(u => u.UserId.Equals(userId));
-            if (utilisateurs.Any())
+            var utilisateur = UserHelper.getUser(User, db);
+            if (utilisateur == null)
             {
-                return Ok(utilisateurs.First());
+                return NotFound();
             }
             else
             {
-                return NotFound();
+                return Ok(utilisateur);
             }
         }
 
@@ -40,23 +40,16 @@ namespace Ot_Sims_Givebox.Controllers
         {
             try
             {
-                string userId = User.Identity.GetUserId();
-                var utilisateurs = db.UtilisateurSet.Where(u => u.UserId.Equals(userId));
-                Utilisateur utilisateur = null;
-                if (!utilisateurs.Any())
+
+                Utilisateur utilisateur = UserHelper.getUser(User, db);
+                if (utilisateur == null)
                 {
-                    utilisateur = new Utilisateur() { UserId = userId };
+                    utilisateur = new Utilisateur() { UserId = User.Identity.GetUserId() };
                     db.UtilisateurSet.Add(utilisateur);
                 }
-                else
-                {
-                    utilisateur = utilisateurs.First();
-                }
                 userInfo.assign(utilisateur);
-
-
                 db.SaveChanges();
-                return Ok();
+                return Ok(utilisateur);
             }
             catch (Exception e)
             {

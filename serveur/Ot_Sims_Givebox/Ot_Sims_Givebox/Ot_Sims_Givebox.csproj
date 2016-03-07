@@ -258,6 +258,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="helper\AuthorizationHelper.cs" />
+    <Compile Include="helper\UserHelper.cs" />
     <Compile Include="Migrations\201603011454053_Initial.cs" />
     <Compile Include="Migrations\201603011454053_Initial.Designer.cs">
       <DependentUpon>201603011454053_Initial.cs</DependentUpon>

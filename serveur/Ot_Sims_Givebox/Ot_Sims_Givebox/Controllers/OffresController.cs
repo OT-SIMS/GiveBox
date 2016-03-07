@@ -16,6 +16,7 @@ using Ot_Sims_Givebox.helper;
 
 namespace Ot_Sims_Givebox.Controllers
 {
+    [Authorize]
     public class OffresController : ApiController
     {
         private ModelContainer db = new ModelContainer();
@@ -27,6 +28,7 @@ namespace Ot_Sims_Givebox.Controllers
         //}
 
         //GET LOCALISATION : api/Offres?motcles=""&categorie=""&lgt=""&latt=""
+        [AllowAnonymous]
         [ResponseType(typeof(Offre))]
         public IHttpActionResult GetOffre(string motcles=null, string categorie=null, double lgt = 5000, double latt = 5000, double r = 1)
         {
@@ -103,6 +105,8 @@ namespace Ot_Sims_Givebox.Controllers
         }
 
         // GET: api/Offres/5
+        [AllowAnonymous]
+
         [ResponseType(typeof(Offre))]
         public async Task<IHttpActionResult> GetOffre(int id)
         {
