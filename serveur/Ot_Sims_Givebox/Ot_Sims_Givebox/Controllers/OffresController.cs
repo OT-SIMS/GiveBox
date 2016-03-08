@@ -141,6 +141,8 @@ namespace Ot_Sims_Givebox.Controllers
             }
 
             offreOrigin = offre;
+            db.Entry(offreOrigin).State = EntityState.Modified;
+
 
             try
             {

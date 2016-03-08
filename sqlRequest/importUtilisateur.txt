@@ -1,3 +1,3 @@
-Id,Nom,UserId
-,Simon,superUser
-,Robert,normalUser
+Id,Nom,UserId,Prenom,DateNaissance,Telephone
+,Simon,superUser,Rispal,23/02/1994,0450256987
+,Robert,normalUser,Rispal,23/02/1994,0450256987
