@@ -3,6 +3,8 @@ angular.module('starter.controllers.Menu', [])
 .controller('MenuCtrl', function($scope, $state, $http, $ionicModal, $cordovaCamera, $cordovaCapture, $cordovaGeolocation, $location, authService){
 
   $scope.$state = $state;
+  $scope.userConnected = {};
+  $scope.userConnected.userName = 'Invité';
 
   $scope.vm = {
     myValue: false,

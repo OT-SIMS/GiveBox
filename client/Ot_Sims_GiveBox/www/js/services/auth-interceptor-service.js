@@ -5,6 +5,11 @@ angular.module('starter.services.AuthInterceptor', [])
     var authInterceptorServiceFactory = {};
     var _request = function (config) {
         if(config.url.search(CONFIG.googleapis) == 0){
+          //Do not change the request when reaching googleapi
+          return config;
+        }
+        if(config.url.search('token')!=-1){
+          //Do not change the request in case of login
           return config;
         }
 

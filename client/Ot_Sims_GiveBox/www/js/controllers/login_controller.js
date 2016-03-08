@@ -1,17 +1,37 @@
 angular.module('starter.controllers.Login', [])
 
-.controller('LoginCtrl', function($scope, $ionicModal, authService, $ionicPopup) {
+.controller('LoginCtrl', function($scope, $ionicModal, authService, $ionicPopup, $http, CONFIG) {
 
   $scope.loginData = {};
 
+  $scope.getMoreUserInfos = function() {
+    console.log('getMoreUserInfos');
+    var req = {
+			 method: 'GET',
+			 url: CONFIG.serverUrl + 'api/Utilisateur',
+		}
+
+    $http(req).then(function(response){
+      if(response.status == '204'){
+        console.log('complete infos needed');
+      }
+      else {
+        console.log('infos ok');
+      }
+    }, function(response){
+			console.log("Problème d'envoi de la requête.");
+			alert( "Problème d'envoi au serveur: " + JSON.stringify({response: response}));
+		});
+  }
+
   $scope.doLogin = function() {
     authService.login($scope.loginData).then(function (response) {
-      $ionicModal.fromTemplateUrl('templates/profile.html', {
-        scope: $scope
-      }).then(function(modal) {
-        $scope.modal = modal;
-      });
-      $scope.openProfile();
+      $scope.closeProfile();
+
+      //Once we get the user email, we need to get more informations from him or from the server
+      $scope.getMoreUserInfos();
+
+      //$scope.userConnected.userName = response.userName;
     },
     function (err) {
       //$scope.message = err.error_description;
@@ -19,8 +39,8 @@ angular.module('starter.controllers.Login', [])
         title: 'Login failed!',
         template: 'We do not know why!'
       });
+      return;
     });
-
   };
 
 });
