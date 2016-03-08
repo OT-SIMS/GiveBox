@@ -30,7 +30,7 @@ namespace Ot_Sims_Givebox.Controllers
             var utilisateur = UserHelper.getUser(User, db);
             if (utilisateur == null)
             {
-                return NotFound();
+                return nocon();
             }
             else
             {
@@ -38,43 +38,50 @@ namespace Ot_Sims_Givebox.Controllers
                 request = from offres in db.OffreSet where offres.UtilisateurId.Equals(utilisateur.Id) select offres; // sélectionne toutes les offres de l'user
                 return Ok(request);
             }
-        }   
-
-
-
-    public IHttpActionResult getUtilisateur()
-    {
-        var utilisateur = UserHelper.getUser(User, db);
-        if (utilisateur == null)
-        {
-            return NotFound();
         }
-        else
-        {
-            return Ok(utilisateur);
-        }
-    }
 
-    public IHttpActionResult postUtilisateur([FromBody] UserInfo userInfo)
-    {
-        try
-        {
 
-            Utilisateur utilisateur = UserHelper.getUser(User, db);
+
+        public IHttpActionResult getUtilisateur()
+        {
+            var utilisateur = UserHelper.getUser(User, db);
             if (utilisateur == null)
             {
-                utilisateur = new Utilisateur() { UserId = User.Identity.GetUserId() };
-                db.UtilisateurSet.Add(utilisateur);
+                return NotFound();
             }
-            userInfo.assign(utilisateur);
-            db.SaveChanges();
-            return Ok(utilisateur);
-        }
-        catch (Exception e)
-        {
-            return InternalServerError(e);
+            else
+            {
+                return Ok(utilisateur);
+            }
         }
 
+        public IHttpActionResult postUtilisateur([FromBody] UserInfo userInfo)
+        {
+            try
+            {
+
+                Utilisateur utilisateur = UserHelper.getUser(User, db);
+                if (utilisateur == null)
+                {
+                    utilisateur = new Utilisateur() { UserId = User.Identity.GetUserId() };
+                    db.UtilisateurSet.Add(utilisateur);
+                }
+                userInfo.assign(utilisateur);
+                db.SaveChanges();
+                return Ok(utilisateur);
+            }
+            catch (Exception e)
+            {
+                return InternalServerError(e);
+            }
+
+        }
+
+        [AllowAnonymous]
+        //option handler
+        public IHttpActionResult Options()
+        {
+            return Ok();
+        }
     }
-}
 }
