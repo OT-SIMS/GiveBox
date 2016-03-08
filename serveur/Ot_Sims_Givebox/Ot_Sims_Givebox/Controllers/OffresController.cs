@@ -22,14 +22,14 @@ namespace Ot_Sims_Givebox.Controllers
     {
         private ModelContainer db = new ModelContainer();
 
-      
+
 
         //GET LOCALISATION : api/Offres?motcles=""&categorie=""&lgt=""&latt=""
         [AllowAnonymous]
         [ResponseType(typeof(Offre))]
-        public IHttpActionResult GetOffre(string motcles=null, string categorie=null, double lgt = 5000, double latt = 5000, double r = 1)
+        public IHttpActionResult GetOffre(string motcles = null, string categorie = null, double lgt = 5000, double latt = 5000, double r = 1)
         {
-            try 
+            try
             {
                 IQueryable<Offre> request = null;
                 if (categorie == null)
@@ -51,7 +51,7 @@ namespace Ot_Sims_Givebox.Controllers
                     double seuil = 0.7; // Seuil de différence entre mot clé rentré par l'user et titre des offres (sert de prio pour le tri, à modifier si besoin)
                     Dictionary<int, Offre> dictionnaire = new Dictionary<int, Offre>();
 
-                    string[] idparts = motcles.Split(' '); 
+                    string[] idparts = motcles.Split(' ');
                     bool premiermot = true; // Gère les priorités (si c'est le premier mot, priorité plus grande)
                     foreach (string idpart in idparts)
                     {
@@ -122,14 +122,14 @@ namespace Ot_Sims_Givebox.Controllers
 
 
         // PUT: api/Offres/5
-        [ResponseType(typeof(void))]
+        [ResponseType(typeof(Offre))] // Void to Offre pour typeof
         public async Task<IHttpActionResult> PutOffre(int id, [FromBody] Offre offre)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            if (id != offre.Id )
+            if (id != offre.Id)
             {
                 return BadRequest();
             }
@@ -158,7 +158,7 @@ namespace Ot_Sims_Givebox.Controllers
                 }
             }
 
-            return StatusCode(HttpStatusCode.NoContent);
+            return Ok(offre); 
         }
 
         // POST: api/Offres
@@ -172,11 +172,11 @@ namespace Ot_Sims_Givebox.Controllers
                     return BadRequest(ModelState);
                 }
                 Utilisateur u = UserHelper.getUser(User, db);
-                
+
                 offre.UtilisateurId = u.Id;
                 db.OffreSet.Add(offre);
                 await db.SaveChangesAsync();
-                
+
                 return CreatedAtRoute("DefaultApi", new { id = offre.Id }, offre);
             }
             catch (Exception e)
@@ -190,10 +190,16 @@ namespace Ot_Sims_Givebox.Controllers
         [ResponseType(typeof(Offre))]
         public async Task<IHttpActionResult> DeleteOffre(int id)
         {
+
             Offre offre = await db.OffreSet.FindAsync(id);
             if (offre == null)
             {
                 return NotFound();
+            }
+
+            if (offre.Utilisateur.UserId != User.Identity.GetUserId())
+            {
+                return Unauthorized();
             }
 
             db.OffreSet.Remove(offre);
@@ -216,7 +222,7 @@ namespace Ot_Sims_Givebox.Controllers
             return db.OffreSet.Count(e => e.Id == id) > 0;
         }
 
-         [AllowAnonymous]
+        [AllowAnonymous]
         //option handler
         public HttpResponseMessage Options()
         {
