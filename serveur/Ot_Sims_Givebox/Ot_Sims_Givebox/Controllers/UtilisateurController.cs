@@ -19,9 +19,15 @@ namespace Ot_Sims_Givebox.Controllers
         public struct UserInfo
         {
             string nom;
+            string prenom;
+            string telephone;
+            DateTime dateNaissance; 
             public void assign(Utilisateur u)
             {
                 u.Nom = nom;
+                u.Prenom = prenom;
+                u.Telephone = telephone;
+                u.DateNaissance = dateNaissance;
             }
         }
         private ModelContainer db = new ModelContainer();
