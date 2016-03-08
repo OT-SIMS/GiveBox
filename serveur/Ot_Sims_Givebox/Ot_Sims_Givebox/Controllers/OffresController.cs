@@ -140,7 +140,7 @@ namespace Ot_Sims_Givebox.Controllers
                 return Unauthorized();
             }
 
-            db.Entry(offre).State = EntityState.Modified;
+            offreOrigin = offre;
 
             try
             {
