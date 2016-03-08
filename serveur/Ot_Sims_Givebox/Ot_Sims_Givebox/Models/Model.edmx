@@ -179,6 +179,9 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Nom" Type="String" Nullable="false" />
           <Property Name="UserId" Type="String" Nullable="false" />
+          <Property Name="Prenom" Type="String" Nullable="false" />
+          <Property Name="DateNaissance" Type="DateTime" Nullable="false" />
+          <Property Name="Telephone" Type="String" Nullable="false" />
         </EntityType>
         <EntityType Name="Offre">
           <Key>

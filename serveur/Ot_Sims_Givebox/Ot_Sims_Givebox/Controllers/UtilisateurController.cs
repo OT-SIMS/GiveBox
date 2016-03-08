@@ -7,6 +7,8 @@ using System.Web.Http;
 using Microsoft.AspNet.Identity;
 using System.Threading.Tasks;
 using Ot_Sims_Givebox.helper;
+using System.Net.Http;
+using System.Net;
 
 namespace Ot_Sims_Givebox.Controllers
 {
@@ -30,7 +32,7 @@ namespace Ot_Sims_Givebox.Controllers
             var utilisateur = UserHelper.getUser(User, db);
             if (utilisateur == null)
             {
-                return nocon();
+                return ResponseMessage(new HttpResponseMessage(HttpStatusCode.NoContent));
             }
             else
             {
@@ -47,7 +49,7 @@ namespace Ot_Sims_Givebox.Controllers
             var utilisateur = UserHelper.getUser(User, db);
             if (utilisateur == null)
             {
-                return NotFound();
+                return ResponseMessage(new HttpResponseMessage(HttpStatusCode.NoContent));
             }
             else
             {
