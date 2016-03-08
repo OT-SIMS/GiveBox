@@ -139,9 +139,13 @@ namespace Ot_Sims_Givebox.Controllers
             {
                 return Unauthorized();
             }
+            else
+            {
+                offre.UtilisateurId = offreOrigin.UtilisateurId;
+            }
 
-            offreOrigin = offre;
-            db.Entry(offreOrigin).State = EntityState.Modified;
+            
+            db.Entry(offreOrigin).CurrentValues.SetValues(offre);
 
 
             try
