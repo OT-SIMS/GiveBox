@@ -7,6 +7,8 @@ using System.Web.Http;
 using Microsoft.AspNet.Identity;
 using System.Threading.Tasks;
 using Ot_Sims_Givebox.helper;
+using System.Net.Http;
+using System.Net;
 
 namespace Ot_Sims_Givebox.Controllers
 {
@@ -17,9 +19,15 @@ namespace Ot_Sims_Givebox.Controllers
         public struct UserInfo
         {
             string nom;
+            string prenom;
+            string telephone;
+            DateTime dateNaissance; 
             public void assign(Utilisateur u)
             {
                 u.Nom = nom;
+                u.Prenom = prenom;
+                u.Telephone = telephone;
+                u.DateNaissance = dateNaissance;
             }
         }
         private ModelContainer db = new ModelContainer();
@@ -30,7 +38,7 @@ namespace Ot_Sims_Givebox.Controllers
             var utilisateur = UserHelper.getUser(User, db);
             if (utilisateur == null)
             {
-                return nocon();
+                return ResponseMessage(new HttpResponseMessage(HttpStatusCode.NoContent));
             }
             else
             {
@@ -47,7 +55,7 @@ namespace Ot_Sims_Givebox.Controllers
             var utilisateur = UserHelper.getUser(User, db);
             if (utilisateur == null)
             {
-                return NotFound();
+                return ResponseMessage(new HttpResponseMessage(HttpStatusCode.NoContent));
             }
             else
             {
@@ -55,6 +63,21 @@ namespace Ot_Sims_Givebox.Controllers
             }
         }
 
+        public IHttpActionResult putUtilisateur([FromBody] UserInfo userinfo)
+        {
+            try
+            {
+                Utilisateur utilisateur = UserHelper.getUser(User, db);
+                //userinfo.assign(utilisateur);
+                db.Entry(utilisateur).CurrentValues.SetValues(userinfo);
+                db.SaveChanges();
+                return Ok(utilisateur);
+            }
+            catch (Exception e)
+            {
+                return InternalServerError(e);
+            }
+        }
         public IHttpActionResult postUtilisateur([FromBody] UserInfo userInfo)
         {
             try

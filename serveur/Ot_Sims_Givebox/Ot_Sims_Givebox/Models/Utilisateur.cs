@@ -17,5 +17,8 @@ namespace Ot_Sims_Givebox.Models
         public int Id { get; set; }
         public string Nom { get; set; }
         public string UserId { get; set; }
+        public string Prenom { get; set; }
+        public System.DateTime DateNaissance { get; set; }
+        public string Telephone { get; set; }
     }
 }

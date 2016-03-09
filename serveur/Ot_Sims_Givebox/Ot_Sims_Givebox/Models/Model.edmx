@@ -39,6 +39,9 @@
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Nom" Type="nvarchar(max)" Nullable="false" />
     <Property Name="UserId" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Prenom" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="DateNaissance" Type="datetime" Nullable="false" />
+    <Property Name="Telephone" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
   <EntityType Name="OffreSet">
     <Key>
@@ -179,6 +182,9 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Nom" Type="String" Nullable="false" />
           <Property Name="UserId" Type="String" Nullable="false" />
+          <Property Name="Prenom" Type="String" Nullable="false" />
+          <Property Name="DateNaissance" Type="DateTime" Nullable="false" />
+          <Property Name="Telephone" Type="String" Nullable="false" />
         </EntityType>
         <EntityType Name="Offre">
           <Key>
@@ -297,6 +303,9 @@
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Nom" ColumnName="Nom" />
           <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="Prenom" ColumnName="Prenom" />
+          <ScalarProperty Name="DateNaissance" ColumnName="DateNaissance" />
+          <ScalarProperty Name="Telephone" ColumnName="Telephone" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
