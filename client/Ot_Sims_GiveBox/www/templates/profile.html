@@ -11,7 +11,8 @@
   <ion-content class="has-bottom">
     <div class="item item-avatar">
       <img class="my-background-green">
-      <h2>{{authentication.userLastName}} {{authentication.userFirstName}}</h2>
+      <h2 ng-if="authentication.userLastName==''">{{authentication.userName}}</h2>
+      <h2 ng-if="authentication.userLastName!=''">{{authentication.userLastName}} {{authentication.userFirstName}}</h2>
       <p><i class="icon ion-location "></i> User Location</p>
     </div>
     <div class="button-bar">
