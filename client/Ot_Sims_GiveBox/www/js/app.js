@@ -19,8 +19,8 @@ angular.module('starter', [
   'starter.controllers.Profile',
   'starter.controllers.CreateProfile',
   'starter.controllers.CompleteProfile',
+  
   'starter.services.Auth',
-
   'starter.services.AuthInterceptor'
 ])
 

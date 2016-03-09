@@ -4,6 +4,10 @@ angular.module('starter.controllers.Profile', [])
 
   $scope.$myIndex = 0;
 
+  $scope.closeProfile = function() {
+    $scope.modal.hide();
+  };
+
   $scope.slideHasChanged = function($index){
     $scope.$myIndex=$index;
   };

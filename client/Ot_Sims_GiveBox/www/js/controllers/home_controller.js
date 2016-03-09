@@ -123,23 +123,4 @@ angular.module('starter.controllers.Home', [])
     $scope.modal.hide();
   };
 
-
-  /*$scope.items = [
-    {img: 'img/pokemon_tshirt.jpg'},
-    {img: 'img/pokemon_socks.jpg'},
-    {img: 'img/pokemon_cards.jpg'},
-    {img: 'img/pokemon_cap.jpg'},
-    {img: 'img/pokemon_socks.jpg'},
-    {img: 'img/pokemon_tshirt.jpg'},
-    {img: 'img/pokemon_cap.jpg'},
-    {img: 'img/pokemon_cards.jpg'},
-    {img: 'img/pokemon_tshirt.jpg'},
-    {img: 'img/pokemon_socks.jpg'},
-    {img: 'img/pokemon_cards.jpg'},
-    {img: 'img/pokemon_cap.jpg'},
-    {img: 'img/pokemon_socks.jpg'},
-    {img: 'img/pokemon_tshirt.jpg'},
-    {img: 'img/pokemon_cap.jpg'},
-    {img: 'img/pokemon_cards.jpg'}
-  ]*/
 });

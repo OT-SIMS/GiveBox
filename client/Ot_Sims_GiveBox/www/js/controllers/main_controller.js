@@ -4,7 +4,6 @@ angular.module('starter.controllers.Main', [])
 
   $scope.logOut = function () {
     authService.logOut();
-    $location.path('/home');
   }
 
   $scope.authentication = authService.authentication;
