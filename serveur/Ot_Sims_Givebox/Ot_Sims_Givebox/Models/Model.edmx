@@ -179,7 +179,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
           <Property Name="Nom" Type="String" Nullable="false" />
           <Property Name="UserId" Type="String" Nullable="false" />
           <Property Name="Prenom" Type="String" Nullable="false" />

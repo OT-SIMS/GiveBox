@@ -12,3 +12,9 @@ serveur/WebApplication4/
 serveur/Ot_Sims_Givebox/Ot_Sims_Givebox_2/bin/**
 *.dll
 serveur/Ot_Sims_Givebox/Ot_Sims_Givebox_2/Web.Debug.config
+
+
+client/bin
+client/obj
+client/Properties
+client/Ot_Sims_Givebox_Client.csproj

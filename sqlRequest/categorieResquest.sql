@@ -34,6 +34,6 @@ from '''+@path +'\GitHub\GiveBox\sqlRequest\importOffre.txt''
 with(FIRSTROW = 2, keepnulls, FIELDTERMINATOR = '','' , ROWTERMINATOR = ''\n'');'
 
 exec(@sql)
-select * from [dbo].OffreSet;
+select * from [dbo].UtilisateurSet;
  
  

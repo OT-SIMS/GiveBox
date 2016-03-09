@@ -16,18 +16,19 @@ namespace Ot_Sims_Givebox.Controllers
     [RoutePrefix("api/utilisateur")]
     public class UtilisateurController : ApiController
     {
-        public struct UserInfo
+        public class UserInfo
         {
-            string nom;
-            string prenom;
-            string telephone;
-            DateTime dateNaissance; 
+            public string nom;
+            public string prenom;
+            public string telephone;
+            public string dateNaissance; 
+
             public void assign(Utilisateur u)
             {
                 u.Nom = nom;
                 u.Prenom = prenom;
                 u.Telephone = telephone;
-                u.DateNaissance = dateNaissance;
+                u.DateNaissance = System.DateTime.Parse(dateNaissance);
             }
         }
         private ModelContainer db = new ModelContainer();
@@ -63,21 +64,6 @@ namespace Ot_Sims_Givebox.Controllers
             }
         }
 
-        public IHttpActionResult putUtilisateur([FromBody] UserInfo userinfo)
-        {
-            try
-            {
-                Utilisateur utilisateur = UserHelper.getUser(User, db);
-                //userinfo.assign(utilisateur);
-                db.Entry(utilisateur).CurrentValues.SetValues(userinfo);
-                db.SaveChanges();
-                return Ok(utilisateur);
-            }
-            catch (Exception e)
-            {
-                return InternalServerError(e);
-            }
-        }
         public IHttpActionResult postUtilisateur([FromBody] UserInfo userInfo)
         {
             try
@@ -87,9 +73,13 @@ namespace Ot_Sims_Givebox.Controllers
                 if (utilisateur == null)
                 {
                     utilisateur = new Utilisateur() { UserId = User.Identity.GetUserId() };
+                    userInfo.assign(utilisateur);
                     db.UtilisateurSet.Add(utilisateur);
                 }
-                userInfo.assign(utilisateur);
+                else
+                {
+                    userInfo.assign(utilisateur);
+                }
                 db.SaveChanges();
                 return Ok(utilisateur);
             }

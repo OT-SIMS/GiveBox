@@ -270,13 +270,16 @@
     <Compile Include="Models\Categorie.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Prio.cs" />
     <Compile Include="Models\Fichier.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\FichierType.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Offre.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Prio.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Model.Context.cs">
       <DependentUpon>Model.Context.tt</DependentUpon>
@@ -292,9 +295,6 @@
       <DependentUpon>Model.edmx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Models\Offre.cs">
-      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Utilisateur.cs">
       <DependentUpon>Model.tt</DependentUpon>
