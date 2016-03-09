@@ -15,7 +15,6 @@ angular.module('starter.controllers.Menu', [])
 
 
 
-
     /*
     $ionicModal.fromTemplateUrl('templates/profile.html', {
       scope: $scope
@@ -48,6 +47,17 @@ angular.module('starter.controllers.Menu', [])
     $scope.modal.hide();
 
     $ionicModal.fromTemplateUrl('templates/createProfile.html', {
+      scope: $scope
+    }).then(function(modal) {
+      $scope.modal = modal;
+      $scope.modal.show();
+    });
+  };
+
+  $scope.completeProfile = function() {
+    $scope.modal.hide();
+
+    $ionicModal.fromTemplateUrl('templates/completeProfile.html', {
       scope: $scope
     }).then(function(modal) {
       $scope.modal = modal;

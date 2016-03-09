@@ -1,18 +1,30 @@
 angular.module('starter.controllers.CompleteProfile', [])
 
-.controller('CompleteProfileCtrl', function($scope, $ionicModal, authService, $ionicPopup) {
+.controller('CompleteProfileCtrl', function($scope, $ionicModal, authService, $ionicPopup, $http, CONFIG) {
 
-  $scope.registration = {};
+  $scope.completion = {};
 
-  $scope.createProfile = function() {
-    authService.saveRegistration($scope.registration).then(function (response) {
+  $scope.completeProfileOnServer = function() {
+      var profileData = {
+        "nom": profileData.lastName,
+        "prenom" : profileData.firstName,
+        "datenaissance" : profileData.birthDate,
+        "telephone" : profileData.phoneNumber
+      }
+
+      var req = {
+         method: 'POST',
+         url: CONFIG.serverUrl + 'api/Utilisateur',
+         headers: {
+           'content-type': 'application/json',
+           'accept': 'application/json'
+         },
+         data: profileData
+      }
+
+    $http(req).then(function (response) {
       //TODO
-      $ionicModal.fromTemplateUrl('templates/profile.html', {
-        scope: $scope
-      }).then(function(modal) {
-        $scope.modal = modal;
-      });
-      $scope.openProfile();
+      alert("Infos completed with success !")
     },
     function (err) {
       //$scope.message = err.error_description;

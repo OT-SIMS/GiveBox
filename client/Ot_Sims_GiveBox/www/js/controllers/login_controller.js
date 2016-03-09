@@ -14,6 +14,7 @@ angular.module('starter.controllers.Login', [])
     $http(req).then(function(response){
       if(response.status == '204'){
         console.log('complete infos needed');
+        $scope.completeProfile();
       }
       else {
         console.log('infos ok');

@@ -39,6 +39,27 @@ angular.module('starter', [
     authService.fillAuthData();
 }])
 
+.service('loginService', ['$modal',
+        function($modal) {
+          this.LoggedIn = true;
+          this.Login = function() {
+            var instance = $modal.open({
+              template: 'Login screen <alert type="warning">some message</alert>',
+            });
+            return instance.result;
+          }
+        }
+      ])
+
+.run(['$ionicModal', '$rootScope', function($ionicModal, $rootScope) {
+  $ionicModal.fromTemplateUrl('templates/login.html', {
+      scope: $rootScope,
+      animation: 'slide-in-up'
+    }).then(function(modal) {
+      $rootScope.modal = modal;
+    });
+}])
+
 
 
 .config(function ($httpProvider) {

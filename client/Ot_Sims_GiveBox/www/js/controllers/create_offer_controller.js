@@ -224,6 +224,7 @@ angular.module('starter.controllers.CreateOffer', [])
 							$scope.hideSpinner();
 							$scope.clearOfferScope();
 							$scope.showAlert('Offre créée !', 'Votre offre a été créée avec succès.');
+							console.log("sending to home");
 							$location.path("/home");
 						}
 				}
@@ -269,7 +270,8 @@ angular.module('starter.controllers.CreateOffer', [])
 				}
 		}, function(data){
 			console.log("Problème d'envoi de la requête.");
-			alert( "Problème d'envoi au serveur: " + JSON.stringify({data: data}));
+			//alert( "Problème d'envoi au serveur: " + JSON.stringify({data: data}));
+			$scope.hideSpinner();
 		});
 
 		//Coming here : the spinner is still here while pictures are being uploaded.

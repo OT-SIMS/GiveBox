@@ -4,7 +4,7 @@ angular.module('starter.controllers.CreateProfile', [])
 
   $scope.registration = {};
 
-  $scope.createProfile = function() {
+  $scope.createProfileOnServer = function() {
     authService.saveRegistration($scope.registration).then(function (response) {
       //TODO
       $ionicModal.fromTemplateUrl('templates/profile.html', {
