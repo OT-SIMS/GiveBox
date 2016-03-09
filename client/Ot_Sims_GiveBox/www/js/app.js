@@ -39,10 +39,12 @@ angular.module('starter', [
     authService.fillAuthData();
 }])
 
+/*
 .service('loginService', ['$modal',
         function($modal) {
           this.LoggedIn = true;
           this.Login = function() {
+            console.log('Login');
             var instance = $modal.open({
               template: 'Login screen <alert type="warning">some message</alert>',
             });
@@ -50,15 +52,42 @@ angular.module('starter', [
           }
         }
       ])
+*/
 
-.run(['$ionicModal', '$rootScope', function($ionicModal, $rootScope) {
-  $ionicModal.fromTemplateUrl('templates/login.html', {
-      scope: $rootScope,
-      animation: 'slide-in-up'
-    }).then(function(modal) {
-      $rootScope.modal = modal;
-    });
-}])
+.service('loginService', [ function($ionicModal) {
+          this.LoggedIn = true;
+          this.Login = function($ionicModal) {
+            console.log('Login');
+            $ionicModal.fromTemplateUrl('templates/login.html', {
+                scope: $rootScope,
+                animation: 'slide-in-up'
+              }).then(function(modal) {
+                $rootScope.modal = modal;
+                $rootScope.modal.show();
+              });
+          }
+        }
+      ])
+
+/*
+.service('loginService', ['$ionicModal', '$rootScope',
+        function($ionicModal, $rootScope) {
+          console.log('Appel du service');
+          this.LoggedIn = true;
+          this.Login = function() {
+            console.log('Login');
+            $ionicModal.fromTemplateUrl('templates/login.html', {
+                scope: $rootScope,
+                animation: 'slide-in-up'
+              }).then(function(modal) {
+                $rootScope.modal = modal;
+                $rootScope.modal.show();
+              });
+
+          }
+        }
+      ])
+*/
 
 
 

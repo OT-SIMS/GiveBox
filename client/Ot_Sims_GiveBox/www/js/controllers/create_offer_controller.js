@@ -1,6 +1,6 @@
 angular.module('starter.controllers.CreateOffer', [])
 
-.controller('CreateOfferCtrl', function($scope, $http, $ionicModal, $cordovaCamera, $cordovaCapture, $cordovaGeolocation, $ionicLoading, $ionicPopup, $location, CONFIG) {
+.controller('CreateOfferCtrl', ['$scope', '$http', '$ionicModal', '$cordovaCamera', '$cordovaCapture', '$cordovaGeolocation', '$ionicLoading', '$ionicPopup', '$location', 'CONFIG','localStorageService',  function($scope, $http, $ionicModal, $cordovaCamera, $cordovaCapture, $cordovaGeolocation, $ionicLoading, $ionicPopup, $location, CONFIG, localStorageService) {
 
 	$scope.allImages = [
 	];
@@ -235,6 +235,7 @@ angular.module('starter.controllers.CreateOffer', [])
 				    console.log("upload error target " + error.target);
 						console.log(error);
 						nbFailedSentPictures = nbFailedSentPictures + 1;
+						//TODO : close spinner
 				}
 
 				//Send each images to the server.
@@ -266,6 +267,12 @@ angular.module('starter.controllers.CreateOffer', [])
 						    } else {
 						    }
 						};
+
+						var authData = localStorageService.get('authorizationData');
+		        if (authData) {
+		            options.headers.Authorization = 'Bearer ' + authData.token;
+		        }
+
 						ft.upload($scope.allImages[i].src, encodeURI(CONFIG.serverUrl + "api/fichiers/" + dataServer.data.Id), win, fail, options);
 				}
 		}, function(data){
@@ -477,4 +484,4 @@ $scope.recordAVideo = function() {
 	}
 
 
-});
+}]);

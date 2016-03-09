@@ -1,7 +1,7 @@
 ﻿'use strict';
 angular.module('starter.services.AuthInterceptor', [])
 
-.factory('authInterceptorService', ['$q', '$location','$injector', 'localStorageService', 'CONFIG', function ($q, $location, $injector, localStorageService, CONFIG) {
+.factory('authInterceptorService', ['$q', '$location', 'localStorageService', 'loginService', 'CONFIG', function ($q, $location, localStorageService, loginService, CONFIG) {
     var authInterceptorServiceFactory = {};
     var _request = function (config) {
         if(config.url.search(CONFIG.googleapis) == 0){
@@ -27,10 +27,9 @@ angular.module('starter.services.AuthInterceptor', [])
         if (rejection.status === 401) {
           //console.log($rootScope);
             //$location.path('/login');
-            var auth = $injector.get('loginService');
-                  return auth.Login();
-                  if (!auth.LoggedIn) {
-                    return auth.Login();
+                  return loginService.Login();
+                  if (!loginService.LoggedIn) {
+                    return loginService.Login();
                   }
         }
         return $q.reject(rejection);
