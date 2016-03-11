@@ -209,7 +209,6 @@ angular.module('starter.controllers.CreateOffer', [])
 
 		$http(reqJson).then(function(dataServer){
 			$scope.message = dataServer;
-			console.log(dataServer.data.Id);
 
 			/*
 			* Function called when the image has just been successfully uploaded.
@@ -230,7 +229,6 @@ angular.module('starter.controllers.CreateOffer', [])
 					$scope.hideSpinner();
 					$scope.clearOfferScope();
 					$scope.showAlert('Offre créée !', 'Votre offre a été créée avec succès.');
-					console.log("sending to home");
 					$location.path("/home");
 				}
 			}
@@ -239,7 +237,6 @@ angular.module('starter.controllers.CreateOffer', [])
 				console.log("An error has occurred: Code = " + error.code);
 				console.log("upload error source " + error.source);
 				console.log("upload error target " + error.target);
-				console.log(error);
 				nbFailedSentPictures = nbFailedSentPictures + 1;
 				$scope.hideSpinner();
 				//TODO : message modal
@@ -422,19 +419,6 @@ $scope.recordAVideo = function() {
 					      }
 
 			      });
-
-			      /*
-			      if(_.contains(result0),"postcode_localities"){
-				      $scope.geolog = result0;
-				      console.log("postcode_localities");
-				      $scope.cities = result0.postcode_localities;
-			      }else{
-				      $scope.cities=[];
-				      $scope.cities.push(result0.long_name);
-				      console.log(result0.long_name);
-			      }
-			      */
-
 	      }, function(data){
 		      console.log("Problème d'envoi de la requête.");
 		      alert( "Problème d'envoi au serveur: " + JSON.stringify({data: data}));
@@ -468,9 +452,7 @@ $scope.recordAVideo = function() {
 
 		      _.each(address_components, function(element){
 			      if(_.contains(element.types, "postal_code")){
-				      console.log($scope.offer.postcode);
 				      $scope.offer.postcode = element.long_name;
-				      console.log($scope.offer.postcode);
 			      }
 			      else if(_.contains(element.types, "locality")){
 				      $scope.town = element.long_name
