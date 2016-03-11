@@ -116,6 +116,11 @@ angular.module('starter.controllers.Home', [])
 
   $scope.openOffer = function(offer){
     $scope.modalData  = offer;
+    var markerOptions = {
+      latitude : offer.Latitude,
+      longitude : offer.LOngitude
+    };
+    $scope.modalData.marker = markerOptions;
     $scope.modal.show();
   }
 

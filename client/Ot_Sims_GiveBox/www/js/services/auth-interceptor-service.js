@@ -1,8 +1,9 @@
 ﻿'use strict';
 angular.module('starter.services.AuthInterceptor', [])
 
-.factory('authInterceptorService', ['$q', '$location', 'localStorageService', 'loginService', 'CONFIG', function ($q, $location, localStorageService, loginService, CONFIG) {
-    var authInterceptorServiceFactory = {};
+.factory('authInterceptorService', ['$q', '$location', '$injector', 'localStorageService', 'CONFIG', function ($q, $location, $injector, localStorageService, CONFIG) {
+
+	var authInterceptorServiceFactory = {};
     var _request = function (config) {
         if(config.url.search(CONFIG.googleapis) == 0){
           //Do not change the request when reaching googleapi
@@ -25,12 +26,16 @@ angular.module('starter.services.AuthInterceptor', [])
 
     var _responseError = function (rejection) {
         if (rejection.status === 401) {
-          //console.log($rootScope);
-            //$location.path('/login');
-                  return loginService.Login();
-                  if (!loginService.LoggedIn) {
-                    return loginService.Login();
-                  }
+		console.log("Sending to login");
+		
+		var loginService = $injector.get('loginService');
+		
+		
+		loginService
+		.init('templates/login.html')
+		.then(function(modal) {
+			modal.show();
+		});
         }
         return $q.reject(rejection);
     }

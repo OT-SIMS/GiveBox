@@ -7,8 +7,8 @@
 angular.module('starter', [
   'ionic',
   'ngCordova',
-  'underscore',
   'LocalStorageModule',
+  'uiGmapgoogle-maps',
 
   'starter.controllers.CreateOffer',
   'starter.controllers.Home',
@@ -39,56 +39,40 @@ angular.module('starter', [
     authService.fillAuthData();
 }])
 
-/*
-.service('loginService', ['$modal',
-        function($modal) {
-          this.LoggedIn = true;
-          this.Login = function() {
-            console.log('Login');
-            var instance = $modal.open({
-              template: 'Login screen <alert type="warning">some message</alert>',
-            });
-            return instance.result;
-          }
-        }
-      ])
-*/
 
-.service('loginService', [ function($ionicModal) {
-          this.LoggedIn = true;
-          this.Login = function($ionicModal) {
-            console.log('Login');
-            $ionicModal.fromTemplateUrl('templates/login.html', {
-                scope: $rootScope,
-                animation: 'slide-in-up'
-              }).then(function(modal) {
-                $rootScope.modal = modal;
-                $rootScope.modal.show();
-              });
-          }
-        }
-      ])
+.service('loginService', function($ionicModal, $rootScope) {
+  var init = function(tpl, $scope) {
+	  console.log("init");
 
-/*
-.service('loginService', ['$ionicModal', '$rootScope',
-        function($ionicModal, $rootScope) {
-          console.log('Appel du service');
-          this.LoggedIn = true;
-          this.Login = function() {
-            console.log('Login');
-            $ionicModal.fromTemplateUrl('templates/login.html', {
-                scope: $rootScope,
-                animation: 'slide-in-up'
-              }).then(function(modal) {
-                $rootScope.modal = modal;
-                $rootScope.modal.show();
-              });
+    var promise;
+    $scope = $rootScope.$new();
+	
+    promise = $ionicModal.fromTemplateUrl(tpl, {
+      scope: $scope,
+      animation: 'slide-in-up'
+    }).then(function(modal) {
+      $scope.modal = modal;
+      modal.show();
+      return modal;
+    });
 
-          }
-        }
-      ])
-*/
+    $scope.openModal = function() {
+       $scope.modal.show();
+     };
+     $scope.closeModal = function() {
+       $scope.modal.hide();
+     };
+     $scope.$on('$destroy', function() {
+       $scope.modal.remove();
+     });
+	
+    return promise;
+  }
 
+  return {
+    init: init
+  }
+})
 
 
 .config(function ($httpProvider) {
