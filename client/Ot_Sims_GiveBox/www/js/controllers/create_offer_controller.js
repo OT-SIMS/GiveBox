@@ -1,7 +1,7 @@
 angular.module('starter.controllers.CreateOffer', [])
 
 //.controller('CreateOfferCtrl', ['$scope', '$http', '$ionicModal', '$cordovaCamera', '$cordovaCapture', '$cordovaGeolocation', '$ionicLoading', '$ionicPopup', '$location', 'CONFIG','localStorageService', '_',  function($scope, $http, $ionicModal, $cordovaCamera, $cordovaCapture, $cordovaGeolocation, $ionicLoading, $ionicPopup, $location, CONFIG, localStorageService, _) {
-.controller('CreateOfferCtrl', function($scope, $http, $ionicModal, $cordovaCamera, $cordovaCapture, $cordovaGeolocation, $ionicLoading, $ionicPopup, $location, CONFIG, localStorageService) {
+.controller('CreateOfferCtrl', function($scope, $state, $http, $ionicModal, $ionicHistory, $cordovaCamera, $cordovaCapture, $cordovaGeolocation, $ionicLoading, $ionicPopup, $location, CONFIG, localStorageService) {
 
 	$scope.allImages = [
 	];
@@ -169,6 +169,10 @@ angular.module('starter.controllers.CreateOffer', [])
 	$scope.sendNewOfferRequest = function() {
 		var  nbSentPictures = 0;
 		var nbFailedSentPictures = 0;
+				
+		$ionicHistory.nextViewOptions({
+			disableBack: true
+		});
 
 
 		stateForm(true);
