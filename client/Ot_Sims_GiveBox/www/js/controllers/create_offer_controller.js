@@ -345,6 +345,8 @@ angular.module('starter.controllers.CreateOffer', [])
 	      $cordovaCapture.captureVideo().then(function(videoData) {
 		VideoService.saveVideo(videoData, $scope).success(function(data) {
 			console.log("data before push in captureVideo : " + data);
+			$scope.allVideos.push({'src' : data});
+
 			//$scope.$apply();
 		}).error(function(data) {
 			console.log('ERROR: ' + data);

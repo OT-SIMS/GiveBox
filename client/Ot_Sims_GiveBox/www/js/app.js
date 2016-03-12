@@ -21,7 +21,9 @@ angular.module('starter', [
   'starter.controllers.CompleteProfile',
   
   'starter.services.Auth',
-  'starter.services.AuthInterceptor'
+  'starter.services.AuthInterceptor',
+  'starter.services.Video',
+  'starter.services.Login'
 ])
 
 .run(function($ionicPlatform) {
@@ -38,133 +40,6 @@ angular.module('starter', [
 .run(['authService', function (authService) {
     authService.fillAuthData();
 }])
-
-
-.service('loginService', function($ionicModal, $rootScope) {
-  var init = function(tpl, $scope) {
-	  console.log("init");
-
-    var promise;
-    $scope = $rootScope.$new();
-	
-    promise = $ionicModal.fromTemplateUrl(tpl, {
-      scope: $scope,
-      animation: 'slide-in-up'
-    }).then(function(modal) {
-      $scope.modal = modal;
-      modal.show();
-      return modal;
-    });
-
-    $scope.openModal = function() {
-       $scope.modal.show();
-     };
-     $scope.closeModal = function() {
-       $scope.modal.hide();
-     };
-     $scope.$on('$destroy', function() {
-       $scope.modal.remove();
-     });
-	
-    return promise;
-  }
-
-  return {
-    init: init
-  }
-})
-
-.service('VideoService', function($q) {
-	var deferred = $q.defer();
-	var promise = deferred.promise;
-	
-	
-	promise.success = function(fn) {
-		console.log("success");
-		promise.then(fn);
-		return promise;
-	}
-	promise.error = function(fn) {
-		console.log("error");
-		promise.then(null, fn);
-		return promise;
-	}
-	
-	
-	// Resolve the URL to the local file
-	// Start the copy process
-	function createFileEntry(fileURI, scope) {
-		window.resolveLocalFileSystemURL(fileURI, function(entry) {
-			return copyFile(entry, scope);
-		}, fail);
-	}
-	
-	// Create a unique name for the videofile
-	// Copy the recorded video to the app dir
-	function copyFile(fileEntry, scope) {
-		var name = fileEntry.fullPath.substr(fileEntry.fullPath.lastIndexOf('/') + 1);
-		var newName = makeid() + name;
-	
-		window.resolveLocalFileSystemURL(cordova.file.dataDirectory, function(fileSystem2) {
-				fileEntry.copyTo(fileSystem2, newName, function(succ) {
-					return onCopySuccess(succ, scope);
-				}, fail);
-			},
-			fail
-		);
-	}
-	
-	// Called on successful copy process
-	// Creates a thumbnail from the movie
-	// The name is the moviename but with .png instead of .mov
-	function onCopySuccess(entry, scope) {
-		var name = entry.nativeURL.slice(0, -4);
-		console.log('onCopySuccessName : ' + name);
-		window.PKVideoThumbnail.createThumbnail (entry.nativeURL, name + '.png', function(prevSucc) {
-			return prevImageSuccess(prevSucc, scope);
-		}, fail);
-	}
-	
-	// Called on thumbnail creation success
-	// Generates the currect URL to the local moviefile
-	// Finally resolves the promies and returns the name
-	function prevImageSuccess(succ, scope) {
-		var correctUrl = succ.slice(0, -4);
-		correctUrl += '.MOV';
-		console.log("correctUrl before push : " + correctUrl);
-		scope.allVideos.push({'src' : correctUrl});
-		deferred.resolve(correctUrl);
-	}
-	
-	// Called when anything fails
-	// Rejects the promise with an Error
-	function fail(error) {
-		console.log('FAIL: ' + error.code);
-		deferred.reject('ERROR');
-	}
-	
-	// Function to make a unique filename
-	function makeid() {
-		var text = '';
-		var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-		for ( var i=0; i < 5; i++ ) {
-			text += possible.charAt(Math.floor(Math.random() * possible.length));
-		}
-		return text;
-	}
-	
-	// The object and functions returned from the Service
-	return {
-		// This is the initial function we call from our controller
-		// Gets the videoData and calls the first service function
-		// with the local URL of the video and returns the promise
-		saveVideo: function(data, scope) {
-			console.log("Dans saveVideo");
-			createFileEntry(data[0].localURL, scope);
-			return promise;
-		}
-	}
-})
 
 
 .config(function ($httpProvider) {
