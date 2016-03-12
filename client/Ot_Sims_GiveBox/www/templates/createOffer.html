@@ -101,16 +101,18 @@
 					<div class="row">
 						<label class="col balanced offer-subtitle" >Vos vidéos</label>
 					</div>
-					<div class="row" id="offerImages">
-
-					</div>
+					<a class="item item-list-detail">
+						<ion-scroll direction="x">
+							<img ng-repeat="video in allVideos" ng-src="{{urlForClipThumb(video.src)}}" ng-click="showVideos($index)" class="image-list-thumb"/>
+						</ion-scroll>
+					</a>
 					<div class="row">
 						<div class="col text-center">
-								<button class="button button-balanced item-icon-center generalCreateOfferButton" ng-model="offer.video" id="takePhotoButton" ng-click="recordAVideo()">
-									<i class="icon ion-android-film"></i>
-								</button>
-							</div>
+							<button class="button button-balanced item-icon-center generalCreateOfferButton" ng-model="offer.video" id="takePhotoButton" ng-click="recordAVideo()">
+								<i class="icon ion-android-film"></i>
+							</button>
 						</div>
+					</div>
 				</div>
 			</div>
 

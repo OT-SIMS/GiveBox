@@ -1,16 +1,36 @@
 angular.module('starter.controllers.CreateOffer', [])
 
 //.controller('CreateOfferCtrl', ['$scope', '$http', '$ionicModal', '$cordovaCamera', '$cordovaCapture', '$cordovaGeolocation', '$ionicLoading', '$ionicPopup', '$location', 'CONFIG','localStorageService', '_',  function($scope, $http, $ionicModal, $cordovaCamera, $cordovaCapture, $cordovaGeolocation, $ionicLoading, $ionicPopup, $location, CONFIG, localStorageService, _) {
-.controller('CreateOfferCtrl', function($scope, $state, $http, $ionicModal, $ionicHistory, $cordovaCamera, $cordovaCapture, $cordovaGeolocation, $ionicLoading, $ionicPopup, $location, CONFIG, localStorageService) {
+.controller('CreateOfferCtrl', function($scope, $state, $http, $ionicModal, $ionicHistory, $timeout, $cordovaCamera, $cordovaCapture, $cordovaGeolocation, $ionicLoading, $ionicPopup, $location, CONFIG, localStorageService, VideoService) {
 
-	$scope.allImages = [
-	];
-	$scope.allImagesObject = [
-	];
+	$scope.allImages = [];
+	$scope.allImagesObject = [];
+	$scope.allVideos = [];
 
 	$scope.showImages = function(index) {
 		$scope.activeSlide = index;
 		$scope.showModal('templates/image-popover.html');
+	}
+	
+	$scope.showVideos = function(index) {
+		$scope.activeSlideVideo = index;
+		$scope.showModal('templates/video-popover.html');
+	}
+	
+	$scope.urlForClipThumb = function(clipUrl) {
+		console.log("clipUrl.urlForClipThumb : " + clipUrl);
+		var name = clipUrl.substr(clipUrl.lastIndexOf('/') + 1);
+		var trueOrigin = cordova.file.dataDirectory + name;
+		var sliced = trueOrigin.slice(0, -4);
+		return sliced + '.png';
+	}
+	
+	$scope.urlForVideoPlaying = function(clipUrl) {
+		var name = clipUrl.substr(clipUrl.lastIndexOf('/') + 1);
+		var trueOrigin = cordova.file.dataDirectory + name;
+		var sliced = trueOrigin.slice(0, -4);
+		console.log('sliced : ' + sliced);
+		return sliced + '.mp4';
 	}
 
 	$scope.showModal = function(templateUrl) {
@@ -321,20 +341,15 @@ angular.module('starter.controllers.CreateOffer', [])
       };
 
 
-$scope.recordAVideo = function() {
-	      var options = {	}
-
-
-	      var captureSuccess = function(mediaFile) {
-		      console.log(mediaFile[0].fullPath)
-	      }
-
-	      // capture error callback
-	      var captureError = function(error) {
-		      navigator.notification.alert('Error code: ' + error.code, null, 'Capture Error');
-	      };
-
-	      navigator.device.capture.captureVideo(captureSuccess, captureError, options);
+	$scope.recordAVideo = function() {
+	      $cordovaCapture.captureVideo().then(function(videoData) {
+		VideoService.saveVideo(videoData, $scope).success(function(data) {
+			console.log("data before push in captureVideo : " + data);
+			//$scope.$apply();
+		}).error(function(data) {
+			console.log('ERROR: ' + data);
+		});
+	});
 
       };
 

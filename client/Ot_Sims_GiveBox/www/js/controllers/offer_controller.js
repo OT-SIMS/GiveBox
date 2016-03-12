@@ -30,13 +30,5 @@ angular.module('starter.controllers.Offer', [])
           };
         }
       }
-    };
-    
-  $scope.init = function(){
-    console.log("init call");
-    
-  }
-  
-  $scope.init();
-  
+    };  
 });
