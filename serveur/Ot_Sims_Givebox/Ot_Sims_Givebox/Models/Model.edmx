@@ -11,6 +11,7 @@
     <EntitySet Name="CategorieSet" EntityType="Model.Store.CategorieSet" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="FichierSet" EntityType="Model.Store.FichierSet" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="FichierTypeSet" EntityType="Model.Store.FichierTypeSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="DiscussionSet" EntityType="Model.Store.DiscussionSet" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="UtilisateurOffre" Association="Model.Store.UtilisateurOffre">
       <End Role="Utilisateur" EntitySet="UtilisateurSet" />
       <End Role="Offre" EntitySet="OffreSet" />
@@ -34,6 +35,14 @@
     <AssociationSet Name="UtilisateurFichier" Association="Model.Store.UtilisateurFichier">
       <End Role="Utilisateur" EntitySet="UtilisateurSet" />
       <End Role="Fichier" EntitySet="FichierSet" />
+    </AssociationSet>
+    <AssociationSet Name="DiscussionOffre" Association="Model.Store.DiscussionOffre">
+      <End Role="Discussion" EntitySet="DiscussionSet" />
+      <End Role="Offre" EntitySet="OffreSet" />
+    </AssociationSet>
+    <AssociationSet Name="UtilisateurDiscussion" Association="Model.Store.UtilisateurDiscussion">
+      <End Role="Utilisateur" EntitySet="UtilisateurSet" />
+      <End Role="Discussion" EntitySet="DiscussionSet" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="UtilisateurSet">
@@ -88,6 +97,16 @@
     </Key>
     <Property Name="Id" Type="int" Nullable="false" />
     <Property Name="Nom" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DiscussionSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="OffreId" Type="int" Nullable="false" />
+    <Property Name="Message" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="UtilisateurId" Type="int" Nullable="false" />
+    <Property Name="DateMsg" Type="datetime" Nullable="false" />
   </EntityType>
   <Association Name="UtilisateurOffre">
     <End Role="Utilisateur" Type="Model.Store.UtilisateurSet" Multiplicity="1" />
@@ -158,6 +177,30 @@
       </Principal>
       <Dependent Role="Fichier">
         <PropertyRef Name="UtilisateurFichier_Fichier_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="DiscussionOffre">
+    <End Role="Discussion" Type="Model.Store.DiscussionSet" Multiplicity="*" />
+    <End Role="Offre" Type="Model.Store.OffreSet" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Offre">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Discussion">
+        <PropertyRef Name="OffreId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="UtilisateurDiscussion">
+    <End Role="Utilisateur" Type="Model.Store.UtilisateurSet" Multiplicity="1" />
+    <End Role="Discussion" Type="Model.Store.DiscussionSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Utilisateur">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Discussion">
+        <PropertyRef Name="UtilisateurId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -422,6 +465,17 @@
         <MappingFragment StoreEntitySet="FichierTypeSet">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Nom" ColumnName="Nom" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DiscussionSet">
+      <EntityTypeMapping TypeName="IsTypeOf(Model.Discussion)">
+        <MappingFragment StoreEntitySet="DiscussionSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="OffreId" ColumnName="OffreId" />
+          <ScalarProperty Name="Message" ColumnName="Message" />
+          <ScalarProperty Name="UtilisateurId" ColumnName="UtilisateurId" />
+          <ScalarProperty Name="DateMsg" ColumnName="DateMsg" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

@@ -18,6 +18,7 @@ using Microsoft.AspNet.Identity;
 namespace Ot_Sims_Givebox.Controllers
 {
     [Authorize]
+    [RoutePrefix("api/offres")]
     public class OffresController : ApiController
     {
         private ModelContainer db = new ModelContainer();
@@ -46,7 +47,7 @@ namespace Ot_Sims_Givebox.Controllers
                     request = request.Where(offres3 => (lgt - offres3.Longitude) * (lgt - offres3.Longitude) + (latt - offres3.Latitude) * (latt - offres3.Latitude) <= r * r); // Filtre les offres selon la position
                 }
 
-                if (motcles != null && motcles!="*") // Si l'user précise aussi des mots clés
+                if (motcles != null && motcles != "*") // Si l'user précise aussi des mots clés
                 {
                     double seuil = 0.7; // Seuil de différence entre mot clé rentré par l'user et titre des offres (sert de prio pour le tri, à modifier si besoin)
                     Dictionary<int, Offre> dictionnaire = new Dictionary<int, Offre>();
@@ -144,7 +145,7 @@ namespace Ot_Sims_Givebox.Controllers
                 offre.UtilisateurId = offreOrigin.UtilisateurId;
             }
 
-            
+
             db.Entry(offreOrigin).CurrentValues.SetValues(offre);
 
 
@@ -164,7 +165,7 @@ namespace Ot_Sims_Givebox.Controllers
                 }
             }
 
-            return Ok(offre); 
+            return Ok(offre);
         }
 
         // POST: api/Offres
@@ -191,15 +192,51 @@ namespace Ot_Sims_Givebox.Controllers
             }
 
         }
-        //POST: api/offres/dicussion
-        public async Task<IHttpActionResult> PostMsg([FromBody] string msg)
+
+        //POST: api/offres/dicussion/idoffre
+        [Route("discussion/{id}")]
+        public async Task<IHttpActionResult> PostMsg([FromBody] string msg, int id)
         {
+            Utilisateur u = UserHelper.getUser(User, db);
+            DateTime DateMsg = DateTime.Now;
+            Discussion disc = new Discussion();
+            disc.DateMsg = DateMsg;
+            disc.Message = msg;
+            disc.OffreId = id;
+            disc.UtilisateurId = u.Id;
             try
             {
-                if()
+                if (db.OffreSet.Find(id) != null)
+                {
+                    db.DiscussionSet.Add(disc);
+                    await db.SaveChangesAsync();
+                    return Created("Message bien envoyé", msg);
+                }
+                return NotFound();
             }
-        }
+            catch (Exception e)
+            {
+                return InternalServerError(e);
+            }
 
+        }
+        // DELETE: api/offres/discussion/iddiscussion
+        [ResponseType(typeof(Discussion))]
+        [Route("discussion/{id}")]
+        public async Task<IHttpActionResult> DeleteDiscussion(int id)
+        {
+            Discussion discussion = await db.DiscussionSet.FindAsync(id);
+
+            if (discussion.Utilisateur.UserId != User.Identity.GetUserId())
+            {
+                return Unauthorized();
+            }
+
+            db.DiscussionSet.Remove(discussion);
+            await db.SaveChangesAsync();
+
+            return Ok(discussion);
+        }
         // DELETE: api/Offres/5
         [ResponseType(typeof(Offre))]
         public async Task<IHttpActionResult> DeleteOffre(int id)

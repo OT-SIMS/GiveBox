@@ -270,6 +270,9 @@
     <Compile Include="Models\Categorie.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Discussion.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Fichier.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
