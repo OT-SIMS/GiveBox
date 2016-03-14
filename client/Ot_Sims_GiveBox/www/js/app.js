@@ -8,7 +8,6 @@ angular.module('starter', [
   'ionic',
   'ngCordova',
   'LocalStorageModule',
-  'uiGmapgoogle-maps',
 
   'starter.controllers.CreateOffer',
   'starter.controllers.Home',

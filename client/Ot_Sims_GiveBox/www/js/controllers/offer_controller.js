@@ -1,6 +1,7 @@
 angular.module('starter.controllers.Offer', [])
 
 .controller('OfferCtrl', function($scope, $ionicModal, $ionicLoading, $log, $ionicSlideBoxDelegate) {
+	
 	$scope.slideIndex = 0;
 	
 	var SLIDES = {
@@ -8,6 +9,9 @@ angular.module('starter.controllers.Offer', [])
 		map : 1
 	}
 	
+	$scope.alreadyInit = false;
+	
+	/*
 	$scope.optionsSlides = {
 		loop: false,
 		//effect: fade,
@@ -67,6 +71,59 @@ angular.module('starter.controllers.Offer', [])
 			$scope.marker.coords.longitude = $scope.modalData.Longitude;
 			
 			$scope.marker.options.labelContent = $scope.modalData.Titre;
+		}
+	};
+	*/
+	
+	
+	$scope.init = function() {
+		$scope.alreadyInit = true;
+		console.log("ajout");
+		var myLatlng = new google.maps.LatLng(37.3000, -120.4833);
+	
+		var mapOptions = {
+			center: myLatlng,
+			zoom: 16,
+			mapTypeId: google.maps.MapTypeId.ROADMAP
+		};
+	
+		var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+	
+		navigator.geolocation.getCurrentPosition(function(pos) {
+			map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
+			var myLocation = new google.maps.Marker({
+				position: new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude),
+				map: map,
+				title: "My Location",
+			});
+			
+			myLocation.addListener('click', function() {
+				$scope.previous();
+			});
+		});
+	
+		$scope.map = map;
+	};
+
+	
+	
+	$scope.slideChanged = function(index) {
+		if(!$scope.alreadyInit){
+			$scope.init();
+		}
+		
+		$scope.slideIndex = index;
+		
+		if(index==SLIDES.map){
+			//Update map content : center and marker
+			//$scope.map.setCenter(new google.maps.LatLng($scope.modalData.Latitude, $scope.modalData.Longitude));
+			
+			/*
+			$scope.marker.coords.latitude = $scope.modalData.Latitude;
+			$scope.marker.coords.longitude = $scope.modalData.Longitude;
+			
+			$scope.marker.options.labelContent = $scope.modalData.Titre;
+			*/
 		}
 	};
 	
