@@ -27,18 +27,18 @@ namespace Ot_Sims_Givebox.Controllers
         //GET LOCALISATION : api/Offres?motcles=""&categorie=""&lgt=""&latt=""
         [AllowAnonymous]
         [ResponseType(typeof(Offre))]
-        public IHttpActionResult GetOffre(string motcles = null, string categorie = null, double lgt = 5000, double latt = 5000, double r = 1)
+        public IHttpActionResult GetOffres(string motcles = null, string categorie = null, double lgt = 5000, double latt = 5000, double r = 1)
         {
             try
             {
                 IQueryable<Offre> request = null;
                 if (categorie == null)
                 {
-                    request = from offres in db.OffreSet select offres;
+                    request = from offres in db.OffreSet where offres.EstArchivee.Equals(false) select offres;
                 }
                 else
                 {
-                    request = from offres in db.OffreSet where offres.Categorie.Nom.Equals(categorie) select offres; // sélectionne toutes les offres de la catégorie précisée
+                    request = from offres in db.OffreSet where offres.Categorie.Nom.Equals(categorie) where offres.EstArchivee.Equals(false) select offres; // sélectionne toutes les offres de la catégorie précisée
                 }
 
                 if (lgt != 5000 && latt != 5000) // Si l'user précise sa géoloc
@@ -190,14 +190,6 @@ namespace Ot_Sims_Givebox.Controllers
                 return InternalServerError(e);
             }
 
-        }
-        //POST: api/offres/dicussion
-        public async Task<IHttpActionResult> PostMsg([FromBody] string msg)
-        {
-            try
-            {
-                if()
-            }
         }
 
         // DELETE: api/Offres/5

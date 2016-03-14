@@ -16,8 +16,10 @@ namespace Ot_Sims_Givebox.Models
     {
         public Offre()
         {
+            this.EstArchivee = false;
             this.Fichier = new HashSet<Fichier>();
             this.Discussion = new HashSet<Discussion>();
+            this.Notifications = new HashSet<Notification>();
         }
     
         public int Id { get; set; }
@@ -29,10 +31,12 @@ namespace Ot_Sims_Givebox.Models
         public int CategorieId { get; set; }
         public string CodePostal { get; set; }
         public string Ville { get; set; }
+        public bool EstArchivee { get; set; }
     
         public virtual Utilisateur Utilisateur { get; set; }
         public virtual ICollection<Fichier> Fichier { get; set; }
         public virtual Categorie Categorie { get; set; }
         public virtual ICollection<Discussion> Discussion { get; set; }
+        public virtual ICollection<Notification> Notifications { get; set; }
     }
 }

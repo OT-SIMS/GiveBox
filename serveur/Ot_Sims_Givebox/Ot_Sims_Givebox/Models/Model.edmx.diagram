@@ -19,6 +19,9 @@
         <EntityTypeShape EntityType="Model.Discussion" Width="1.5" PointX="1" PointY="1.875" />
         <AssociationConnector Association="Model.DiscussionOffre" />
         <AssociationConnector Association="Model.UtilisateurDiscussion" />
+        <EntityTypeShape EntityType="Model.Notification" Width="1.5" PointX="6.125" PointY="6.875" />
+        <AssociationConnector Association="Model.UtilisateurNotifications" />
+        <AssociationConnector Association="Model.OffreNotifications" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

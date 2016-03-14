@@ -30,11 +30,6 @@ namespace Ot_Sims_Givebox
                 defaults: new { id = RouteParameter.Optional }
             );
 
-            config.Routes.MapHttpRoute(
-                name: "localisationApi",
-                routeTemplate: "api/{controller}/{lgt}/{latt}/{r}",
-                defaults: new { r = RouteParameter.Optional }
-            );
         }
     }
 }
