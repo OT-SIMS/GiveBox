@@ -46,7 +46,7 @@ namespace Ot_Sims_Givebox.Controllers
                     request = request.Where(offres3 => (lgt - offres3.Longitude) * (lgt - offres3.Longitude) + (latt - offres3.Latitude) * (latt - offres3.Latitude) <= r * r); // Filtre les offres selon la position
                 }
 
-                if (motcles != null) // Si l'user précise aussi des mots clés
+                if (motcles != null && motcles!="*") // Si l'user précise aussi des mots clés
                 {
                     double seuil = 0.7; // Seuil de différence entre mot clé rentré par l'user et titre des offres (sert de prio pour le tri, à modifier si besoin)
                     Dictionary<int, Offre> dictionnaire = new Dictionary<int, Offre>();
