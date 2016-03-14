@@ -5,40 +5,30 @@
 	</ion-nav-title>
 
 	<ion-content>
-	<div class="row">
-		<div class="col">
 		<form novalidate>
+			<ion-list type="card">
+			<!--<div class="list list-inset">-->
+					<ion-item id="titleLabel">
+						<input type="text" class="balanced" ng-model="offer.title" placeholder="Titre de votre offre"></input>
+					</ion-item>
+					<ion-item id="descriptionLabel">
+						<input type="text" class="balanced" ng-model="offer.description" placeholder="Description de votre offre"></input>
+					</ion-item>
+			</ion-list>
 
-			<div class="list list-inset">
-				<!--<div class="row">-->
-					<label class="item item-input"> <!--col createOfferLabel spaceTop" id="titleLabel">-->
-						<input type="text" class="balanced" ng-model="offer.title" placeholder="Titre de votre offre"></input> <!--class="createOfferInput offer-textInput"
-	class="createOfferInput offer-textInput"-->
-					</label>
-				<!--</div>-->
-				<!--<div class="row">-->
-					<label class="item item-input"> <!--col createOfferLabel spaceTop" id="descriptionLabel">-->
-						<input type="text" class="balanced" ng-model="offer.description" placeholder="Description de votre offre"></input> <!--class="createOfferInput offer-textInput"
-	class="createOfferInput offer-textInput"-->
-					</label>
-				<!--</div>-->
-			</div>
-
-			<div class="list list-inset">
-				<label class="item item-input item-select"> <!--createOfferLabel spaceTop col" id="categorieLabel">-->
-					<div class="input-label balanced"> <!--offer-subtitle">-->
-						<strong>Catégorie</strong>
-					</div>
-					<select ng-model="offer.categorie" ng-options="categorie.name group by categorie.parent for categorie in categories">
-						<option value="">Choisir une catégorie</option>
-    			</select>
+			<ion-list type="card">
+				<label class="item item-input item-select" id="categorieLabel">
+				<!--<ion-item>-->
+					
+						<div class="input-label balanced">
+							<strong>Catégorie</strong>
+						</div>
+						<select ng-model="offer.categorie" ng-options="categorie.name group by categorie.parent for categorie in categories">
+							<option value="">Choisir une catégorie</option>
+						</select>
 				</label>
-			<!--</div>-->
-
-			<!--<div class="row">-->
-				<label class="item item-toggle"> <!--col createOfferLabel spaceTop" id="locLabel">-->
-					<!--<div class="row">-->
-					<div class="balanced"> <!--col col-50 offer-subtitle">-->
+				<label class="item item-toggle" id="locLabel">
+					<div class="balanced">
 						<strong>Ma position</strong>
 					</div>
 					<label class="toggle toggle-balanced">
@@ -47,42 +37,44 @@
 							<div class="handle"></div>
 						</div>
 					</label>
-						<!--<button class="col col-50 button button-balanced generalCreateOfferButton text-center" ng-click="updatePosition()">
-							Utiliser mon GPS
-						</button>-->
-					<!--</div>-->
 				</label>
 
 				<label class="item item-input">
-			    <div class="input-label balanced">
-			      <strong>Code Postal</strong>
-			    </div>
-					<!--
-					<input type="text" class="createOfferInput offer-textInput" ng-model="postcode" ng-change="findLocalityFromPostcode()" ng-pattern="regexPostalCode" placeholder="{{postcode}}"></input>
-				-->
-					<input class="text-right" type="text"  ng-model="offer.postcode" ng-change="findLocalityFromPostcode()"></input> <!--id="postalCodeInput"  class="createOfferInput offer-textInput"-->
+					<div class="input-label balanced">
+						<strong>Code Postal</strong>
+					</div>
+					<input class="text-right" type="text"  ng-model="offer.postcode" ng-change="findLocalityFromPostcode()"></input>
 				</label>
 
 				<label class="item item-input item-select">
-			    <div class="input-label balanced">
-			      <strong>Ville</strong>
-			    </div>
+					<div class="input-label balanced">
+						<strong>Ville</strong>
+					</div>
 					<select ng-model="offer.town" ng-options="city for city in cities">
 						<option value="">Votre ville</option>
 					</select>
-			  </label>
-			</div>
+				</label>
+			</ion-list>
 
-			<div class="list list-inset">
-				<label class="item">
-					<span class="balanced"><strong>Photo/Video</strong></span>
-				</label>
-				<label class="item">
+			<ion-list type="list-inset">
+				<ion-item>
+					<span class="balanced"><strong>Photos/Videos</strong></span>
+				</ion-item>
+				<ion-item>
 					<ion-scroll direction="x">
-						<img ng-repeat="image in allImages" ng-src="{{ image.src }}" ng-click="showImages($index)" class="image-list-thumb"/>
+						<img ng-repeat="element in allMultimedia" ng-src="{{imagePreview(element)}}" ng-click="showMultimedia($index)" class="image-list-thumb">
+							<!--<i class="icon ion-play">
+							</i>-->
+						</img>
+						<!--
+						ng-style="{background: url({{imagePreview(element)}}) no-repeat 0 0 scroll,
+						background-size: 100% 100%,
+    height:100%,
+    width:100%}"
+						-->
 					</ion-scroll>
-				</label>
-				<label class="item">
+				</ion-item>
+				<ion-item>
 					<div class="row">
 						<div class="col col-33">
 							<button class="button button-balanced my-file-button icon ion-android-camera" ng-click="takeAPhoto()"></button>
@@ -94,56 +86,8 @@
 							<button class="button button-balanced my-file-button icon ion-android-film" ng-click="recordAVideo()"></button>
 						</div>
 					</div>
-				</label>
-			</div>
-
-			<div class="list list-inset">
-			<!--<div class="row">-->
-				<div class="item"> <!-- createOfferLabel col spaceTop" id="picturesLabel">-->
-					<div class="row">
-						<label class="col balanced text-center"><strong>Vos photos</strong></label> <!--offer-subtitle-->
-					</div>
-					<a class="item item-list-detail">
-						<ion-scroll direction="x">
-							<img ng-repeat="image in allImages" ng-src="{{ image.src }}" ng-click="showImages($index)" class="image-list-thumb"/>
-						</ion-scroll>
-					</a>
-					<div class="row">
-						<div class="col col-50 text-center">
-								<button class="button button-balanced item-icon-center generalCreateOfferButton" id="takePhotoButton" ng-click="takeAPhoto()">
-									<i class="icon ion-android-camera"></i>
-								</button>
-						</div>
-						<div class="col col-50 text-center">
-								<button class="button button-balanced item-icon-center generalCreateOfferButton" id="takePhotoButton" ng-click="importAPhoto()">
-									<i class="icon ion-android-folder-open"></i>
-								</button>
-						</div>
-					</div>
-				<!--</div>-->
-				</div>
-
-
-			<div class="row">
-				<div class="item createOfferLabel col spaceTop">
-					<div class="row">
-						<label class="col balanced offer-subtitle" >Vos vidéos</label>
-					</div>
-					<a class="item item-list-detail">
-						<ion-scroll direction="x">
-							<img ng-repeat="video in allVideos" ng-src="{{urlForClipThumb(video.src)}}" ng-click="showVideos($index)" class="image-list-thumb"/>
-						</ion-scroll>
-					</a>
-					<div class="row">
-						<div class="col text-center">
-							<button class="button button-balanced item-icon-center generalCreateOfferButton" ng-model="offer.video" id="takePhotoButton" ng-click="recordAVideo()">
-								<i class="icon ion-android-film"></i>
-							</button>
-						</div>
-					</div>
-				</div>
-			</div>
-
+				</ion-item>
+			</ion-list>
 
 			<div class="row">
 				<button class="button button-balanced item-icon-right generalCreateOfferButton spaceTop" id="createOfferButton" ng-click="sendNewOfferRequest(offer)">
@@ -152,13 +96,6 @@
 				</button>
 			</div>
 		</form>
-		</div>
-
-		<div>
-			{{geolog}}
-		</div>
-
-	</div>
   </ion-content>
 
 	<script id="templates/loading.html" type="text/ng-template">

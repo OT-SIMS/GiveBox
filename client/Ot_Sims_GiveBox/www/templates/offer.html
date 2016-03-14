@@ -1,8 +1,4 @@
 <ion-modal-view ng-controller="OfferCtrl">
-<!--
-<<<<<<< HEAD
--->
-	
 	<ion-header-bar class="bar-stable my-bar">
 		
 		<div class="buttons">
@@ -27,29 +23,6 @@
 						<h2>{{modalData.Utilisateur.Nom}}</h2>
 						<p>En cours</p>
 					</div>
-					
-<!--
-					=======
-
-
-  <ion-header-bar class="bar-stable my-bar">
-    <div class="buttons">
-      <button class="button button-clear ion-arrow-left-c green my-icon-size" ng-click="closeOffer()"></button>
-    </div>
-    <h1 class="title green nav-title">GiveBox</h1>
-    <div class="buttons">
-      <button class="button button-clear ion-ios-heart-outline green my-margin my-icon-size" ng-click=""></button>
-      <button class="button button-clear ion-android-share-alt green my-icon-size" ng-click=""></button>
-    </div>
-  </ion-header-bar>
-  <ion-content>
-    <div class="list card my-card">
-      <div class="item item-avatar">
-        <img>
-        <h2>{{modalData.Utilisateur.Prenom}} {{modalData.Utilisateur.Nom}}</h2>
-        <p>En cours</p>
-      </div>
->>>>>>> e21b139e87a7b12d343080036ec44e0692638bd9-->
 
 					<div class="item item-body">
 						<h3>{{modalData.Titre}}</h3>
@@ -63,7 +36,7 @@
 						</p>
 						
 						<div class="row">
-							<div class="col"
+							<div class="col">
 								<p>
 									<i class="icon ion-location my-margin"></i>{{modalData.Latitude}}, {{modalData.Longitude}}
 								</p>
@@ -84,7 +57,7 @@
 				<br>
 			</ion-slide>
 			<ion-slide>
-				<ui-gmap-google-map center='map.center' zoom='map.zoom'>
+				<ui-gmap-google-map center='map.center' zoom='map.zoom' dragging="false">
 					<ui-gmap-marker coords=marker.coords options="marker.options" events="marker.events" idkey="marker.id" click="marker.click" labelContent="marker.labelContent" labelAnchor="marker.labelAnchor">
 					</ui-gmap-marker>
 					
