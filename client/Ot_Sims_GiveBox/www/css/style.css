@@ -222,6 +222,11 @@ input[type=text]
 .wdith.max {
   width:100% !important;
 }
+
+.my-file-button{
+  border-radius: 50%;
+  padding:0;
+}
 /********/
 
 
@@ -297,4 +302,14 @@ input[type=text]
 .no-product-yet{
   padding-top: 100px;
   text-align: center;
+}
+
+/******************/
+/* UPDATE PROFILE */
+/******************/
+.my-button-width{
+  width:100%;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  text-align: left;
 }
