@@ -6,6 +6,7 @@ angular.module('starter.controllers.CreateOffer', [])
 	$scope.allImages = [];
 	$scope.allImagesObject = [];
 	$scope.allVideos = [];
+	$scope.location = {checked: false}
 
 	$scope.showImages = function(index) {
 		$scope.activeSlide = index;
@@ -355,16 +356,22 @@ angular.module('starter.controllers.CreateOffer', [])
 
       };
 
-      $scope.updatePosition = function() {
-	      var options = {timeout: 10000}
-	      
-	      // onSuccess Callback
-	      // This method accepts a Position object, which contains the
-	      // current GPS coordinates
-	      //
-	      var onSuccess = function(position) {
-		      /*
-		      alert('Latitude: '          + position.coords.latitude          + '\n' +
+	$scope.updatePosition = function() {
+		if(!$scope.location.checked){
+			console.log("not checked");
+			return;
+			
+		}
+		
+		var options = {timeout: 10000}
+		
+		// onSuccess Callback
+		// This method accepts a Position object, which contains the
+		// current GPS coordinates
+		//
+		var onSuccess = function(position) {
+			/*
+			alert('Latitude: '          + position.coords.latitude          + '\n' +
 				'Longitude: '         + position.coords.longitude         + '\n' +
 				'Altitude: '          + position.coords.altitude          + '\n' +
 				'Accuracy: '          + position.coords.accuracy          + '\n' +
@@ -374,25 +381,30 @@ angular.module('starter.controllers.CreateOffer', [])
 				'Timestamp: '         + position.timestamp                + '\n');
 			      */
 
-		      $scope.offer.latitude = position.coords.latitude;
-		      $scope.offer.longitude = position.coords.longitude;
+			$scope.offer.latitude = position.coords.latitude;
+			$scope.offer.longitude = position.coords.longitude;
 
-		      $scope.convertCoordinates();
+			$scope.convertCoordinates();
 	      };
 
 
 
-	      // onError Callback receives a PositionError object
-	      //
-	      function onError(error) {
-		      console.log("error");
-		      alert('code: '    + error.code    + '\n' + 'message: ' + error.message + '\n');
-	      }
+		// onError Callback receives a PositionError object
+		//
+		function onError(error) {
+			if(error.code == 3){
+				alert("Temps d'attente expiré : la géolocalisation semble désactivée.");
+			      
+			}else{
+				alert('code: '    + error.code    + '\n' + 'message: ' + error.message + '\n');
+	      
+			}
+		}
 
-	      navigator.geolocation.getCurrentPosition(onSuccess, onError, options);
+		navigator.geolocation.getCurrentPosition(onSuccess, onError, options);
 
 
-      };
+	};
 
       $scope.findLocalityFromPostcode = function() {
 	      //https://maps.googleapis.com/maps/api/geocode/json?components=postal_code:69100|country:France

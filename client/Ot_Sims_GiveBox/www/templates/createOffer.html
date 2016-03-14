@@ -38,15 +38,15 @@
 			<!--<div class="row">-->
 				<label class="item item-toggle"> <!--col createOfferLabel spaceTop" id="locLabel">-->
 					<!--<div class="row">-->
-						<div class="balanced"> <!--col col-50 offer-subtitle">-->
-							<strong>Ma position</strong>
+					<div class="balanced"> <!--col col-50 offer-subtitle">-->
+						<strong>Ma position</strong>
+					</div>
+					<label class="toggle toggle-balanced">
+						<input type="checkbox" ng-click="updatePosition()" ng-model="location.checked">
+						<div class="track">
+							<div class="handle"></div>
 						</div>
-						<label class="toggle toggle-balanced">
-				       <input type="checkbox" ng-click="updatePosition()">
-				       <div class="track">
-				         <div class="handle"></div>
-				       </div>
-				     </label>
+					</label>
 						<!--<button class="col col-50 button button-balanced generalCreateOfferButton text-center" ng-click="updatePosition()">
 							Utiliser mon GPS
 						</button>-->
