@@ -31,6 +31,10 @@
       <End Role="Categorie" EntitySet="CategorieSet" />
       <End Role="Offre" EntitySet="OffreSet" />
     </AssociationSet>
+    <AssociationSet Name="UtilisateurFichier" Association="Model.Store.UtilisateurFichier">
+      <End Role="Utilisateur" EntitySet="UtilisateurSet" />
+      <End Role="Fichier" EntitySet="FichierSet" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="UtilisateurSet">
     <Key>
@@ -70,12 +74,13 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="OffreId" Type="int" Nullable="false" />
+    <Property Name="OffreId" Type="int" Nullable="true" />
     <Property Name="FichierTypeId" Type="int" Nullable="false" />
     <Property Name="Chemin" Type="nvarchar(max)" Nullable="false" />
     <Property Name="Titre" Type="nvarchar(max)" Nullable="false" />
     <Property Name="url" Type="nvarchar(max)" Nullable="false" />
     <Property Name="contentType" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="UtilisateurFichier_Fichier_Id" Type="int" Nullable="true" />
   </EntityType>
   <EntityType Name="FichierTypeSet">
     <Key>
@@ -97,7 +102,7 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="OffreFichier">
-    <End Role="Offre" Type="Model.Store.OffreSet" Multiplicity="1" />
+    <End Role="Offre" Type="Model.Store.OffreSet" Multiplicity="0..1" />
     <End Role="Fichier" Type="Model.Store.FichierSet" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Offre">
@@ -144,6 +149,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="UtilisateurFichier">
+    <End Role="Utilisateur" Type="Model.Store.UtilisateurSet" Multiplicity="0..1" />
+    <End Role="Fichier" Type="Model.Store.FichierSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Utilisateur">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Fichier">
+        <PropertyRef Name="UtilisateurFichier_Fichier_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -158,8 +175,8 @@
           <EntitySet Name="CategorieSet" EntityType="Model.Categorie" />
           <EntitySet Name="FichierSet" EntityType="Model.Fichier" />
           <AssociationSet Name="OffreFichier" Association="Model.OffreFichier">
-            <End Role="Offre" EntitySet="OffreSet" />
-            <End Role="Fichier" EntitySet="FichierSet" />
+            <End EntitySet="OffreSet" Role="Offre" />
+            <End EntitySet="FichierSet" Role="Fichier" />
           </AssociationSet>
           <AssociationSet Name="CategorieCategorie" Association="Model.CategorieCategorie">
             <End Role="Categorie" EntitySet="CategorieSet" />
@@ -174,6 +191,10 @@
             <End Role="Categorie" EntitySet="CategorieSet" />
             <End Role="Offre" EntitySet="OffreSet" />
           </AssociationSet>
+          <AssociationSet Name="UtilisateurFichier" Association="Model.UtilisateurFichier">
+            <End Role="Utilisateur" EntitySet="UtilisateurSet" />
+            <End Role="Fichier" EntitySet="FichierSet" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Utilisateur">
           <Key>
@@ -185,6 +206,7 @@
           <Property Name="Prenom" Type="String" Nullable="false" />
           <Property Name="DateNaissance" Type="DateTime" Nullable="false" />
           <Property Name="Telephone" Type="String" Nullable="false" />
+          <NavigationProperty Name="Fichier" Relationship="Model.UtilisateurFichier" FromRole="Utilisateur" ToRole="Fichier" />
         </EntityType>
         <EntityType Name="Offre">
           <Key>
@@ -228,7 +250,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="OffreId" Type="Int32" Nullable="false" />
+          <Property Name="OffreId" Type="Int32" Nullable="true" />
           <NavigationProperty Name="FichierType" Relationship="Model.FichierFichierType" FromRole="Fichier" ToRole="FichierType" />
           <Property Name="FichierTypeId" Type="Int32" Nullable="false" />
           <Property Name="Chemin" Type="String" Nullable="false" />
@@ -237,8 +259,8 @@
           <Property Name="contentType" Type="String" Nullable="false" />
         </EntityType>
         <Association Name="OffreFichier">
-          <End Type="Model.Offre" Role="Offre" Multiplicity="1" />
-          <End Type="Model.Fichier" Role="Fichier" Multiplicity="*" />
+          <End Type="Model.Offre" Multiplicity="0..1" Role="Offre" />
+          <End Type="Model.Fichier" Multiplicity="*" Role="Fichier" />
           <ReferentialConstraint>
             <Principal Role="Offre">
               <PropertyRef Name="Id" />
@@ -290,6 +312,10 @@
               <PropertyRef Name="CategorieId" />
             </Dependent>
           </ReferentialConstraint>
+        </Association>
+        <Association Name="UtilisateurFichier">
+          <End Type="Model.Utilisateur" Role="Utilisateur" Multiplicity="0..1" />
+          <End Type="Model.Fichier" Role="Fichier" Multiplicity="0..1" />
         </Association>
       </Schema>
     </edmx:ConceptualModels>
@@ -354,6 +380,15 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <AssociationSetMapping Name="UtilisateurFichier" TypeName="Model.UtilisateurFichier" StoreEntitySet="FichierSet">
+      <EndProperty Name="Utilisateur">
+        <ScalarProperty Name="Id" ColumnName="UtilisateurFichier_Fichier_Id" />
+      </EndProperty>
+      <EndProperty Name="Fichier">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+      <Condition ColumnName="UtilisateurFichier_Fichier_Id" IsNull="false" />
+    </AssociationSetMapping>
   </EntityContainerMapping>
 </Mapping></edmx:Mappings>
   </edmx:Runtime>
