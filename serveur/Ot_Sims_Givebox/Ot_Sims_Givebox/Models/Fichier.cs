@@ -15,7 +15,7 @@ namespace Ot_Sims_Givebox.Models
     public partial class Fichier
     {
         public int Id { get; set; }
-        public int OffreId { get; set; }
+        public Nullable<int> OffreId { get; set; }
         public int FichierTypeId { get; set; }
         public string Chemin { get; set; }
         public string Titre { get; set; }

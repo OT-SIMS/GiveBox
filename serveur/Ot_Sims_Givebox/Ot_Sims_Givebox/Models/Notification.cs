@@ -12,15 +12,19 @@ namespace Ot_Sims_Givebox.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Utilisateur
+    public partial class Notification
     {
-        public int Id { get; set; }
-        public string Nom { get; set; }
-        public string UserId { get; set; }
-        public string Prenom { get; set; }
-        public System.DateTime DateNaissance { get; set; }
-        public string Telephone { get; set; }
+        public Notification()
+        {
+            this.EstAccepte = false;
+        }
     
-        public virtual Fichier Fichier { get; set; }
+        public int Id { get; set; }
+        public int UtilisateurId { get; set; }
+        public int OffreId { get; set; }
+        public System.DateTime Date { get; set; }
+        public bool EstAccepte { get; set; }
+    
+        public virtual Utilisateur Utilisateur { get; set; }
     }
 }
