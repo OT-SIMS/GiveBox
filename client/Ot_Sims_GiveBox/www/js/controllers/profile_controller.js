@@ -1,6 +1,6 @@
 angular.module('starter.controllers.Profile', [])
 
-.controller('ProfileCtrl', function($scope, $ionicModal, $ionicSlideBoxDelegate) {
+.controller('ProfileCtrl', function($scope, $ionicModal, $ionicSlideBoxDelegate, authService) {
 
   $scope.$myIndex = 0;
 
@@ -14,6 +14,16 @@ angular.module('starter.controllers.Profile', [])
 
   $scope.changeIndex = function(to){
     $ionicSlideBoxDelegate.slide(to);
+  }
+
+  $scope.updateProfile = function(){
+    $scope.modal.hide();
+    $ionicModal.fromTemplateUrl('templates/updateProfile.html', {
+      scope: $scope
+    }).then(function(modal) {
+      $scope.modal = modal;
+      $scope.modal.show();
+    });
   }
 
 });

@@ -19,7 +19,8 @@ angular.module('starter', [
   'starter.controllers.Profile',
   'starter.controllers.CreateProfile',
   'starter.controllers.CompleteProfile',
-  
+  'starter.controllers.UpdateProfile',
+
   'starter.services.Auth',
   'starter.services.AuthInterceptor',
   'starter.services.Video',
@@ -40,7 +41,6 @@ angular.module('starter', [
 .run(['authService', function (authService) {
     authService.fillAuthData();
 }])
-
 
 .config(function ($httpProvider) {
     $httpProvider.interceptors.push('authInterceptorService');
@@ -74,8 +74,8 @@ angular.module('starter', [
     }
   })
 
-.state('app.createOffer', {
-  url: '/createOffer',
+  .state('app.createOffer', {
+    url: '/createOffer',
     views: {
       'menuContent': {
         templateUrl: 'templates/createOffer.html',
@@ -83,34 +83,6 @@ angular.module('starter', [
       }
     }
   })
-
-  .state('app.browse', {
-      url: '/browse',
-      views: {
-        'menuContent': {
-          templateUrl: 'templates/browse.html'
-        }
-      }
-    })
-    .state('app.playlists', {
-      url: '/playlists',
-      views: {
-        'menuContent': {
-          templateUrl: 'templates/playlists.html',
-          controller: 'PlaylistsCtrl'
-        }
-      }
-    })
-
-  .state('app.single', {
-    url: '/playlists/:playlistId',
-    views: {
-      'menuContent': {
-        templateUrl: 'templates/playlist.html',
-        controller: 'PlaylistCtrl'
-      }
-    }
-  });
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/app/home');
 });
