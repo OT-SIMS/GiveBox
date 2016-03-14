@@ -3,7 +3,6 @@ angular.module('starter.services.Login', [])
 
 .service('loginService', function($ionicModal, $rootScope) {
   var init = function(tpl, $scope) {
-	  console.log("init");
 
     var promise;
     $scope = $rootScope.$new();

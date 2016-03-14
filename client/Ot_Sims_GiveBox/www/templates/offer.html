@@ -1,57 +1,84 @@
 <ion-modal-view ng-controller="OfferCtrl">
-  <ion-header-bar class="bar-stable my-bar">
-    <div class="buttons">
-      <button class="button button-clear ion-arrow-left-c green my-icon-size" ng-click="closeOffer()"></button>
-    </div>
-    <h1 class="title green nav-title">GiveBox</h1>
-    <div class="buttons">
-      <button class="button button-clear ion-ios-heart-outline green my-margin my-icon-size" ng-click=""></button>
-      <button class="button button-clear ion-android-share-alt green my-icon-size" ng-click=""></button>
-    </div>
-  </ion-header-bar>
-  <ion-content>
-    <div class="list card my-card">
-      <div class="item item-avatar">
-        <img>
-        <h2>{{modalData.Utilisateur.Nom}}</h2>
-        <p>En cours</p>
-      </div>
+	
+	<ion-header-bar class="bar-stable my-bar">
+		
+		<div class="buttons">
+			<button class="button button-clear ion-arrow-left-c green my-icon-size" ng-click="closeOffer()"></button>
+		</div>
+		<h1 class="title green nav-title">GiveBox</h1>
+		<div class="buttons">
+			<button class="button button-clear ion-ios-heart-outline green my-margin my-icon-size" ng-click=""></button>
+			<button class="button button-clear ion-android-share-alt green my-icon-size" ng-click=""></button>
+		</div>
+		
+		
+			
+	</ion-header-bar>
+		<ion-content>
+		<ion-slide-box on-slide-changed="slideChanged(index)">
+			<ion-slide>
+				<div class="list card my-card">
+					<div class="item item-avatar">
+						<img>
+						<h2>{{modalData.Utilisateur.Nom}}</h2>
+						<p>En cours</p>
+					</div>
 
-      <div class="item item-body">
-        <h3>{{modalData.Titre}}</h3>
-        <ion-slide-box>
-          <ion-slide ng-repeat="image in modalData.Fichier">
-            <img id="offerImg" class="full-image" ng-src="{{image.url}}">
-          </ion-slide>
-        </ion-slide-box>
-        <p>
-          {{modalData.Description}}
-        </p>
-        <p>
-          <i class="icon ion-location my-margin"></i>{{modalData.marker.latitude}}, {{modalData.Longitude}}
-        </p>
-        <!--<p>
-          <a href="#" class="subdued">1 Like</a>
-          <a href="#" class="subdued">5 Comments</a>
-        </p>-->
-      </div>
-      
-      
-      
-      
-    </div>
-    <br>
-    
-    
-    
-  </ion-content>
-  <ui-gmap-google-map center='map.center' zoom='map.zoom'>
-	<ui-gmap-marker coords=map.coords options="marker.options" events="marker.events" idkey="marker.id">
-        </ui-gmap-marker>
-      </ui-gmap-google-map>
-  <div class="bar bar-footer">
-    <a class="button icon-left ion-help-circled button-outline button-balanced my-margin-left">Pose une question</a>
+					<div class="item item-body">
+						<h3>{{modalData.Titre}}</h3>
+						<ion-slide-box>
+							<ion-slide ng-repeat="image in modalData.Fichier">
+							<img id="offerImg" class="full-image" ng-src="{{image.url}}">
+							</ion-slide>
+						</ion-slide-box>
+						<p>
+							{{modalData.Description}}
+						</p>
+						
+						<div class="row">
+							<div class="col"
+								<p>
+									<i class="icon ion-location my-margin"></i>{{modalData.Latitude}}, {{modalData.Longitude}}
+								</p>
+							</div>
+							<div class="col text-right">
+							<button class="button icon-right ion-chevron-right button-balanced" ng-click="next()" ng-show="slideIndex == 0">
+								Carte
+							</button>
+							</div>
+						</div>
+						<!--<p>
+							<a href="#" class="subdued">1 Like</a>
+							<a href="#" class="subdued">5 Comments</a>
+						</p>-->
+					</div>
+				</div>
 
-    <a class="button icon-left ion-android-contact button-balanced my-margin-right">Contacte l'annonceur</a>
-  </div>
+				<br>
+			</ion-slide>
+			<ion-slide>
+				<ui-gmap-google-map center='map.center' zoom='map.zoom'>
+					<ui-gmap-marker coords=marker.coords options="marker.options" events="marker.events" idkey="marker.id" click="marker.click" labelContent="marker.labelContent" labelAnchor="marker.labelAnchor">
+					</ui-gmap-marker>
+					
+				</ui-gmap-google-map>
+				
+				<div class="row">
+					<div class="col text-center">
+						<button class="button icon-left ion-chevron-left button-balanced" ng-click="previous()" ng-show="slideIndex == 1">
+							Description
+						</button>
+					</div>
+				</div>
+			</ion-slide>
+		</ion-slide-box>
+
+
+
+	</ion-content>
+	<div class="bar bar-footer">
+		<a class="button icon-left ion-help-circled button-outline button-balanced my-margin-left">Pose une question</a>
+
+		<a class="button icon-left ion-android-contact button-balanced my-margin-right">Contacte l'annonceur</a>
+	</div>
 </ion-modal-view>

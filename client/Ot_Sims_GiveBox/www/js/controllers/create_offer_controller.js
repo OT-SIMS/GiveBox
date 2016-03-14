@@ -356,6 +356,8 @@ angular.module('starter.controllers.CreateOffer', [])
       };
 
       $scope.updatePosition = function() {
+	      var options = {timeout: 10000}
+	      
 	      // onSuccess Callback
 	      // This method accepts a Position object, which contains the
 	      // current GPS coordinates
@@ -387,7 +389,7 @@ angular.module('starter.controllers.CreateOffer', [])
 		      alert('code: '    + error.code    + '\n' + 'message: ' + error.message + '\n');
 	      }
 
-	      navigator.geolocation.getCurrentPosition(onSuccess, onError);
+	      navigator.geolocation.getCurrentPosition(onSuccess, onError, options);
 
 
       };
