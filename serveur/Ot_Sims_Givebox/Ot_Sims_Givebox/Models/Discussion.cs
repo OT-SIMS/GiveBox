@@ -12,27 +12,14 @@ namespace Ot_Sims_Givebox.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Offre
+    public partial class Discussion
     {
-        public Offre()
-        {
-            this.Fichier = new HashSet<Fichier>();
-            this.Discussion = new HashSet<Discussion>();
-        }
-    
         public int Id { get; set; }
+        public int OffreId { get; set; }
+        public string Message { get; set; }
         public int UtilisateurId { get; set; }
-        public string Titre { get; set; }
-        public string Description { get; set; }
-        public Nullable<double> Latitude { get; set; }
-        public Nullable<double> Longitude { get; set; }
-        public int CategorieId { get; set; }
-        public string CodePostal { get; set; }
-        public string Ville { get; set; }
+        public System.DateTime DateMsg { get; set; }
     
         public virtual Utilisateur Utilisateur { get; set; }
-        public virtual ICollection<Fichier> Fichier { get; set; }
-        public virtual Categorie Categorie { get; set; }
-        public virtual ICollection<Discussion> Discussion { get; set; }
     }
 }

@@ -195,6 +195,15 @@
             <End Role="Utilisateur" EntitySet="UtilisateurSet" />
             <End Role="Fichier" EntitySet="FichierSet" />
           </AssociationSet>
+          <EntitySet Name="DiscussionSet" EntityType="Model.Discussion" />
+          <AssociationSet Name="DiscussionOffre" Association="Model.DiscussionOffre">
+            <End Role="Discussion" EntitySet="DiscussionSet" />
+            <End Role="Offre" EntitySet="OffreSet" />
+          </AssociationSet>
+          <AssociationSet Name="UtilisateurDiscussion" Association="Model.UtilisateurDiscussion">
+            <End Role="Utilisateur" EntitySet="UtilisateurSet" />
+            <End Role="Discussion" EntitySet="DiscussionSet" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Utilisateur">
           <Key>
@@ -224,6 +233,7 @@
           <Property Name="CategorieId" Type="Int32" Nullable="false" />
           <Property Name="CodePostal" Type="String" Nullable="false" />
           <Property Name="Ville" Type="String" Nullable="false" />
+          <NavigationProperty Name="Discussion" Relationship="Model.DiscussionOffre" FromRole="Offre" ToRole="Discussion" />
         </EntityType>
         <Association Name="UtilisateurOffre">
           <End Type="Model.Utilisateur" Role="Utilisateur" Multiplicity="1" />
@@ -316,6 +326,41 @@
         <Association Name="UtilisateurFichier">
           <End Type="Model.Utilisateur" Role="Utilisateur" Multiplicity="0..1" />
           <End Type="Model.Fichier" Role="Fichier" Multiplicity="0..1" />
+        </Association>
+        <EntityType Name="Discussion">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OffreId" Type="Int32" Nullable="false" />
+          <Property Name="Message" Type="String" Nullable="false" />
+          <NavigationProperty Name="Utilisateur" Relationship="Model.UtilisateurDiscussion" FromRole="Discussion" ToRole="Utilisateur" />
+          <Property Name="UtilisateurId" Type="Int32" Nullable="false" />
+          <Property Name="DateMsg" Type="DateTime" Nullable="false" />
+        </EntityType>
+        <Association Name="DiscussionOffre">
+          <End Type="Model.Discussion" Role="Discussion" Multiplicity="*" />
+          <End Type="Model.Offre" Role="Offre" Multiplicity="1" />
+          <ReferentialConstraint>
+            <Principal Role="Offre">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Discussion">
+              <PropertyRef Name="OffreId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="UtilisateurDiscussion">
+          <End Type="Model.Utilisateur" Role="Utilisateur" Multiplicity="1" />
+          <End Type="Model.Discussion" Role="Discussion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Utilisateur">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Discussion">
+              <PropertyRef Name="UtilisateurId" />
+            </Dependent>
+          </ReferentialConstraint>
         </Association>
       </Schema>
     </edmx:ConceptualModels>

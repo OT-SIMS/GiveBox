@@ -191,6 +191,14 @@ namespace Ot_Sims_Givebox.Controllers
             }
 
         }
+        //POST: api/offres/dicussion
+        public async Task<IHttpActionResult> PostMsg([FromBody] string msg)
+        {
+            try
+            {
+                if()
+            }
+        }
 
         // DELETE: api/Offres/5
         [ResponseType(typeof(Offre))]

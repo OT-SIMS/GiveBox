@@ -16,6 +16,9 @@
         <AssociationConnector Association="Model.FichierFichierType" />
         <AssociationConnector Association="Model.CategorieOffre" />
         <AssociationConnector Association="Model.UtilisateurFichier" />
+        <EntityTypeShape EntityType="Model.Discussion" Width="1.5" PointX="1" PointY="1.875" />
+        <AssociationConnector Association="Model.DiscussionOffre" />
+        <AssociationConnector Association="Model.UtilisateurDiscussion" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
