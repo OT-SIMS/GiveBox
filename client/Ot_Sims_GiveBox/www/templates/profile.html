@@ -5,34 +5,35 @@
     </div>
     <h1 class="title green nav-title">GiveBox</h1>
     <div class="buttons">
-      <button class="button button-clear ion-ios-settings-strong green my-icon-size" ng-click=""></button>
+      <button class="button button-clear ion-compose green my-icon-size" ng-click="updateProfile()"></button>
     </div>
   </ion-header-bar>
   <ion-content class="has-bottom">
     <div class="item item-avatar">
       <img class="my-background-green">
-      <h2>User Name</h2>
+      <h2 ng-if="authentication.userLastName==''">{{authentication.userName}}</h2>
+      <h2 ng-if="authentication.userLastName!=''">{{authentication.userFirstName}} {{authentication.userLastName}}</h2>
       <p><i class="icon ion-location "></i> User Location</p>
     </div>
     <div class="button-bar">
-      <a class="button my-background-white" ng-class="{'my-button-active': $myIndex === 0}" ng-click="changeIndex(0)">Giving</a>
-      <a class="button my-background-white" ng-class="{'my-button-active': $myIndex === 1}" ng-click="changeIndex(1)">Received</a>
-      <a class="button my-background-white" ng-class="{'my-button-active': $myIndex === 2}" ng-click="changeIndex(2)">Favorites</a>
+      <a class="button my-background-white" ng-class="{'my-button-active': $myIndex === 0}" ng-click="changeIndex(0)">Dons</a>
+      <a class="button my-background-white" ng-class="{'my-button-active': $myIndex === 1}" ng-click="changeIndex(1)">Reçu</a>
+      <a class="button my-background-white" ng-class="{'my-button-active': $myIndex === 2}" ng-click="changeIndex(2)">Favoris</a>
     </div>
     <ion-slide-box show-pager=false on-slide-changed="slideHasChanged($index)">
       <ion-slide>
         <div class="box">
-          <p class="my-grey no-product-yet">No product in this category (yet!)</p>
+          <p class="my-grey no-product-yet">Pas (encore) de produit ici !</p>
         </div>
       </ion-slide>
       <ion-slide>
         <div class="box">
-          <p class="my-grey no-product-yet">No product in this category (yet!)</p>
+          <p class="my-grey no-product-yet">Pas (encore) de produit ici !</p>
         </div>
       </ion-slide>
       <ion-slide>
         <div class="box">
-          <p class="my-grey no-product-yet">No product in this category (yet!)</p>
+          <p class="my-grey no-product-yet">Pas (encore) de produit ici !</p>
         </div>
       </ion-slide>
     </ion-slide-box>

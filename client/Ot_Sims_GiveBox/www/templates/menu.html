@@ -13,6 +13,8 @@
       <ion-nav-buttons side="right">
         <button class="button button-icon button-clear ion-ios-search-strong green" ng-click="vm.toggle()" ng-show="$state.includes('app.home')">
         </button>
+        <button class="button button-icon button-clear ion-android-options green" ng-click="" ng-show="$state.includes('app.home')">
+        </button>
       </ion-nav-buttons>
     </ion-nav-bar>
     <ion-nav-view name="menuContent"></ion-nav-view>
@@ -23,19 +25,26 @@
     </ion-header-bar>
     <ion-content>
       <ion-list>
-        <ion-item class="item item-avatar my-background-green no-border">
+        <ion-item class="item item-avatar my-background-green no-border" ng-if="authentication.isAuth">
             <img class="my-background-white">
-            <h2 class="title white">{{userConnected.userName}}</h2>
+            <h2 ng-if="authentication.userLastName==''" class="title white">{{authentication.userName}}</h2>
+            <h2 ng-if="authentication.userLastName!=''" class="title white">{{authentication.userFirstName}} {{authentication.userLastName}}</h2>
             <p><i class="icon ion-location"></i> User Location</p>
         </ion-item>
         <ion-item class="item-icon-left" menu-close href="#/app/home">
-          <i class="icon ion-home"></i>Browse
+          <i class="icon ion-home"></i>Catalogue
         </ion-item>
         <ion-item class="item-icon-left" menu-close href="#/app/createOffer">
-          <i class="icon ion-android-camera"></i>Give Your Stuff
+          <i class="icon ion-android-camera"></i>Donne tes trucs
         </ion-item>
-        <ion-item class="item-icon-left" menu-close ng-click="openProfile()">
-          <i class="icon ion-person"></i>My profile
+        <ion-item class="item-icon-left" menu-close ng-click="openLogin()" ng-if="!authentication.isAuth" >
+          <i class="icon ion-person"></i>Log In
+        </ion-item>
+        <ion-item class="item-icon-left" menu-close ng-click="openProfile()" ng-if="authentication.isAuth" >
+          <i class="icon ion-person"></i>Profil
+        </ion-item>
+        <ion-item class="item-icon-left" menu-close ng-click="logOut()" ng-if="authentication.isAuth" >
+          <i class="icon ion-android-exit"></i>Log Out
         </ion-item>
       </ion-list>
     </ion-content>

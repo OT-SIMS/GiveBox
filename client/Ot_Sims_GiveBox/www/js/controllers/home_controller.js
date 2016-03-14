@@ -116,6 +116,11 @@ angular.module('starter.controllers.Home', [])
 
   $scope.openOffer = function(offer){
     $scope.modalData  = offer;
+    var markerOptions = {
+      latitude : offer.Latitude,
+      longitude : offer.LOngitude
+    };
+    $scope.modalData.marker = markerOptions;
     $scope.modal.show();
   }
 
@@ -123,23 +128,4 @@ angular.module('starter.controllers.Home', [])
     $scope.modal.hide();
   };
 
-
-  /*$scope.items = [
-    {img: 'img/pokemon_tshirt.jpg'},
-    {img: 'img/pokemon_socks.jpg'},
-    {img: 'img/pokemon_cards.jpg'},
-    {img: 'img/pokemon_cap.jpg'},
-    {img: 'img/pokemon_socks.jpg'},
-    {img: 'img/pokemon_tshirt.jpg'},
-    {img: 'img/pokemon_cap.jpg'},
-    {img: 'img/pokemon_cards.jpg'},
-    {img: 'img/pokemon_tshirt.jpg'},
-    {img: 'img/pokemon_socks.jpg'},
-    {img: 'img/pokemon_cards.jpg'},
-    {img: 'img/pokemon_cap.jpg'},
-    {img: 'img/pokemon_socks.jpg'},
-    {img: 'img/pokemon_tshirt.jpg'},
-    {img: 'img/pokemon_cap.jpg'},
-    {img: 'img/pokemon_cards.jpg'}
-  ]*/
 });

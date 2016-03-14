@@ -6,10 +6,10 @@ angular.module('starter.controllers.CompleteProfile', [])
 
   $scope.completeProfileOnServer = function() {
       var profileData = {
-        "nom": profileData.lastName,
-        "prenom" : profileData.firstName,
-        "datenaissance" : profileData.birthDate,
-        "telephone" : profileData.phoneNumber
+        "nom": $scope.completion.lastName,
+        "prenom" : $scope.completion.firstName,
+        "datenaissance" : $scope.completion.birthDate,
+        "telephone" : $scope.completion.phoneNumber
       }
 
       var req = {

@@ -7,8 +7,8 @@
 angular.module('starter', [
   'ionic',
   'ngCordova',
-  'underscore',
   'LocalStorageModule',
+  'uiGmapgoogle-maps',
 
   'starter.controllers.CreateOffer',
   'starter.controllers.Home',
@@ -19,9 +19,12 @@ angular.module('starter', [
   'starter.controllers.Profile',
   'starter.controllers.CreateProfile',
   'starter.controllers.CompleteProfile',
-  'starter.services.Auth',
+  'starter.controllers.UpdateProfile',
 
-  'starter.services.AuthInterceptor'
+  'starter.services.Auth',
+  'starter.services.AuthInterceptor',
+  'starter.services.Video',
+  'starter.services.Login'
 ])
 
 .run(function($ionicPlatform) {
@@ -38,29 +41,6 @@ angular.module('starter', [
 .run(['authService', function (authService) {
     authService.fillAuthData();
 }])
-
-.service('loginService', ['$modal',
-        function($modal) {
-          this.LoggedIn = true;
-          this.Login = function() {
-            var instance = $modal.open({
-              template: 'Login screen <alert type="warning">some message</alert>',
-            });
-            return instance.result;
-          }
-        }
-      ])
-
-.run(['$ionicModal', '$rootScope', function($ionicModal, $rootScope) {
-  $ionicModal.fromTemplateUrl('templates/login.html', {
-      scope: $rootScope,
-      animation: 'slide-in-up'
-    }).then(function(modal) {
-      $rootScope.modal = modal;
-    });
-}])
-
-
 
 .config(function ($httpProvider) {
     $httpProvider.interceptors.push('authInterceptorService');
@@ -94,8 +74,8 @@ angular.module('starter', [
     }
   })
 
-.state('app.createOffer', {
-  url: '/createOffer',
+  .state('app.createOffer', {
+    url: '/createOffer',
     views: {
       'menuContent': {
         templateUrl: 'templates/createOffer.html',
@@ -103,34 +83,6 @@ angular.module('starter', [
       }
     }
   })
-
-  .state('app.browse', {
-      url: '/browse',
-      views: {
-        'menuContent': {
-          templateUrl: 'templates/browse.html'
-        }
-      }
-    })
-    .state('app.playlists', {
-      url: '/playlists',
-      views: {
-        'menuContent': {
-          templateUrl: 'templates/playlists.html',
-          controller: 'PlaylistsCtrl'
-        }
-      }
-    })
-
-  .state('app.single', {
-    url: '/playlists/:playlistId',
-    views: {
-      'menuContent': {
-        templateUrl: 'templates/playlist.html',
-        controller: 'PlaylistCtrl'
-      }
-    }
-  });
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/app/home');
 });

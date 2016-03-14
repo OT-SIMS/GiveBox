@@ -8,7 +8,11 @@ angular.module('starter.services.Auth', [])
 
     var _authentication = {
         isAuth: false,
-        userName: ""
+        userName: "",
+        userLastName: "",
+        userFirstName: "",
+        userAvatar: "",
+        userLocation: ""
     };
 
     var _saveRegistration = function (registration) {
@@ -57,6 +61,10 @@ angular.module('starter.services.Auth', [])
 
         _authentication.isAuth = false;
         _authentication.userName = "";
+        _authentication.userLastName = "";
+        _authentication.userFirstName = "";
+        _authentication.userAvatar = "";
+        _authentication.userLocation = "";
 
     };
 
