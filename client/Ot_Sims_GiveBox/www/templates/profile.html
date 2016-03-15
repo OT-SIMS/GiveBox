@@ -23,7 +23,15 @@
     <ion-slide-box show-pager=false on-slide-changed="slideHasChanged($index)">
       <ion-slide>
         <div class="box">
-          <p class="my-grey no-product-yet">Pas (encore) de produit ici !</p>
+          <div class="list">
+              <a class="item item-thumbnail-left" ng-repeat="offer in myOffers" ng-click="openOffer(offer)">
+                <img ng-src="{{item.Fichier[0].url}}" ng-if="item.Fichier[0] != null">
+                <img ng-src="img/no_img.jpg" ng-if="item.Fichier[0] == null">
+                <h2>{{offer.Titre}}</h2>
+                <p>{{offer.Description}}  </p>
+              </a>
+          </div>
+          <p class="my-grey no-product-yet" ng-if="myOffers==''">Pas (encore) de produit ici !</p>
         </div>
       </ion-slide>
       <ion-slide>

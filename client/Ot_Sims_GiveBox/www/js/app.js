@@ -8,6 +8,11 @@ angular.module('starter', [
   'ionic',
   'ngCordova',
   'LocalStorageModule',
+<<<<<<< HEAD
+=======
+  'uiGmapgoogle-maps',
+  'angular.filter',
+>>>>>>> 06cad85e0289c9bf8523744b5237d7df087dc9fb
 
   'starter.controllers.CreateOffer',
   'starter.controllers.Home',
@@ -46,9 +51,7 @@ angular.module('starter', [
 })
 
 .constant('CONFIG', {
-    //serverUrl: "http://localhost/givebox/"
-    //serverUrl: "http://yoda.rispal.info/givebox/",
-	serverUrl: "http://192.168.0.5/givebox/",
+    serverUrl: "http://192.168.0.5/givebox/",//"http://yoda.rispal.info/givebox/", 
     googleapis: "https://maps.googleapis.com/maps/api/"
 })
 
