@@ -26,18 +26,17 @@ angular.module('starter.services.AuthInterceptor', [])
 
     var _responseError = function (rejection) {
         if (rejection.status === 401) {
-		console.log("Sending to login");
-		
-		var loginService = $injector.get('loginService');
-		
-		
-		loginService
-		.init('templates/login.html')
-		.then(function(modal) {
-			modal.show();
-		});
-        }
-        return $q.reject(rejection);
+					console.log("Sending to login");
+
+					var loginService = $injector.get('loginService');
+
+					loginService
+					.init('templates/login.html')
+					.then(function(modal) {
+						modal.show();
+					});
+			  }
+			  return $q.reject(rejection);
     }
 
     authInterceptorServiceFactory.request = _request;

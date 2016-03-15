@@ -1,14 +1,15 @@
 angular.module('starter.controllers.Home', [])
 
-.controller('HomeCtrl', function($scope, $http, $ionicModal, $cordovaGeolocation, $location){
+.controller('HomeCtrl', function($scope, $http, $ionicModal, $cordovaGeolocation, $location, CONFIG){
+
   $scope.coordonnees = {};
   $scope.coordonnees.latitude = '';
   $scope.coordonnees.longitude = '';
 
   $scope.getAllOffers = function(){
-      var req = {
+    var req = {
        method: 'GET',
-       url: 'http://yoda.rispal.info/givebox/api/offres',
+       url: CONFIG.serverUrl + 'api/offres',
        headers: {
          'Content-Type': 'application/json',
          'accept': 'application/json'
@@ -39,22 +40,10 @@ angular.module('starter.controllers.Home', [])
 		// current GPS coordinates
 		//
 		var onSuccess = function(position) {
-      /*
-			alert('Latitude: '          + position.coords.latitude          + '\n' +
-				  'Longitude: '         + position.coords.longitude         + '\n' +
-				  'Altitude: '          + position.coords.altitude          + '\n' +
-				  'Accuracy: '          + position.coords.accuracy          + '\n' +
-				  'Altitude Accuracy: ' + position.coords.altitudeAccuracy  + '\n' +
-				  'Heading: '           + position.coords.heading           + '\n' +
-				  'Speed: '             + position.coords.speed             + '\n' +
-				  'Timestamp: '         + position.timestamp                + '\n');
-				*/
 
 			$scope.coordonnees.latitude = position.coords.latitude;
 			$scope.coordonnees.longitude = position.coords.longitude;
 		};
-
-
 
 		// onError Callback receives a PositionError object
 		//
@@ -73,7 +62,7 @@ angular.module('starter.controllers.Home', [])
     if(keyword!=undefined){
       var req = {
          method: 'GET',
-         url: 'http://yoda.rispal.info/givebox/api/offres/',
+         url: CONFIG.serverUrl + '/api/offres/',
          headers: {
            'Content-Type': 'application/json',
            'accept': 'application/json'
@@ -106,8 +95,6 @@ angular.module('starter.controllers.Home', [])
     }
   }
 
-  $scope.getAllOffers();
-
   $ionicModal.fromTemplateUrl('templates/offer.html', {
     scope: $scope
   }).then(function(modal) {
@@ -127,5 +114,67 @@ angular.module('starter.controllers.Home', [])
   $scope.closeOffer = function() {
     $scope.modal.hide();
   };
+
+  searchCategorie = function(){
+		var req = {
+			method: 'GET',
+			url: CONFIG.serverUrl + 'api/categories'
+		}
+
+  	$http(req).then(function(dataServer){
+  		$scope.categories = [];
+
+  		for(var i = 0; i< dataServer.data.length; i++){
+  			var elementCat = dataServer.data[i];
+
+  			if(elementCat.ParentId != null){
+  				var parentCategorie = _.find(dataServer.data, {Id: elementCat.ParentId});
+  				$scope.categories.push({name: elementCat.Nom, Id: elementCat.Id, parent: parentCategorie.Nom});
+  			}
+
+  		}
+
+  	}, function(data){
+  		console.log("Problème de réception de la requête.");
+  		$scope.message = data;
+		});
+	};
+
+  // Run when the app is opened
+  $scope.getAllOffers();
+  searchCategorie();
+
+  $scope.getOffersByCategories = function(categorie){
+    var req = {
+       method: 'GET',
+       url: CONFIG.serverUrl + '/api/offres/',
+       headers: {
+         'Content-Type': 'application/json',
+         'accept': 'application/json'
+       }
+    }
+
+    var params = {};
+    params.categorie = categorie;
+
+    if($scope.coordonnees.latitude != '' && $scope.coordonnees.longitude != ''){
+
+      params.latt = $scope.coordonnees.latitude;
+      params.lgt = $scope.coordonnees.longitude;
+      params.r = '1000';
+
+      //params.latt = '100';
+      //params.lgt = '100';
+    }
+
+    req.params = params;
+
+    $http(req)
+      .then(function(response){
+        $scope.items=response.data;
+      }, function(response){
+        alert( "Problème d'envoi au serveur: " + JSON.stringify({response: response}));
+      });
+  }
 
 });

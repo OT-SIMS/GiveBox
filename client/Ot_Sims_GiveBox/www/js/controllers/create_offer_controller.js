@@ -3,20 +3,14 @@ angular.module('starter.controllers.CreateOffer', [])
 //.controller('CreateOfferCtrl', ['$scope', '$http', '$ionicModal', '$cordovaCamera', '$cordovaCapture', '$cordovaGeolocation', '$ionicLoading', '$ionicPopup', '$location', 'CONFIG','localStorageService', '_',  function($scope, $http, $ionicModal, $cordovaCamera, $cordovaCapture, $cordovaGeolocation, $ionicLoading, $ionicPopup, $location, CONFIG, localStorageService, _) {
 .controller('CreateOfferCtrl', function($scope, $state, $http, $ionicModal, $ionicHistory, $timeout, $cordovaCamera, $cordovaCapture, $cordovaGeolocation, $ionicLoading, $ionicPopup, $location, CONFIG, localStorageService, VideoService) {
 
-	$scope.allImages = [];
-	$scope.allImagesObject = [];
-	$scope.allVideos = [];
+	$scope.allMultimedia = [];
+	$scope.location = {checked: false}
 
-	$scope.showImages = function(index) {
+	$scope.showMultimedia = function(index) {
 		$scope.activeSlide = index;
-		$scope.showModal('templates/image-popover.html');
+		$scope.showModal('templates/multimedia-popover.html');
 	}
-	
-	$scope.showVideos = function(index) {
-		$scope.activeSlideVideo = index;
-		$scope.showModal('templates/video-popover.html');
-	}
-	
+
 	$scope.urlForClipThumb = function(clipUrl) {
 		console.log("clipUrl.urlForClipThumb : " + clipUrl);
 		var name = clipUrl.substr(clipUrl.lastIndexOf('/') + 1);
@@ -24,12 +18,20 @@ angular.module('starter.controllers.CreateOffer', [])
 		var sliced = trueOrigin.slice(0, -4);
 		return sliced + '.png';
 	}
-	
+
+	$scope.imagePreview = function(element) {
+		console.log("imagePreview");
+		if(element.type == 1){
+			return element.src;
+		}
+
+		return $scope.urlForClipThumb(element.src);
+	}
+
 	$scope.urlForVideoPlaying = function(clipUrl) {
 		var name = clipUrl.substr(clipUrl.lastIndexOf('/') + 1);
 		var trueOrigin = cordova.file.dataDirectory + name;
 		var sliced = trueOrigin.slice(0, -4);
-		console.log('sliced : ' + sliced);
 		return sliced + '.mp4';
 	}
 
@@ -75,9 +77,9 @@ angular.module('starter.controllers.CreateOffer', [])
 	*/
 	searchCategorie = function(){
 		var req = {
-		method: 'GET',
-		url: CONFIG.serverUrl + 'api/categories'
-	}
+			method: 'GET',
+			url: CONFIG.serverUrl + 'api/categories'
+		}
 
 	$http(req).then(function(dataServer){
 		$scope.categories = [];
@@ -122,13 +124,11 @@ angular.module('starter.controllers.CreateOffer', [])
 			document.getElementById("titleLabel").className = document.getElementById("titleLabel").className.replace( /(?:^|\s)toFill(?!\S)/g , '' );
 			document.getElementById("descriptionLabel").className = document.getElementById("descriptionLabel").className.replace( /(?:^|\s)toFill(?!\S)/g , '' );
 			document.getElementById("categorieLabel").className = document.getElementById("categorieLabel").className.replace( /(?:^|\s)toFill(?!\S)/g , '' );
-			document.getElementById("picturesLabel").className = document.getElementById("picturesLabel").className.replace( /(?:^|\s)toFill(?!\S)/g , '' );
 			document.getElementById("locLabel").className = document.getElementById("locLabel").className.replace( /(?:^|\s)toFill(?!\S)/g , '' );
 		}else{
 			document.getElementById("titleLabel").className += " toFill";
 			document.getElementById("descriptionLabel").className += " toFill";
 			document.getElementById("categorieLabel").className += " toFill";
-			document.getElementById("picturesLabel").className += " toFill";
 			document.getElementById("locLabel").className += " toFill";
 		}
 
@@ -146,17 +146,17 @@ angular.module('starter.controllers.CreateOffer', [])
 		$scope.offer.title = undefined;
 		$scope.offer.description = undefined;
 		$scope.offer.categorie = undefined;
-		$scope.allImages = [];
+		$scope.allMultimedia = [];
 		$scope.offer.postcode = "00000";
 		$scope.offer.town = '';
 		$scope.cities = [];
 		//TODO : add videos
-		
+
 	};
-	
+
 	$scope.checkOfferValid = function() {
 		var sendingOk = true;
-		
+
 		if($scope.offer.title == ''){
 			document.getElementById("titleLabel").className += " toFill";
 			sendingOk = false;
@@ -172,31 +172,25 @@ angular.module('starter.controllers.CreateOffer', [])
 			sendingOk = false;
 		}
 
-		if($scope.allImages.length == 0){
-			document.getElementById("picturesLabel").className += " toFill";
-			sendingOk = false;
-		}
-
 		if($scope.offer.postcode == "00000" || $scope.offer.town == '' || $scope.offer.town == null){
 			document.getElementById("locLabel").className += " toFill";
 			sendingOk = false;
 		}
-		
+
 		return sendingOk;
 	}
 
 	// Create and send a request to create an offer
 	$scope.sendNewOfferRequest = function() {
-		var  nbSentPictures = 0;
-		var nbFailedSentPictures = 0;
-				
+		var  nbSentMultimedia = 0;
+		var nbFailedSentMultimedia = 0;
 		$ionicHistory.nextViewOptions({
 			disableBack: true
 		});
 
 
 		stateForm(true);
-		
+
 		var sendingOk = $scope.checkOfferValid();
 		if(!sendingOk){
 			$scope.showAlert('Offre incomplète !', 'Il manque des informations dans votre offre.');
@@ -237,10 +231,10 @@ angular.module('starter.controllers.CreateOffer', [])
 				console.log("Code = " + r.responseCode);
 				console.log("Response = " + r.response);
 				console.log("Sent = " + r.bytesSent);
-				nbSentPictures = nbSentPictures + 1;
+				nbSentMultimedia = nbSentMultimedia + 1;
 
-				if(nbSentPictures != $scope.allImages.length){
-					if(nbFailedSentPictures != 0){
+				if(nbSentMultimedia != $scope.allMultimedia.length){
+					if(nbFailedSentMultimedia != 0){
 						$scope.hideSpinner();
 						$scope.showAlert('Offre non créée !', 'Il y a eu un problème avec le serveur, veuillez réessayer ultérieurement.');
 					}
@@ -257,28 +251,32 @@ angular.module('starter.controllers.CreateOffer', [])
 				console.log("An error has occurred: Code = " + error.code);
 				console.log("upload error source " + error.source);
 				console.log("upload error target " + error.target);
-				nbFailedSentPictures = nbFailedSentPictures + 1;
+				console.log("http_status : " + error.http_status);
+				console.log("body : " + body);
+				nbFailedSentMultimedia = nbFailedSentMultimedia + 1;
 				$scope.hideSpinner();
 				//TODO : message modal
 			}
 
 			//Send each images to the server.
-			for(var i = 0; i< $scope.allImages.length; i++){
-				var imagePath = $scope.allImages[i];
+			for(var i = 0; i< $scope.allMultimedia.length; i++){
+				var imagePath = $scope.allMultimedia[i];
 
 				var options = new FileUploadOptions();
-				options.fileKey = "1_" + i;
-				options.name = "1_" + i;
-				options.mimeType = "image/jpeg";
+				options.fileKey = $scope.allMultimedia[i].type + "_" + i;
+				options.name = $scope.allMultimedia[i].type + "_" + i;
+				//options.mimeType = "image/jpeg";
 				options.httpMethod = "POST";
 
+				/*
 				var params = {};
 				params.value1 = 1;
 
 				options.params = params;
+				*/
 
 				var headers={
-				'accept': 'application/json'
+					'accept': 'application/json'
 				};
 
 				options.headers = headers;
@@ -287,17 +285,24 @@ angular.module('starter.controllers.CreateOffer', [])
 				//dataServer.data.Id
 				ft.onprogress = function(progressEvent) {
 					if (progressEvent.lengthComputable) {
-					console.log(progressEvent.loaded / progressEvent.total);
+						console.log(progressEvent.loaded / progressEvent.total);
 					} else {
 					}
 				};
 
 				var authData = localStorageService.get('authorizationData');
-					if (authData) {
+				if (authData) {
 					options.headers.Authorization = 'Bearer ' + authData.token;
-					}
+				}
 
-					ft.upload($scope.allImages[i].src, encodeURI(CONFIG.serverUrl + "api/fichiers/" + dataServer.data.Id), win, fail, options);
+
+				var fichier;
+				if($scope.allMultimedia[i].type == 1){
+					fichier = $scope.allMultimedia[i].src;
+				}else{
+					fichier = $scope.urlForVideoPlaying($scope.allMultimedia[i].src);
+				}
+				ft.upload(fichier, encodeURI(CONFIG.serverUrl + "api/fichiers/" + dataServer.data.Id), win, fail, options);
 			}
 		}, function(data){
 			console.log("Problème d'envoi de la requête.");
@@ -318,7 +323,7 @@ angular.module('starter.controllers.CreateOffer', [])
 
 	      $cordovaCamera.getPicture(options).then(function(imageURI) {
 		      console.log(imageURI);
-		      $scope.allImages.push({'src' : imageURI});
+		      $scope.allMultimedia.push({'src' : imageURI, 'type' : 1});
 	      }, function(err) {
 		      console.log("Erreur pour importer une photo : " + err);
 	      });
@@ -334,7 +339,7 @@ angular.module('starter.controllers.CreateOffer', [])
 
 	      $cordovaCamera.getPicture(options).then(function(imageURI) {
 		      console.log(imageURI);
-		      $scope.allImages.push({'src' : imageURI});
+		      $scope.allMultimedia.push({'src' : imageURI , 'type' : 1});
 	      }, function(err) {
 		      console.log("Erreur pour prendre une photo : " + err);
 	      });
@@ -342,10 +347,10 @@ angular.module('starter.controllers.CreateOffer', [])
 
 
 	$scope.recordAVideo = function() {
-	      $cordovaCapture.captureVideo().then(function(videoData) {
+		$cordovaCapture.captureVideo().then(function(videoData) {
 		VideoService.saveVideo(videoData, $scope).success(function(data) {
 			console.log("data before push in captureVideo : " + data);
-			$scope.allVideos.push({'src' : data});
+			$scope.allMultimedia.push({'src' : data, 'type' : 2});
 
 			//$scope.$apply();
 		}).error(function(data) {
@@ -355,16 +360,22 @@ angular.module('starter.controllers.CreateOffer', [])
 
       };
 
-      $scope.updatePosition = function() {
-	      var options = {timeout: 10000}
-	      
-	      // onSuccess Callback
-	      // This method accepts a Position object, which contains the
-	      // current GPS coordinates
-	      //
-	      var onSuccess = function(position) {
-		      /*
-		      alert('Latitude: '          + position.coords.latitude          + '\n' +
+	$scope.updatePosition = function() {
+		if(!$scope.location.checked){
+			console.log("not checked");
+			return;
+
+		}
+
+		var options = {timeout: 10000}
+
+		// onSuccess Callback
+		// This method accepts a Position object, which contains the
+		// current GPS coordinates
+		//
+		var onSuccess = function(position) {
+			/*
+			alert('Latitude: '          + position.coords.latitude          + '\n' +
 				'Longitude: '         + position.coords.longitude         + '\n' +
 				'Altitude: '          + position.coords.altitude          + '\n' +
 				'Accuracy: '          + position.coords.accuracy          + '\n' +
@@ -374,25 +385,30 @@ angular.module('starter.controllers.CreateOffer', [])
 				'Timestamp: '         + position.timestamp                + '\n');
 			      */
 
-		      $scope.offer.latitude = position.coords.latitude;
-		      $scope.offer.longitude = position.coords.longitude;
+			$scope.offer.latitude = position.coords.latitude;
+			$scope.offer.longitude = position.coords.longitude;
 
-		      $scope.convertCoordinates();
+			$scope.convertCoordinates();
 	      };
 
 
 
-	      // onError Callback receives a PositionError object
-	      //
-	      function onError(error) {
-		      console.log("error");
-		      alert('code: '    + error.code    + '\n' + 'message: ' + error.message + '\n');
-	      }
+		// onError Callback receives a PositionError object
+		//
+		function onError(error) {
+			if(error.code == 3){
+				alert("Temps d'attente expiré : la géolocalisation semble désactivée.");
 
-	      navigator.geolocation.getCurrentPosition(onSuccess, onError, options);
+			}else{
+				alert('code: '    + error.code    + '\n' + 'message: ' + error.message + '\n');
+
+			}
+		}
+
+		navigator.geolocation.getCurrentPosition(onSuccess, onError, options);
 
 
-      };
+	};
 
       $scope.findLocalityFromPostcode = function() {
 	      //https://maps.googleapis.com/maps/api/geocode/json?components=postal_code:69100|country:France

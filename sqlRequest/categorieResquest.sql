@@ -1,7 +1,7 @@
 
 declare @path varchar(max)
 declare @sql varchar(max)
-set @path = 'C:\Users\Simon\Documents'
+set @path = 'C:\Users\Simon\Documents\GitHub\GiveBox\sqlRequest\'
 
 DELETE FROM [dbo].FichierTypeSet
 DBCC CHECKIDENT ('dbo.FichierTypeSet',RESEED, 0);
@@ -18,22 +18,22 @@ DBCC CHECKIDENT ('dbo.utilisateurSet',RESEED, 0);
 
 set @sql = '
 bulk INSERT [dbo].CategorieSet
-from '''+@path +'\GitHub\GiveBox\sqlRequest\importCategorie.txt''
+from '''+@path +'importCategorie.txt''
 with(FIRSTROW = 2, keepnulls, FIELDTERMINATOR = '','' , ROWTERMINATOR = ''\n'');
 
 bulk INSERT [dbo].fichierTypeSet
-from '''+@path+'\GitHub\GiveBox\sqlRequest\importFichierType.txt''
+from '''+@path+'importFichierType.txt''
 with(FIRSTROW = 2, keepnulls, FIELDTERMINATOR = '','' , ROWTERMINATOR = ''\n'');
 
 bulk INSERT [dbo].UtilisateurSet
-from '''+@path+'\GitHub\GiveBox\sqlRequest\importUtilisateur.txt''
+from '''+@path+'importUtilisateur.txt''
 with(FIRSTROW = 2, keepnulls, FIELDTERMINATOR = '','' , ROWTERMINATOR = ''\n'');
 
 bulk INSERT [dbo].OffreSet
-from '''+@path +'\GitHub\GiveBox\sqlRequest\importOffre.txt''
+from '''+@path +'importOffre.txt''
 with(FIRSTROW = 2, keepnulls, FIELDTERMINATOR = '','' , ROWTERMINATOR = ''\n'');'
 
 exec(@sql)
-select * from [dbo].UtilisateurSet;
+select * from [dbo].OffreSet;
  
  

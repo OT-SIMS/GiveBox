@@ -94,6 +94,8 @@ namespace Ot_Sims_Givebox.Controllers
                 return err;
             }
         }
+
+        //ajout de l'avatar
         public async Task<HttpResponseMessage> PostFichier() {
             Utilisateur user = UserHelper.getUser(User, db);
 
