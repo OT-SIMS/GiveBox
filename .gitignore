@@ -19,3 +19,4 @@ client/obj
 client/Properties
 client/Ot_Sims_Givebox_Client.csproj
 client/Ot_Sims_GiveBox/start.cmd
+client/Ot_Sims_GiveBox/test.cmd

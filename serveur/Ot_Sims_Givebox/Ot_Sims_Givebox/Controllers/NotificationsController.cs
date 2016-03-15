@@ -17,8 +17,14 @@ namespace Ot_Sims_Givebox.Controllers
 
         //Crée une notification sur l'offre donnée
         [HttpPost]
-        public async Task<IHttpActionResult> PostNotification(int id) { 
+        public async Task<IHttpActionResult> PostNotification(int id)
+        {
             Utilisateur u = UserHelper.getUser(User, db);
+            var request = from notifications in db.NotificationSet where notifications.OffreId.Equals(id) where notifications.UtilisateurId.Equals(u.Id) select notifications;
+            if (request != null)
+            {
+                return BadRequest("Une notification a déjà été envoyé pour cette offre");
+            }
             Notification notif = new Notification() { OffreId = id, Date = DateTime.Now, UtilisateurId = u.Id };
 
             db.NotificationSet.Add(notif);
