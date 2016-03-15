@@ -2,17 +2,27 @@
   <ion-header-bar class="bar bar-header bar-stable my-bar item-input-inset my-search-header">
     <label class="item-input-wrapper">
       <i class="icon ion-ios-search placeholder-icon"></i>
-      <form class="width-max" novalidate ng-submit="keyWordsResearch(keyword)">
+      <form class="width-max" ng-submit="keyWordsResearch(keyword)">
         <input class="width-max" type="search" placeholder="De quoi as-tu besoin ?" ng-model="keyword" required>
       </form>
       <a class="icon ion-close my-clear-button" on-tap="keyword = ''"></a>
     </label>
-    <button class="button button-clear green" ng-click="vm.toggle(); getAllOffers()">
+    <button class="button button-clear green" ng-click="vm.toggle()">
       Fermer
     </button>
   </ion-header-bar>
 
   <ion-content class="has-bottom">
+    <div id="categoriesDiv" class="list" ng-if="vmCategories.myValue">
+      <div ng-repeat="(key, value) in categories | groupBy: 'parent'">
+        <div class="item item-divider">
+          {{key}}
+        </div>
+        <a class="item" ng-repeat="categorie in value" ng-click="getOffersByCategories(categorie.name);vmCategories.toggle()">
+          {{categorie.name}}
+        </a>
+      </div>
+    </div>
     <div id="donationsDiv">
       <div class="row">
         <div class="col col-50 itemDiv">

@@ -10,7 +10,7 @@ angular.module('starter.controllers.CreateOffer', [])
 		$scope.activeSlide = index;
 		$scope.showModal('templates/multimedia-popover.html');
 	}
-	
+
 	$scope.urlForClipThumb = function(clipUrl) {
 		console.log("clipUrl.urlForClipThumb : " + clipUrl);
 		var name = clipUrl.substr(clipUrl.lastIndexOf('/') + 1);
@@ -18,16 +18,16 @@ angular.module('starter.controllers.CreateOffer', [])
 		var sliced = trueOrigin.slice(0, -4);
 		return sliced + '.png';
 	}
-	
+
 	$scope.imagePreview = function(element) {
 		console.log("imagePreview");
 		if(element.type == 1){
 			return element.src;
 		}
-		
+
 		return $scope.urlForClipThumb(element.src);
 	}
-	
+
 	$scope.urlForVideoPlaying = function(clipUrl) {
 		var name = clipUrl.substr(clipUrl.lastIndexOf('/') + 1);
 		var trueOrigin = cordova.file.dataDirectory + name;
@@ -77,9 +77,9 @@ angular.module('starter.controllers.CreateOffer', [])
 	*/
 	searchCategorie = function(){
 		var req = {
-		method: 'GET',
-		url: CONFIG.serverUrl + 'api/categories'
-	}
+			method: 'GET',
+			url: CONFIG.serverUrl + 'api/categories'
+		}
 
 	$http(req).then(function(dataServer){
 		$scope.categories = [];
@@ -151,12 +151,12 @@ angular.module('starter.controllers.CreateOffer', [])
 		$scope.offer.town = '';
 		$scope.cities = [];
 		//TODO : add videos
-		
+
 	};
-	
+
 	$scope.checkOfferValid = function() {
 		var sendingOk = true;
-		
+
 		if($scope.offer.title == ''){
 			document.getElementById("titleLabel").className += " toFill";
 			sendingOk = false;
@@ -176,7 +176,7 @@ angular.module('starter.controllers.CreateOffer', [])
 			document.getElementById("locLabel").className += " toFill";
 			sendingOk = false;
 		}
-		
+
 		return sendingOk;
 	}
 
@@ -184,14 +184,13 @@ angular.module('starter.controllers.CreateOffer', [])
 	$scope.sendNewOfferRequest = function() {
 		var  nbSentMultimedia = 0;
 		var nbFailedSentMultimedia = 0;
-				
 		$ionicHistory.nextViewOptions({
 			disableBack: true
 		});
 
 
 		stateForm(true);
-		
+
 		var sendingOk = $scope.checkOfferValid();
 		if(!sendingOk){
 			$scope.showAlert('Offre incomplète !', 'Il manque des informations dans votre offre.');
@@ -268,7 +267,7 @@ angular.module('starter.controllers.CreateOffer', [])
 				options.name = $scope.allMultimedia[i].type + "_" + i;
 				//options.mimeType = "image/jpeg";
 				options.httpMethod = "POST";
-				
+
 				/*
 				var params = {};
 				params.value1 = 1;
@@ -295,8 +294,8 @@ angular.module('starter.controllers.CreateOffer', [])
 				if (authData) {
 					options.headers.Authorization = 'Bearer ' + authData.token;
 				}
-				
-				
+
+
 				var fichier;
 				if($scope.allMultimedia[i].type == 1){
 					fichier = $scope.allMultimedia[i].src;
@@ -365,11 +364,11 @@ angular.module('starter.controllers.CreateOffer', [])
 		if(!$scope.location.checked){
 			console.log("not checked");
 			return;
-			
+
 		}
-		
+
 		var options = {timeout: 10000}
-		
+
 		// onSuccess Callback
 		// This method accepts a Position object, which contains the
 		// current GPS coordinates
@@ -399,10 +398,10 @@ angular.module('starter.controllers.CreateOffer', [])
 		function onError(error) {
 			if(error.code == 3){
 				alert("Temps d'attente expiré : la géolocalisation semble désactivée.");
-			      
+
 			}else{
 				alert('code: '    + error.code    + '\n' + 'message: ' + error.message + '\n');
-	      
+
 			}
 		}
 

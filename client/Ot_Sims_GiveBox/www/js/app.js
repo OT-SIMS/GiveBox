@@ -9,6 +9,7 @@ angular.module('starter', [
   'ngCordova',
   'LocalStorageModule',
   'uiGmapgoogle-maps',
+  'angular.filter',
 
   'starter.controllers.CreateOffer',
   'starter.controllers.Home',
@@ -47,8 +48,7 @@ angular.module('starter', [
 })
 
 .constant('CONFIG', {
-    //serverUrl: "http://localhost/givebox/"
-    serverUrl: "http://yoda.rispal.info/givebox/",
+    serverUrl: "http://192.168.0.5/givebox/",//"http://yoda.rispal.info/givebox/", 
     googleapis: "https://maps.googleapis.com/maps/api/"
 })
 

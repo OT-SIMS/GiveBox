@@ -4,6 +4,13 @@ angular.module('starter.controllers.Menu', [])
 
   $scope.$state = $state;
 
+  $scope.vmCategories = {
+    myValue: false,
+    toggle: function() {
+        this.myValue = !this.myValue;
+    }
+  };
+
   $scope.vm = {
     myValue: false,
     toggle: function() {
@@ -18,9 +25,6 @@ angular.module('starter.controllers.Menu', [])
       $scope.modal = modal;
       $scope.modal.show();
     });
-
-    //$scope.modalData  = offer;
-    //$scope.modal.show();
   };
 
   $scope.openProfile = function(){
@@ -30,9 +34,7 @@ angular.module('starter.controllers.Menu', [])
       $scope.modal = modal;
       $scope.modal.show();
     });
-
-    //$scope.modalData  = offer;
-    //$scope.modal.show();
   };
 
+  authService.fillUserData();
 });

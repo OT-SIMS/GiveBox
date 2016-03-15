@@ -1,6 +1,6 @@
 angular.module('starter.controllers.Login', [])
 
-.controller('LoginCtrl', function($scope, $ionicModal, authService, $ionicPopup, $http, CONFIG) {
+.controller('LoginCtrl', function($scope, $ionicModal, authService, $ionicPopup, $http, CONFIG, localStorageService) {
 
   $scope.loginData = {};
 
@@ -44,6 +44,8 @@ angular.module('starter.controllers.Login', [])
       }
       else {
         console.log(response.data);
+        localStorageService.set('userData', { firstName: response.data.Prenom, lastName: response.data.Nom });
+
         authService.authentication.userLastName = response.data.Nom;
         authService.authentication.userFirstName = response.data.Prenom;
 

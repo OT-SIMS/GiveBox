@@ -43,6 +43,7 @@ angular.module('starter.services.Auth', [])
 
             _authentication.isAuth = true;
             _authentication.userName = loginData.userName;
+            console.log(response);
 
             deferred.resolve(response);
 
@@ -58,6 +59,7 @@ angular.module('starter.services.Auth', [])
     var _logOut = function () {
 
         localStorageService.remove('authorizationData');
+        localStorageService.remove('userData');
 
         _authentication.isAuth = false;
         _authentication.userName = "";
@@ -75,13 +77,22 @@ angular.module('starter.services.Auth', [])
             _authentication.isAuth = true;
             _authentication.userName = authData.userName;
         }
+    }
 
+    var _fillUserData = function (){
+
+      var userData = localStorageService.get('userData');
+      if(userData){
+        _authentication.userFirstName = userData.firstName;
+        _authentication.userLastName = userData.lastName;
+      }
     }
 
     authServiceFactory.saveRegistration = _saveRegistration;
     authServiceFactory.login = _login;
     authServiceFactory.logOut = _logOut;
     authServiceFactory.fillAuthData = _fillAuthData;
+    authServiceFactory.fillUserData = _fillUserData;
     authServiceFactory.authentication = _authentication;
     authServiceFactory.changePassword = _changePassword;
 
