@@ -21,7 +21,7 @@ namespace Ot_Sims_Givebox.Controllers
             public string nom;
             public string prenom;
             public string telephone;
-            public string dateNaissance; 
+            public string dateNaissance;
 
             public void assign(Utilisateur u)
             {
@@ -32,7 +32,46 @@ namespace Ot_Sims_Givebox.Controllers
             }
         }
         private ModelContainer db = new ModelContainer();
-
+        //POST: Offres que l'user met en fav : api/utilisateur/favori/{idOffre}
+        [Route("favori/{id}")]
+        public async Task<IHttpActionResult> MettreFav(int id)
+        {
+            var utilisateur = UserHelper.getUser(User, db);
+            db.FavoriSet.Add(new Favori()
+            {
+                UtilisateurId = utilisateur.Id,
+                OffreId = id
+            });
+            await db.SaveChangesAsync();
+            return Ok(); 
+        }
+        // DEL: Enlever une offre des favoris
+        [Route("favori/{id}")]
+        public async Task<IHttpActionResult> DeleteFav(int id)
+        {
+            var utilisateur = UserHelper.getUser(User, db);
+            Favori favori = db.FavoriSet.Find(id);
+            db.FavoriSet.Remove(favori);
+            await db.SaveChangesAsync();
+            return Ok();
+        }
+        // GET: Offres mises en fav par l'user : api/utilisateur/favori
+        [Route("favori")]
+        public IHttpActionResult getFav()
+        {
+            var utilisateur = UserHelper.getUser(User, db);
+            if (utilisateur == null)
+            {
+                return ResponseMessage(new HttpResponseMessage(HttpStatusCode.NoContent));
+            }
+            else
+            {
+                IQueryable<Favori> request = null;
+                request = from fav in db.FavoriSet where fav.UtilisateurId.Equals(utilisateur.Id) select fav; // sélectionne toutes les offres mises en fav par l'user
+                return Ok(request);
+            }
+        }
+        // GET: Offres Postées par l'user : api/utilisateur/offres
         [Route("Offres")]
         public IHttpActionResult getOffre()
         {

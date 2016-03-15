@@ -12,6 +12,7 @@
     <EntitySet Name="FichierSet" EntityType="Model.Store.FichierSet" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="FichierTypeSet" EntityType="Model.Store.FichierTypeSet" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="DiscussionSet" EntityType="Model.Store.DiscussionSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="FavoriSet" EntityType="Model.Store.FavoriSet" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="UtilisateurOffre" Association="Model.Store.UtilisateurOffre">
       <End Role="Utilisateur" EntitySet="UtilisateurSet" />
       <End Role="Offre" EntitySet="OffreSet" />
@@ -43,6 +44,14 @@
     <AssociationSet Name="UtilisateurDiscussion" Association="Model.Store.UtilisateurDiscussion">
       <End Role="Utilisateur" EntitySet="UtilisateurSet" />
       <End Role="Discussion" EntitySet="DiscussionSet" />
+    </AssociationSet>
+    <AssociationSet Name="UtilisateurFavori" Association="Model.Store.UtilisateurFavori">
+      <End Role="Utilisateur" EntitySet="UtilisateurSet" />
+      <End Role="Favori" EntitySet="FavoriSet" />
+    </AssociationSet>
+    <AssociationSet Name="OffreFavori" Association="Model.Store.OffreFavori">
+      <End Role="Offre" EntitySet="OffreSet" />
+      <End Role="Favori" EntitySet="FavoriSet" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="UtilisateurSet">
@@ -107,6 +116,14 @@
     <Property Name="Message" Type="nvarchar(max)" Nullable="false" />
     <Property Name="UtilisateurId" Type="int" Nullable="false" />
     <Property Name="DateMsg" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="FavoriSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UtilisateurId" Type="int" Nullable="false" />
+    <Property Name="OffreId" Type="int" Nullable="false" />
   </EntityType>
   <Association Name="UtilisateurOffre">
     <End Role="Utilisateur" Type="Model.Store.UtilisateurSet" Multiplicity="1" />
@@ -204,6 +221,30 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="UtilisateurFavori">
+    <End Role="Utilisateur" Type="Model.Store.UtilisateurSet" Multiplicity="1" />
+    <End Role="Favori" Type="Model.Store.FavoriSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Utilisateur">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Favori">
+        <PropertyRef Name="UtilisateurId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="OffreFavori">
+    <End Role="Offre" Type="Model.Store.OffreSet" Multiplicity="1" />
+    <End Role="Favori" Type="Model.Store.FavoriSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Offre">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Favori">
+        <PropertyRef Name="OffreId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -246,6 +287,15 @@
           <AssociationSet Name="UtilisateurDiscussion" Association="Model.UtilisateurDiscussion">
             <End Role="Utilisateur" EntitySet="UtilisateurSet" />
             <End Role="Discussion" EntitySet="DiscussionSet" />
+          </AssociationSet>
+          <EntitySet Name="FavoriSet" EntityType="Model.Favori" />
+          <AssociationSet Name="UtilisateurFavori" Association="Model.UtilisateurFavori">
+            <End Role="Utilisateur" EntitySet="UtilisateurSet" />
+            <End Role="Favori" EntitySet="FavoriSet" />
+          </AssociationSet>
+          <AssociationSet Name="OffreFavori" Association="Model.OffreFavori">
+            <End Role="Offre" EntitySet="OffreSet" />
+            <End Role="Favori" EntitySet="FavoriSet" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Utilisateur">
@@ -405,6 +455,39 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Favori">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UtilisateurId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Offre" Relationship="Model.OffreFavori" FromRole="Favori" ToRole="Offre" />
+          <Property Name="OffreId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="UtilisateurFavori">
+          <End Type="Model.Utilisateur" Role="Utilisateur" Multiplicity="1" />
+          <End Type="Model.Favori" Role="Favori" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Utilisateur">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Favori">
+              <PropertyRef Name="UtilisateurId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="OffreFavori">
+          <End Type="Model.Offre" Role="Offre" Multiplicity="1" />
+          <End Type="Model.Favori" Role="Favori" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Offre">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Favori">
+              <PropertyRef Name="OffreId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -476,6 +559,15 @@
           <ScalarProperty Name="Message" ColumnName="Message" />
           <ScalarProperty Name="UtilisateurId" ColumnName="UtilisateurId" />
           <ScalarProperty Name="DateMsg" ColumnName="DateMsg" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FavoriSet">
+      <EntityTypeMapping TypeName="IsTypeOf(Model.Favori)">
+        <MappingFragment StoreEntitySet="FavoriSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="UtilisateurId" ColumnName="UtilisateurId" />
+          <ScalarProperty Name="OffreId" ColumnName="OffreId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

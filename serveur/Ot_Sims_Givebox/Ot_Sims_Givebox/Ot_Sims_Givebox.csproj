@@ -273,6 +273,9 @@
     <Compile Include="Models\Discussion.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Favori.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Fichier.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
