@@ -12,7 +12,7 @@
     <EntitySet Name="FichierSet" EntityType="Model.Store.FichierSet" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="FichierTypeSet" EntityType="Model.Store.FichierTypeSet" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="DiscussionSet" EntityType="Model.Store.DiscussionSet" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="NotificationSet" EntityType="Model.Store.NotificationSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="FavoriSet" EntityType="Model.Store.FavoriSet" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="UtilisateurOffre" Association="Model.Store.UtilisateurOffre">
       <End Role="Utilisateur" EntitySet="UtilisateurSet" />
       <End Role="Offre" EntitySet="OffreSet" />
@@ -45,13 +45,13 @@
       <End Role="Utilisateur" EntitySet="UtilisateurSet" />
       <End Role="Discussion" EntitySet="DiscussionSet" />
     </AssociationSet>
-    <AssociationSet Name="UtilisateurNotifications" Association="Model.Store.UtilisateurNotifications">
+    <AssociationSet Name="UtilisateurFavori" Association="Model.Store.UtilisateurFavori">
       <End Role="Utilisateur" EntitySet="UtilisateurSet" />
-      <End Role="Notifications" EntitySet="NotificationSet" />
+      <End Role="Favori" EntitySet="FavoriSet" />
     </AssociationSet>
-    <AssociationSet Name="OffreNotifications" Association="Model.Store.OffreNotifications">
+    <AssociationSet Name="OffreFavori" Association="Model.Store.OffreFavori">
       <End Role="Offre" EntitySet="OffreSet" />
-      <End Role="Notifications" EntitySet="NotificationSet" />
+      <End Role="Favori" EntitySet="FavoriSet" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="UtilisateurSet">
@@ -78,7 +78,6 @@
     <Property Name="CategorieId" Type="int" Nullable="false" />
     <Property Name="CodePostal" Type="nvarchar(max)" Nullable="false" />
     <Property Name="Ville" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="EstArchivee" Type="bit" Nullable="false" DefaultValue="false" />
   </EntityType>
   <EntityType Name="CategorieSet">
     <Key>
@@ -118,15 +117,13 @@
     <Property Name="UtilisateurId" Type="int" Nullable="false" />
     <Property Name="DateMsg" Type="datetime" Nullable="false" />
   </EntityType>
-  <EntityType Name="NotificationSet">
+  <EntityType Name="FavoriSet">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="UtilisateurId" Type="int" Nullable="false" />
     <Property Name="OffreId" Type="int" Nullable="false" />
-    <Property Name="Date" Type="datetime" Nullable="false" />
-    <Property Name="EstAccepte" Type="bit" Nullable="false" DefaultValue="false" />
   </EntityType>
   <Association Name="UtilisateurOffre">
     <End Role="Utilisateur" Type="Model.Store.UtilisateurSet" Multiplicity="1" />
@@ -224,26 +221,26 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="UtilisateurNotifications">
+  <Association Name="UtilisateurFavori">
     <End Role="Utilisateur" Type="Model.Store.UtilisateurSet" Multiplicity="1" />
-    <End Role="Notifications" Type="Model.Store.NotificationSet" Multiplicity="*" />
+    <End Role="Favori" Type="Model.Store.FavoriSet" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Utilisateur">
         <PropertyRef Name="Id" />
       </Principal>
-      <Dependent Role="Notifications">
+      <Dependent Role="Favori">
         <PropertyRef Name="UtilisateurId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="OffreNotifications">
+  <Association Name="OffreFavori">
     <End Role="Offre" Type="Model.Store.OffreSet" Multiplicity="1" />
-    <End Role="Notifications" Type="Model.Store.NotificationSet" Multiplicity="*" />
+    <End Role="Favori" Type="Model.Store.FavoriSet" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Offre">
         <PropertyRef Name="Id" />
       </Principal>
-      <Dependent Role="Notifications">
+      <Dependent Role="Favori">
         <PropertyRef Name="OffreId" />
       </Dependent>
     </ReferentialConstraint>
@@ -291,14 +288,14 @@
             <End Role="Utilisateur" EntitySet="UtilisateurSet" />
             <End Role="Discussion" EntitySet="DiscussionSet" />
           </AssociationSet>
-          <EntitySet Name="NotificationSet" EntityType="Model.Notification" />
-          <AssociationSet Name="UtilisateurNotifications" Association="Model.UtilisateurNotifications">
+          <EntitySet Name="FavoriSet" EntityType="Model.Favori" />
+          <AssociationSet Name="UtilisateurFavori" Association="Model.UtilisateurFavori">
             <End Role="Utilisateur" EntitySet="UtilisateurSet" />
-            <End Role="Notifications" EntitySet="NotificationSet" />
+            <End Role="Favori" EntitySet="FavoriSet" />
           </AssociationSet>
-          <AssociationSet Name="OffreNotifications" Association="Model.OffreNotifications">
+          <AssociationSet Name="OffreFavori" Association="Model.OffreFavori">
             <End Role="Offre" EntitySet="OffreSet" />
-            <End Role="Notifications" EntitySet="NotificationSet" />
+            <End Role="Favori" EntitySet="FavoriSet" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Utilisateur">
@@ -330,8 +327,6 @@
           <Property Name="CodePostal" Type="String" Nullable="false" />
           <Property Name="Ville" Type="String" Nullable="false" />
           <NavigationProperty Name="Discussion" Relationship="Model.DiscussionOffre" FromRole="Offre" ToRole="Discussion" />
-          <NavigationProperty Name="Notifications" Relationship="Model.OffreNotifications" FromRole="Offre" ToRole="Notifications" />
-          <Property Name="EstArchivee" Type="Boolean" Nullable="false" DefaultValue="False" annotation:StoreGeneratedPattern="None" />
         </EntityType>
         <Association Name="UtilisateurOffre">
           <End Type="Model.Utilisateur" Role="Utilisateur" Multiplicity="1" />
@@ -460,37 +455,35 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="Notification">
+        <EntityType Name="Favori">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <NavigationProperty Name="Utilisateur" Relationship="Model.UtilisateurNotifications" FromRole="Notifications" ToRole="Utilisateur" />
           <Property Name="UtilisateurId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Offre" Relationship="Model.OffreFavori" FromRole="Favori" ToRole="Offre" />
           <Property Name="OffreId" Type="Int32" Nullable="false" />
-          <Property Name="Date" Type="DateTime" Nullable="false" />
-          <Property Name="EstAccepte" Type="Boolean" Nullable="false" DefaultValue="false" />
         </EntityType>
-        <Association Name="UtilisateurNotifications">
+        <Association Name="UtilisateurFavori">
           <End Type="Model.Utilisateur" Role="Utilisateur" Multiplicity="1" />
-          <End Type="Model.Notification" Role="Notifications" Multiplicity="*" />
+          <End Type="Model.Favori" Role="Favori" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Utilisateur">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Notifications">
+            <Dependent Role="Favori">
               <PropertyRef Name="UtilisateurId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="OffreNotifications">
+        <Association Name="OffreFavori">
           <End Type="Model.Offre" Role="Offre" Multiplicity="1" />
-          <End Type="Model.Notification" Role="Notifications" Multiplicity="*" />
+          <End Type="Model.Favori" Role="Favori" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Offre">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Notifications">
+            <Dependent Role="Favori">
               <PropertyRef Name="OffreId" />
             </Dependent>
           </ReferentialConstraint>
@@ -525,7 +518,6 @@
           <ScalarProperty Name="CategorieId" ColumnName="CategorieId" />
           <ScalarProperty Name="CodePostal" ColumnName="CodePostal" />
           <ScalarProperty Name="Ville" ColumnName="Ville" />
-          <ScalarProperty Name="EstArchivee" ColumnName="EstArchivee" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -570,14 +562,12 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="NotificationSet">
-      <EntityTypeMapping TypeName="IsTypeOf(Model.Notification)">
-        <MappingFragment StoreEntitySet="NotificationSet">
+    <EntitySetMapping Name="FavoriSet">
+      <EntityTypeMapping TypeName="IsTypeOf(Model.Favori)">
+        <MappingFragment StoreEntitySet="FavoriSet">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="UtilisateurId" ColumnName="UtilisateurId" />
           <ScalarProperty Name="OffreId" ColumnName="OffreId" />
-          <ScalarProperty Name="Date" ColumnName="Date" />
-          <ScalarProperty Name="EstAccepte" ColumnName="EstAccepte" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
