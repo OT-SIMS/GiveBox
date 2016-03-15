@@ -300,6 +300,15 @@
             <End Role="Offre" EntitySet="OffreSet" />
             <End Role="Notifications" EntitySet="NotificationSet" />
           </AssociationSet>
+          <EntitySet Name="FavoriSet" EntityType="Model.Favori" />
+          <AssociationSet Name="UtilisateurFavori" Association="Model.UtilisateurFavori">
+            <End Role="Utilisateur" EntitySet="UtilisateurSet" />
+            <End Role="Favori" EntitySet="FavoriSet" />
+          </AssociationSet>
+          <AssociationSet Name="FavoriOffre" Association="Model.FavoriOffre">
+            <End Role="Favori" EntitySet="FavoriSet" />
+            <End Role="Offre" EntitySet="OffreSet" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Utilisateur">
           <Key>
@@ -491,6 +500,39 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Notifications">
+              <PropertyRef Name="OffreId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Favori">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UtilisateurId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Offre" Relationship="Model.FavoriOffre" FromRole="Favori" ToRole="Offre" />
+          <Property Name="OffreId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="UtilisateurFavori">
+          <End Type="Model.Utilisateur" Role="Utilisateur" Multiplicity="1" />
+          <End Type="Model.Favori" Role="Favori" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Utilisateur">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Favori">
+              <PropertyRef Name="UtilisateurId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FavoriOffre">
+          <End Type="Model.Favori" Role="Favori" Multiplicity="*" />
+          <End Type="Model.Offre" Role="Offre" Multiplicity="1" />
+          <ReferentialConstraint>
+            <Principal Role="Offre">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Favori">
               <PropertyRef Name="OffreId" />
             </Dependent>
           </ReferentialConstraint>

@@ -31,6 +31,7 @@ namespace Ot_Sims_Givebox.Models
         public virtual DbSet<Fichier> FichierSet { get; set; }
         public virtual DbSet<FichierType> FichierTypeSet { get; set; }
         public virtual DbSet<Discussion> DiscussionSet { get; set; }
+        public virtual DbSet<Notification> NotificationSet { get; set; }
         public virtual DbSet<Favori> FavoriSet { get; set; }
     }
 }

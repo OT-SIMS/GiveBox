@@ -66,8 +66,8 @@ namespace Ot_Sims_Givebox.Controllers
             }
             else
             {
-                IQueryable<Favori> request = null;
-                request = from fav in db.FavoriSet where fav.UtilisateurId.Equals(utilisateur.Id) select fav; // sélectionne toutes les offres mises en fav par l'user
+                IQueryable<Offre> request = null;
+                request = from fav in db.FavoriSet where fav.UtilisateurId.Equals(utilisateur.Id) select fav.Offre; // sélectionne toutes les offres mises en fav par l'user
                 return Ok(request);
             }
         }
