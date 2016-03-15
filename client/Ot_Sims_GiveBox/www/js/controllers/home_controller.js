@@ -1,6 +1,6 @@
 angular.module('starter.controllers.Home', [])
 
-.controller('HomeCtrl', function($scope, $http, $ionicModal, $cordovaGeolocation, $location){
+.controller('HomeCtrl', function($scope, $http, $ionicModal, $cordovaGeolocation, $location, CONFIG){
   $scope.coordonnees = {};
   $scope.coordonnees.latitude = '';
   $scope.coordonnees.longitude = '';
@@ -8,7 +8,7 @@ angular.module('starter.controllers.Home', [])
   $scope.getAllOffers = function(){
       var req = {
        method: 'GET',
-       url: 'http://yoda.rispal.info/givebox/api/offres',
+       url: CONFIG.serverUrl + 'api/offres',
        headers: {
          'Content-Type': 'application/json',
          'accept': 'application/json'
