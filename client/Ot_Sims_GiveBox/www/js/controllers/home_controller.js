@@ -1,10 +1,13 @@
 angular.module('starter.controllers.Home', [])
 
-.controller('HomeCtrl', function($scope, $http, $ionicModal, $cordovaGeolocation, $location, CONFIG){
+.controller('HomeCtrl', function($scope, $http, $ionicModal, $cordovaGeolocation, $location, CONFIG, localStorageService){
 
   $scope.coordonnees = {};
   $scope.coordonnees.latitude = '';
   $scope.coordonnees.longitude = '';
+  $scope.offerData = {
+	  newComment : ''
+  }
 
   $scope.getAllOffers = function(){
     var req = {
@@ -175,6 +178,14 @@ angular.module('starter.controllers.Home', [])
       }, function(response){
         alert( "Problème d'envoi au serveur: " + JSON.stringify({response: response}));
       });
+  }
+  
+  $scope.canLeaveComment = function() {
+	var authData = localStorageService.get('authorizationData');
+	if (authData) {
+		return true;
+	}
+	return false;
   }
 
 });

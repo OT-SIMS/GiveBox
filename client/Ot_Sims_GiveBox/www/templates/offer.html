@@ -14,44 +14,62 @@
 
 	<ion-content>
 		<div class="list card my-card">
-			<div class="item item-avatar">
+			<div class="item item-avatar item-button-right">
 				<img>
 				<h2>{{modalData.Utilisateur.Nom}}</h2>
 				<p>En cours</p>
+				<button class="button icon-left ion-android-contact button-balanced my-margin-right" ng-click="">Contacter l'annonceur</button>
 			</div>
 
-      <div class="item item-body">
-        <h3>{{modalData.Titre}}</h3>
-        <ion-slide-box>
-          <ion-slide ng-repeat="image in modalData.Fichier">
-            <img id="offerImg" class="full-image" ng-src="{{image.url}}">
-          </ion-slide>
-        </ion-slide-box>
-        <p>
-          {{modalData.Description}}
-        </p>
-        <p>
-          <!--<i class="icon ion-location my-margin"></i>{{modalData.marker.latitude}}, {{modalData.Longitude}}-->
-          <ui-gmap-google-map center='map.center' zoom='map.zoom'>
-        	   <ui-gmap-marker coords=map.coords options="marker.options" events="marker.events" idkey="marker.id">
-             </ui-gmap-marker>
-          </ui-gmap-google-map>
-        </p>
+			<div class="item item-body">
+				<h3>{{modalData.Titre}}</h3>
+				<ion-slide-box>
+					<ion-slide ng-repeat="image in modalData.Fichier">
+					<img id="offerImg" class="full-image" ng-src="{{image.url}}">
+					</ion-slide>
+				</ion-slide-box>
+				<p>
+					{{modalData.Description}}
+				</p>
+				<p>
+					<!--<i class="icon ion-location my-margin"></i>{{modalData.marker.latitude}}, {{modalData.Longitude}}-->
+					<ui-gmap-google-map center='map.center' zoom='map.zoom' data-tap-disabled="true">
+						<ui-gmap-marker coords=map.coords options="marker.options" events="marker.events" idkey="marker.id">
+						</ui-gmap-marker>
+					</ui-gmap-google-map>
+				</p>
 
-        <!--<p>
-          <a href="#" class="subdued">1 Like</a>
-          <a href="#" class="subdued">5 Comments</a>
-        </p>-->
-      </div>
-    </div>
-    <br>
+				<!--<p>
+					<a href="#" class="subdued">1 Like</a>
+					<a href="#" class="subdued">5 Comments</a>
+				</p>-->
+			</div>
+			
+			<div class="item item-body">
+				<div class="list">
+					<!--TODO : add ng-repeat, depending on the modelData format regarding Discussion-->
+					
+					<a class="item item-thumbnail-left" href="#">
+						<img>
+						<h2>Pretty Hate Machine</h2>
+						<p>Nine Inch Nails</p>
+					</a>
+					
+					<a class="item item-thumbnail-left" href="#">
+						<img>
+						<h2>Pretty Hate Machine 2</h2>
+						<p>Nine Inch Nails 2</p>
+					</a>
+				
+				</div>
+			</div>
+			
+			<div class="item item-button-right" ng-show="canLeaveComment()">
+				<input type="text" class="balanced" ng-model="offerData.newComment" placeholder="Votre commentaire ..."></input>
+				<button class="button icon-center ion-plus-circled button-balanced" ng-disabled="newComment == ''" ng-click="sendNewComment()"></button>
+			</div>
+		</div>
+		<br>
 
 	</ion-content>
-
-	<div class="bar bar-footer">
-		<a class="button icon-left ion-help-circled button-outline button-balanced my-margin-left">Pose une question</a>
-
-		<a class="button icon-left ion-android-contact button-balanced my-margin-right">Contacte l'annonceur</a>
-	</div>
-	
 </ion-modal-view>

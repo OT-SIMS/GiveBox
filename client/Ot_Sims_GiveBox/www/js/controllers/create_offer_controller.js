@@ -150,7 +150,6 @@ angular.module('starter.controllers.CreateOffer', [])
 		$scope.offer.postcode = "00000";
 		$scope.offer.town = '';
 		$scope.cities = [];
-		//TODO : add videos
 
 	};
 

@@ -1,22 +1,6 @@
 angular.module('starter.controllers.Offer', [])
 
-.controller('OfferCtrl', function($scope, $ionicModal, $ionicLoading, $log, $ionicSlideBoxDelegate) {
-	
-	$scope.slideIndex = 0;
-	
-	var SLIDES = {
-		description : 0,
-		map : 1
-	}
-	
-	$scope.alreadyInit = false;
-	
-	/*
-	$scope.optionsSlides = {
-		loop: false,
-		//effect: fade,
-		speed: 500,
-	}
+.controller('OfferCtrl', function($scope, $ionicModal, $ionicLoading, $log, $http, $ionicSlideBoxDelegate, CONFIG) {
 	$scope.data = {};
 	$scope.$watch('data.slider', function(nv, ov) {
 		$scope.slider = $scope.data.slider;
@@ -59,73 +43,28 @@ angular.module('starter.controllers.Offer', [])
 		}
 	};
 	
-	$scope.slideChanged = function(index) {
-		$scope.slideIndex = index;
+	$scope.sendNewComment = function() {
+		console.log("sendNewComment :" + $scope.offerData.newComment);
 		
-		if(index==SLIDES.map){
-			//Update map content : center and marker
-			$scope.map.center.latitude = $scope.modalData.Latitude;
-			$scope.map.center.longitude = $scope.modalData.Longitude;
-			
-			$scope.marker.coords.latitude = $scope.modalData.Latitude;
-			$scope.marker.coords.longitude = $scope.modalData.Longitude;
-			
-			$scope.marker.options.labelContent = $scope.modalData.Titre;
+		var req = {
+			method: 'POST',
+			url: CONFIG.serverUrl + 'api/offres/discussion/' + $scope.modalData.Id,
+			headers: {
+			'content-type': 'application/json',
+			'accept': 'application/json'
+			},
+			data: $scope.offerData.newComment
 		}
-	};
-	*/
-	
-	
-	$scope.init = function() {
-		$scope.alreadyInit = true;
-		console.log("ajout");
-		var myLatlng = new google.maps.LatLng(37.3000, -120.4833);
-	
-		var mapOptions = {
-			center: myLatlng,
-			zoom: 16,
-			mapTypeId: google.maps.MapTypeId.ROADMAP
-		};
-	
-		var map = new google.maps.Map(document.getElementById("map"), mapOptions);
-	
-		navigator.geolocation.getCurrentPosition(function(pos) {
-			map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
-			var myLocation = new google.maps.Marker({
-				position: new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude),
-				map: map,
-				title: "My Location",
-			});
-			
-			myLocation.addListener('click', function() {
-				$scope.previous();
-			});
+		
+		$http(req).then(function(dataServer){
+			$scope.offerData.newComment = '';
+		}, function(data){
+			console.log("Problème d'envoi de la requête.");
+			//alert( "Problème d'envoi au serveur: " + JSON.stringify({data: data}));
 		});
-	
-		$scope.map = map;
-	};
-
-	
-	
-	$scope.slideChanged = function(index) {
-		if(!$scope.alreadyInit){
-			$scope.init();
-		}
 		
-		$scope.slideIndex = index;
 		
-		if(index==SLIDES.map){
-			//Update map content : center and marker
-			//$scope.map.setCenter(new google.maps.LatLng($scope.modalData.Latitude, $scope.modalData.Longitude));
-			
-			/*
-			$scope.marker.coords.latitude = $scope.modalData.Latitude;
-			$scope.marker.coords.longitude = $scope.modalData.Longitude;
-			
-			$scope.marker.options.labelContent = $scope.modalData.Titre;
-			*/
-		}
-	};
+	}
 	
 	$scope.next = function() {
 		$ionicSlideBoxDelegate.next();
