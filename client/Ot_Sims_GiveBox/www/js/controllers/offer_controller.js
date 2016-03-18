@@ -1,11 +1,6 @@
 angular.module('starter.controllers.Offer', [])
 
-.controller('OfferCtrl', function($scope, $ionicModal, $ionicLoading, $log, $http, $ionicSlideBoxDelegate, CONFIG) {
-	$scope.data = {};
-	$scope.$watch('data.slider', function(nv, ov) {
-		$scope.slider = $scope.data.slider;
-	})
-	
+.controller('OfferCtrl', function($scope, $ionicModal, $ionicLoading, $log, $http, $ionicSlideBoxDelegate, $cordovaEmailComposer, CONFIG) {
 	$scope.map = { center: { latitude: 45.7818, longitude: 4.8731 }, zoom: 15, pan: 1 };
 	//$scope.map = {center: {latitude: 45.7818, longitude: 4.8731 }, zoom: 4 };
 	$scope.options = {scrollwheel: false};
@@ -43,8 +38,8 @@ angular.module('starter.controllers.Offer', [])
 		}
 	};
 	
-	$scope.sendNewComment = function() {
-		console.log("sendNewComment :" + $scope.offerData.newComment);
+	$scope.sendNewComment = function() {		
+		var comment = $scope.offerData.newComment;
 		
 		var req = {
 			method: 'POST',
@@ -53,7 +48,7 @@ angular.module('starter.controllers.Offer', [])
 			'content-type': 'application/json',
 			'accept': 'application/json'
 			},
-			data: $scope.offerData.newComment
+			data: comment
 		}
 		
 		$http(req).then(function(dataServer){
@@ -66,9 +61,68 @@ angular.module('starter.controllers.Offer', [])
 		
 	}
 	
+	$scope.composeMail = function() {
+		$scope.offerData.allowMailComposing = true;
+	}
+	
+	$scope.sendMail = function() {
+		$cordovaEmailComposer.isAvailable(
+			function (isAvailable) {
+				// alert('Service is not available') unless isAvailable;
+				console.log("isAvailable : " + isAvailable);
+			}
+);
+		
+		var email = {
+			to: 'jerome.guidon@insa-lyon.fr',
+			//cc: 'erika@mustermann.de',
+			//bcc: ['john@doe.com', 'jane@doe.com'],
+			attachments: [],
+			subject: '[Givebox] Votre offre \" ' + $scope.modalData.Titre + '\" ',
+			body: $scope.offerData.mailContent,
+			isHtml: true,
+			app: 'mailto',
+		};
+
+		$cordovaEmailComposer.open(email).then(function() {
+			console.log("success")
+		}, function () {
+			console.log("user cancelled email");
+		});
+	}
+	
+	$scope.deleteMail = function() {
+		$scope.offerData.allowMailComposing = false;
+		$scope.offerData.mailContent = '';
+	}
+	
 	$scope.next = function() {
 		$ionicSlideBoxDelegate.next();
 	};
+	
+	$scope.formatDate = function(date) {
+// 		var toReturn = '';		
+		///2016-03-17T18:01:42.663
+		var months = [
+			'Janvier',
+			'Février',
+			'Mars',
+			'Avril',
+			'Mai',
+			'Juin',
+			'Juillet',
+			'Août',
+			'Septembre',
+			'Octobre',
+			'Novembre',
+			'Décembre'
+		]
+		
+		var strMonth = date.substring(5,7);
+		var month = months[_.parseInt(strMonth-1)];
+		
+		return "le " + date.substring(8,10) + " " + month + " " + date.substring(0,4) + " à " + date.substring(11,13) + "h" + date.substring(14,16);
+	}
 	
 	$scope.previous = function() {
 		$ionicSlideBoxDelegate.previous();

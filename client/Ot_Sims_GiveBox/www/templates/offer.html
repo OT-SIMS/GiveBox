@@ -18,7 +18,13 @@
 				<img>
 				<h2>{{modalData.Utilisateur.Nom}}</h2>
 				<p>En cours</p>
-				<button class="button icon-left ion-android-contact button-balanced my-margin-right" ng-click="">Contacter l'annonceur</button>
+				<button class="button icon-left ion-android-contact button-balanced my-margin-right" ng-click="composeMail()" ng-show="offerData.allowMailComposing == false">Contact</button>
+				<button class="button icon-left ion-android-contact button-balanced my-margin-right" ng-click="sendMail()" ng-show="offerData.allowMailComposing == true" ng-disabled="offerData.mailContent == ''">Envoyer le mail</button>
+			</div>
+			
+			<div class="item item-button-right" ng-show="offerData.allowMailComposing">
+				<input type="text" class="balanced" ng-model="offerData.mailContent" placeholder="Votre message ..."></input>
+				<button class="button icon-left ion-android-contact button-balanced my-margin-right" ng-click="deleteMail()">Annuler</button>
 			</div>
 
 			<div class="item item-body">
@@ -49,16 +55,11 @@
 				<div class="list">
 					<!--TODO : add ng-repeat, depending on the modelData format regarding Discussion-->
 					
-					<a class="item item-thumbnail-left" href="#">
+					<a class="item item-thumbnail-left" ng-repeat="message in modalData.Discussion">
 						<img>
-						<h2>Pretty Hate Machine</h2>
-						<p>Nine Inch Nails</p>
-					</a>
-					
-					<a class="item item-thumbnail-left" href="#">
-						<img>
-						<h2>Pretty Hate Machine 2</h2>
-						<p>Nine Inch Nails 2</p>
+						<h2>{{message.Utilisateur.Nom}}</h2>
+						<p align="right">{{formatDate(message.DateMsg)}}</p>
+						<p>{{message.Message}}</p>
 					</a>
 				
 				</div>

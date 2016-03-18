@@ -6,7 +6,9 @@ angular.module('starter.controllers.Home', [])
   $scope.coordonnees.latitude = '';
   $scope.coordonnees.longitude = '';
   $scope.offerData = {
-	  newComment : ''
+	  newComment : '',
+	  allowMailComposing : false,
+	  mailContent: ''
   }
 
   $scope.getAllOffers = function(){
