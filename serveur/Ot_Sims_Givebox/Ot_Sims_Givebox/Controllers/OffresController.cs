@@ -193,10 +193,15 @@ namespace Ot_Sims_Givebox.Controllers
 
         }
 
+        public struct msg
+        {
+            public string message;
+        }
         //POST: api/offres/dicussion/idoffre
         [Route("discussion/{id}")]
-        public async Task<IHttpActionResult> PostMsg([FromBody] string msg, int id)
+        public async Task<IHttpActionResult> PostMsg([FromBody] msg message, int id)
         {
+            string msg = message.message;
             Utilisateur u = UserHelper.getUser(User, db);
             DateTime DateMsg = DateTime.Now;
             Discussion disc = new Discussion();

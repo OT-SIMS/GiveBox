@@ -93,6 +93,12 @@ en modifiant ce fichier MSBuild. Pour en savoir plus à ce sujet, consultez la p
     <File Include="bin/EntityFramework.SqlServer.dll">
       <publishTime>02/29/2016 15:30:28</publishTime>
     </File>
+    <File Include="bin/EntityFramework.SqlServer.xml">
+      <publishTime>02/29/2016 15:30:28</publishTime>
+    </File>
+    <File Include="bin/EntityFramework.xml">
+      <publishTime>02/29/2016 15:30:28</publishTime>
+    </File>
     <File Include="bin/es/Microsoft.Data.Edm.resources.dll">
       <publishTime>02/10/2016 09:52:04</publishTime>
     </File>
@@ -210,19 +216,37 @@ en modifiant ce fichier MSBuild. Pour en savoir plus à ce sujet, consultez la p
     <File Include="bin/Microsoft.AspNet.Identity.Core.dll">
       <publishTime>02/29/2016 15:28:55</publishTime>
     </File>
+    <File Include="bin/Microsoft.AspNet.Identity.Core.xml">
+      <publishTime>02/29/2016 15:28:55</publishTime>
+    </File>
     <File Include="bin/Microsoft.AspNet.Identity.EntityFramework.dll">
+      <publishTime>02/29/2016 15:29:25</publishTime>
+    </File>
+    <File Include="bin/Microsoft.AspNet.Identity.EntityFramework.xml">
       <publishTime>02/29/2016 15:29:25</publishTime>
     </File>
     <File Include="bin/Microsoft.AspNet.Identity.Owin.dll">
       <publishTime>02/29/2016 15:28:56</publishTime>
     </File>
+    <File Include="bin/Microsoft.AspNet.Identity.Owin.xml">
+      <publishTime>02/29/2016 15:28:56</publishTime>
+    </File>
     <File Include="bin/Microsoft.Data.Edm.dll">
+      <publishTime>02/10/2016 09:52:04</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Data.Edm.xml">
       <publishTime>02/10/2016 09:52:04</publishTime>
     </File>
     <File Include="bin/Microsoft.Data.OData.dll">
       <publishTime>02/10/2016 09:52:16</publishTime>
     </File>
+    <File Include="bin/Microsoft.Data.OData.xml">
+      <publishTime>02/10/2016 09:52:16</publishTime>
+    </File>
     <File Include="bin/Microsoft.Owin.Cors.dll">
+      <publishTime>02/29/2016 10:37:30</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Owin.Cors.xml">
       <publishTime>02/29/2016 10:37:30</publishTime>
     </File>
     <File Include="bin/Microsoft.Owin.dll">
@@ -231,7 +255,13 @@ en modifiant ce fichier MSBuild. Pour en savoir plus à ce sujet, consultez la p
     <File Include="bin/Microsoft.Owin.Host.SystemWeb.dll">
       <publishTime>02/29/2016 15:23:19</publishTime>
     </File>
+    <File Include="bin/Microsoft.Owin.Host.SystemWeb.xml">
+      <publishTime>02/29/2016 15:23:19</publishTime>
+    </File>
     <File Include="bin/Microsoft.Owin.Security.Cookies.dll">
+      <publishTime>02/29/2016 15:22:17</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Owin.Security.Cookies.xml">
       <publishTime>02/29/2016 15:22:17</publishTime>
     </File>
     <File Include="bin/Microsoft.Owin.Security.dll">
@@ -240,17 +270,38 @@ en modifiant ce fichier MSBuild. Pour en savoir plus à ce sujet, consultez la p
     <File Include="bin/Microsoft.Owin.Security.Facebook.dll">
       <publishTime>02/29/2016 15:22:10</publishTime>
     </File>
+    <File Include="bin/Microsoft.Owin.Security.Facebook.xml">
+      <publishTime>02/29/2016 15:22:10</publishTime>
+    </File>
     <File Include="bin/Microsoft.Owin.Security.Google.dll">
+      <publishTime>02/29/2016 14:59:16</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Owin.Security.Google.xml">
       <publishTime>02/29/2016 14:59:16</publishTime>
     </File>
     <File Include="bin/Microsoft.Owin.Security.MicrosoftAccount.dll">
       <publishTime>02/29/2016 15:21:55</publishTime>
     </File>
+    <File Include="bin/Microsoft.Owin.Security.MicrosoftAccount.xml">
+      <publishTime>02/29/2016 15:21:55</publishTime>
+    </File>
     <File Include="bin/Microsoft.Owin.Security.OAuth.dll">
+      <publishTime>02/29/2016 15:21:50</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Owin.Security.OAuth.xml">
       <publishTime>02/29/2016 15:21:50</publishTime>
     </File>
     <File Include="bin/Microsoft.Owin.Security.Twitter.dll">
       <publishTime>02/29/2016 15:21:44</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Owin.Security.Twitter.xml">
+      <publishTime>02/29/2016 15:21:44</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Owin.Security.xml">
+      <publishTime>02/29/2016 14:59:15</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Owin.xml">
+      <publishTime>02/29/2016 10:37:30</publishTime>
     </File>
     <File Include="bin/Microsoft.Web.Infrastructure.dll">
       <publishTime>02/09/2016 14:25:17</publishTime>
@@ -258,11 +309,14 @@ en modifiant ce fichier MSBuild. Pour en savoir plus à ce sujet, consultez la p
     <File Include="bin/Newtonsoft.Json.dll">
       <publishTime>02/29/2016 15:29:08</publishTime>
     </File>
+    <File Include="bin/Newtonsoft.Json.xml">
+      <publishTime>02/29/2016 15:29:08</publishTime>
+    </File>
     <File Include="bin/Ot_Sims_Givebox.dll">
-      <publishTime>03/15/2016 09:35:02</publishTime>
+      <publishTime>03/18/2016 18:05:36</publishTime>
     </File>
     <File Include="bin/Ot_Sims_Givebox.pdb">
-      <publishTime>03/15/2016 09:35:02</publishTime>
+      <publishTime>03/18/2016 18:05:36</publishTime>
     </File>
     <File Include="bin/Owin.dll">
       <publishTime>02/29/2016 10:37:50</publishTime>
@@ -279,7 +333,13 @@ en modifiant ce fichier MSBuild. Pour en savoir plus à ce sujet, consultez la p
     <File Include="bin/System.Net.Http.Formatting.dll">
       <publishTime>02/11/2016 21:52:43</publishTime>
     </File>
+    <File Include="bin/System.Net.Http.Formatting.xml">
+      <publishTime>02/11/2016 21:52:43</publishTime>
+    </File>
     <File Include="bin/System.Spatial.dll">
+      <publishTime>02/10/2016 09:52:12</publishTime>
+    </File>
+    <File Include="bin/System.Spatial.xml">
       <publishTime>02/10/2016 09:52:12</publishTime>
     </File>
     <File Include="bin/System.Web.Cors.dll">
@@ -288,7 +348,13 @@ en modifiant ce fichier MSBuild. Pour en savoir plus à ce sujet, consultez la p
     <File Include="bin/System.Web.Helpers.dll">
       <publishTime>02/29/2016 15:24:26</publishTime>
     </File>
+    <File Include="bin/System.Web.Helpers.xml">
+      <publishTime>02/29/2016 15:24:26</publishTime>
+    </File>
     <File Include="bin/System.Web.Http.Cors.dll">
+      <publishTime>02/11/2016 21:52:43</publishTime>
+    </File>
+    <File Include="bin/System.Web.Http.Cors.xml">
       <publishTime>02/11/2016 21:52:43</publishTime>
     </File>
     <File Include="bin/System.Web.Http.dll">
@@ -297,28 +363,58 @@ en modifiant ce fichier MSBuild. Pour en savoir plus à ce sujet, consultez la p
     <File Include="bin/System.Web.Http.OData.dll">
       <publishTime>02/10/2016 09:52:21</publishTime>
     </File>
+    <File Include="bin/System.Web.Http.OData.xml">
+      <publishTime>02/10/2016 09:52:21</publishTime>
+    </File>
     <File Include="bin/System.Web.Http.Owin.dll">
+      <publishTime>02/29/2016 15:24:39</publishTime>
+    </File>
+    <File Include="bin/System.Web.Http.Owin.xml">
       <publishTime>02/29/2016 15:24:39</publishTime>
     </File>
     <File Include="bin/System.Web.Http.WebHost.dll">
       <publishTime>02/29/2016 15:24:35</publishTime>
     </File>
+    <File Include="bin/System.Web.Http.WebHost.xml">
+      <publishTime>02/29/2016 15:24:35</publishTime>
+    </File>
+    <File Include="bin/System.Web.Http.xml">
+      <publishTime>02/11/2016 21:52:43</publishTime>
+    </File>
     <File Include="bin/System.Web.Mvc.dll">
+      <publishTime>02/29/2016 15:25:46</publishTime>
+    </File>
+    <File Include="bin/System.Web.Mvc.xml">
       <publishTime>02/29/2016 15:25:46</publishTime>
     </File>
     <File Include="bin/System.Web.Optimization.dll">
       <publishTime>02/09/2016 14:25:15</publishTime>
     </File>
+    <File Include="bin/System.Web.Optimization.xml">
+      <publishTime>02/09/2016 14:25:15</publishTime>
+    </File>
     <File Include="bin/System.Web.Razor.dll">
       <publishTime>02/29/2016 15:24:25</publishTime>
     </File>
+    <File Include="bin/System.Web.Razor.xml">
+      <publishTime>02/29/2016 15:24:25</publishTime>
+    </File>
     <File Include="bin/System.Web.WebPages.Deployment.dll">
+      <publishTime>02/29/2016 15:24:26</publishTime>
+    </File>
+    <File Include="bin/System.Web.WebPages.Deployment.xml">
       <publishTime>02/29/2016 15:24:26</publishTime>
     </File>
     <File Include="bin/System.Web.WebPages.dll">
       <publishTime>02/29/2016 15:24:26</publishTime>
     </File>
     <File Include="bin/System.Web.WebPages.Razor.dll">
+      <publishTime>02/29/2016 15:24:26</publishTime>
+    </File>
+    <File Include="bin/System.Web.WebPages.Razor.xml">
+      <publishTime>02/29/2016 15:24:26</publishTime>
+    </File>
+    <File Include="bin/System.Web.WebPages.xml">
       <publishTime>02/29/2016 15:24:26</publishTime>
     </File>
     <File Include="bin/WebGrease.dll">
@@ -370,10 +466,10 @@ en modifiant ce fichier MSBuild. Pour en savoir plus à ce sujet, consultez la p
       <publishTime>02/09/2016 14:42:57</publishTime>
     </File>
     <File Include="Models/Model.edmx.diagram">
-      <publishTime>03/14/2016 15:33:25</publishTime>
+      <publishTime>03/15/2016 16:24:19</publishTime>
     </File>
     <File Include="Models/Model.edmx.sql">
-      <publishTime>03/14/2016 14:40:11</publishTime>
+      <publishTime>03/18/2016 18:04:32</publishTime>
     </File>
     <File Include="packages.config">
       <publishTime>02/29/2016 15:57:03</publishTime>
@@ -421,7 +517,7 @@ en modifiant ce fichier MSBuild. Pour en savoir plus à ce sujet, consultez la p
       <publishTime>02/09/2016 14:42:57</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>03/08/2016 11:07:05</publishTime>
+      <publishTime>03/18/2016 17:52:16</publishTime>
     </File>
   </ItemGroup>
 </Project>

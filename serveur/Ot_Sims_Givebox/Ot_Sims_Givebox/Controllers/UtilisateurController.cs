@@ -111,7 +111,7 @@ namespace Ot_Sims_Givebox.Controllers
                 Utilisateur utilisateur = UserHelper.getUser(User, db);
                 if (utilisateur == null)
                 {
-                    utilisateur = new Utilisateur() { UserId = User.Identity.GetUserId() };
+                    utilisateur = new Utilisateur() { UserId = User.Identity.GetUserId(), Email = User.Identity.GetUserName() };
                     userInfo.assign(utilisateur);
                     db.UtilisateurSet.Add(utilisateur);
                 }
@@ -119,6 +119,7 @@ namespace Ot_Sims_Givebox.Controllers
                 {
                     userInfo.assign(utilisateur);
                 }
+
                 db.SaveChanges();
                 return Ok(utilisateur);
             }

@@ -22,7 +22,7 @@
         <EntityTypeShape EntityType="Model.Notification" Width="1.5" PointX="6.125" PointY="6.875" />
         <AssociationConnector Association="Model.UtilisateurNotifications" />
         <AssociationConnector Association="Model.OffreNotifications" />
-        <EntityTypeShape EntityType="Model.Favori" Width="1.5" PointX="9.25" PointY="1.375" />
+        <EntityTypeShape EntityType="Model.Favori" Width="1.5" PointX="9.625" PointY="0.875" />
         <AssociationConnector Association="Model.UtilisateurFavori" />
         <AssociationConnector Association="Model.FavoriOffre" />
       </Diagram>
