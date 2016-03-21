@@ -13,6 +13,7 @@
     <EntitySet Name="FichierTypeSet" EntityType="Model.Store.FichierTypeSet" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="DiscussionSet" EntityType="Model.Store.DiscussionSet" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="NotificationSet" EntityType="Model.Store.NotificationSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="FavoriSet" EntityType="Model.Store.FavoriSet" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="UtilisateurOffre" Association="Model.Store.UtilisateurOffre">
       <End Role="Utilisateur" EntitySet="UtilisateurSet" />
       <End Role="Offre" EntitySet="OffreSet" />
@@ -53,6 +54,14 @@
       <End Role="Offre" EntitySet="OffreSet" />
       <End Role="Notifications" EntitySet="NotificationSet" />
     </AssociationSet>
+    <AssociationSet Name="UtilisateurFavori" Association="Model.Store.UtilisateurFavori">
+      <End Role="Utilisateur" EntitySet="UtilisateurSet" />
+      <End Role="Favori" EntitySet="FavoriSet" />
+    </AssociationSet>
+    <AssociationSet Name="FavoriOffre" Association="Model.Store.FavoriOffre">
+      <End Role="Favori" EntitySet="FavoriSet" />
+      <End Role="Offre" EntitySet="OffreSet" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="UtilisateurSet">
     <Key>
@@ -64,6 +73,7 @@
     <Property Name="Prenom" Type="nvarchar(max)" Nullable="false" />
     <Property Name="DateNaissance" Type="datetime" Nullable="false" />
     <Property Name="Telephone" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Email" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
   <EntityType Name="OffreSet">
     <Key>
@@ -127,6 +137,14 @@
     <Property Name="OffreId" Type="int" Nullable="false" />
     <Property Name="Date" Type="datetime" Nullable="false" />
     <Property Name="EstAccepte" Type="bit" Nullable="false" DefaultValue="false" />
+  </EntityType>
+  <EntityType Name="FavoriSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UtilisateurId" Type="int" Nullable="false" />
+    <Property Name="OffreId" Type="int" Nullable="false" />
   </EntityType>
   <Association Name="UtilisateurOffre">
     <End Role="Utilisateur" Type="Model.Store.UtilisateurSet" Multiplicity="1" />
@@ -248,6 +266,30 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="UtilisateurFavori">
+    <End Role="Utilisateur" Type="Model.Store.UtilisateurSet" Multiplicity="1" />
+    <End Role="Favori" Type="Model.Store.FavoriSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Utilisateur">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Favori">
+        <PropertyRef Name="UtilisateurId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FavoriOffre">
+    <End Role="Favori" Type="Model.Store.FavoriSet" Multiplicity="*" />
+    <End Role="Offre" Type="Model.Store.OffreSet" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Offre">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Favori">
+        <PropertyRef Name="OffreId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -321,6 +363,7 @@
           <Property Name="DateNaissance" Type="DateTime" Nullable="false" />
           <Property Name="Telephone" Type="String" Nullable="false" />
           <NavigationProperty Name="Fichier" Relationship="Model.UtilisateurFichier" FromRole="Utilisateur" ToRole="Fichier" />
+          <Property Name="Email" Type="String" Nullable="false" />
         </EntityType>
         <EntityType Name="Offre">
           <Key>
@@ -552,6 +595,7 @@
           <ScalarProperty Name="Prenom" ColumnName="Prenom" />
           <ScalarProperty Name="DateNaissance" ColumnName="DateNaissance" />
           <ScalarProperty Name="Telephone" ColumnName="Telephone" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -620,6 +664,15 @@
           <ScalarProperty Name="OffreId" ColumnName="OffreId" />
           <ScalarProperty Name="Date" ColumnName="Date" />
           <ScalarProperty Name="EstAccepte" ColumnName="EstAccepte" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FavoriSet">
+      <EntityTypeMapping TypeName="IsTypeOf(Model.Favori)">
+        <MappingFragment StoreEntitySet="FavoriSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="UtilisateurId" ColumnName="UtilisateurId" />
+          <ScalarProperty Name="OffreId" ColumnName="OffreId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

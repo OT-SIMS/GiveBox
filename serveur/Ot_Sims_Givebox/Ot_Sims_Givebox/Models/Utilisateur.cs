@@ -20,6 +20,7 @@ namespace Ot_Sims_Givebox.Models
         public string Prenom { get; set; }
         public System.DateTime DateNaissance { get; set; }
         public string Telephone { get; set; }
+        public string Email { get; set; }
     
         public virtual Fichier Fichier { get; set; }
     }

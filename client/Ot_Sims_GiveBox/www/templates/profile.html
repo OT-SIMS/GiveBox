@@ -8,28 +8,47 @@
       <button class="button button-clear ion-compose green my-icon-size" ng-click="updateProfile()"></button>
     </div>
   </ion-header-bar>
-  <ion-content class="has-bottom">
+  <ion-content>
     <div class="item item-avatar">
       <img class="my-background-green">
-      <h2 ng-if="authentication.userLastName==''">{{authentication.userName}}</h2>
-      <h2 ng-if="authentication.userLastName!=''">{{authentication.userFirstName}} {{authentication.userLastName}}</h2>
-      <p><i class="icon ion-location "></i> User Location</p>
+      <h2>{{authentication.userFirstName}} {{authentication.userLastName}}</h2>
+      <p><i class="icon ion-at"></i> {{authentication.userName}}</p>
     </div>
     <div class="button-bar">
       <a class="button my-background-white" ng-class="{'my-button-active': $myIndex === 0}" ng-click="changeIndex(0)">Dons</a>
-      <a class="button my-background-white" ng-class="{'my-button-active': $myIndex === 1}" ng-click="changeIndex(1)">Reçu</a>
+      <a class="button my-background-white" ng-class="{'my-button-active': $myIndex === 1}" ng-click="changeIndex(1)">Reçus</a>
       <a class="button my-background-white" ng-class="{'my-button-active': $myIndex === 2}" ng-click="changeIndex(2)">Favoris</a>
     </div>
     <ion-slide-box show-pager=false on-slide-changed="slideHasChanged($index)">
       <ion-slide>
         <div class="box">
           <div class="list">
-              <a class="item item-thumbnail-left" ng-repeat="offer in myOffers" ng-click="openOffer(offer)">
-                <img ng-src="{{item.Fichier[0].url}}" ng-if="item.Fichier[0] != null">
-                <img ng-src="img/no_img.jpg" ng-if="item.Fichier[0] == null">
-                <h2>{{offer.Titre}}</h2>
-                <p>{{offer.Description}}  </p>
-              </a>
+            <div class="item item-divider">
+              Offres en cours
+            </div>
+            <a class="item item-thumbnail-left item-button-right" ng-repeat="offer in myOffers" ng-click="openOffer(offer)" ng-if="!offer.EstArchivee">
+              <img ng-src="{{offer.Fichier[0].url}}" ng-if="offer.Fichier[0] != null">
+              <img ng-src="img/no_img.jpg" ng-if="item.Fichier[0] == null">
+              <h2>{{offer.Titre}}</h2>
+              <h3><i class="icon ion-location"></i> {{offer.Ville}}</h3>
+              <p>{{offer.Description}}</p>
+              <button class="button button-balanced" ng-if="!offer.EstArchivee" ng-click="">
+                <i class="icon ion-trash-a"></i>
+              </button>
+            </a>
+            <div class="item item-divider">
+              Offres archivées
+            </div>
+            <a class="item item-thumbnail-left item-button-right" ng-repeat="offer in myOffers" ng-click="openOffer(offer)" ng-if="offer.EstArchivee">
+              <img ng-src="{{offer.Fichier[0].url}}" ng-if="offer.Fichier[0] != null">
+              <img ng-src="img/no_img.jpg" ng-if="item.Fichier[0] == null">
+              <h2>{{offer.Titre}}</h2>
+              <h3><i class="icon ion-location"></i> {{offer.Ville}}</h3>
+              <p>{{offer.Description}}</p>
+              <button class="button button-balanced" ng-if="!offer.EstArchivee" ng-click="">
+                <i class="icon ion-trash-a"></i>
+              </button>
+            </a>
           </div>
           <p class="my-grey no-product-yet" ng-if="myOffers==''">Pas (encore) de produit ici !</p>
         </div>
@@ -41,7 +60,24 @@
       </ion-slide>
       <ion-slide>
         <div class="box">
-          <p class="my-grey no-product-yet">Pas (encore) de produit ici !</p>
+          <div class="list">
+            <div ng-repeat="(key, value) in myFavorites | groupBy: 'estArchivee'">
+              <div class="item item-divider">
+                {{key}}
+              </div>
+              <a class="item item-thumbnail-left item-button-right" ng-repeat="offer in value" ng-click="openOffer(offer)">
+                <img ng-src="{{offer.Fichier[0].url}}" ng-if="offer.Fichier[0] != null">
+                <img ng-src="img/no_img.jpg" ng-if="item.Fichier[0] == null">
+                <h2>{{offer.Titre}}</h2>
+                <h3><i class="icon ion-location"></i> {{offer.Ville}}</h3>
+                <p>{{offer.Description}}</p>
+                <button class="button button-balanced" ng-if="!offer.estArchivee" ng-click="">
+                  <i class="icon ion-heart-broken"></i>
+                </button>
+              </a>
+            </div>
+          </div>
+          <p class="my-grey no-product-yet" ng-if="myFavorites==''">Pas (encore) de produit ici !</p>
         </div>
       </ion-slide>
     </ion-slide-box>

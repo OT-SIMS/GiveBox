@@ -39,6 +39,25 @@ angular.module('starter.controllers.Profile', [])
     $http(req)
       .then(function(response){
         $scope.myOffers=response.data;
+        console.log(response.data);
+      }, function(response){
+        alert( "Problème d'envoi au serveur: " + JSON.stringify({response: response}));
+      });
+  }
+
+  $scope.myFavorites={};
+  $scope.getMyFavorites = function(){
+    var req = {
+      method: 'GET',
+      url: CONFIG.serverUrl + 'api/utilisateur/favori',
+      headers: {
+        'Content-Type': 'application/json',
+        'accept': 'application/json'
+      }
+    }
+    $http(req)
+      .then(function(response){
+        $scope.myFavorites=response.data;
       }, function(response){
         alert( "Problème d'envoi au serveur: " + JSON.stringify({response: response}));
       });
@@ -71,6 +90,7 @@ angular.module('starter.controllers.Profile', [])
   };
 
   $scope.getMyOffers();
+  $scope.getMyFavorites();
 
 
 

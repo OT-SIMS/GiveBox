@@ -6,7 +6,8 @@
 		</div>
 		<h1 class="title green nav-title">GiveBox</h1>
 		<div class="buttons">
-			<button class="button button-clear ion-ios-heart-outline green my-margin my-icon-size" ng-click=""></button>
+			<button class="button button-clear ion-ios-heart-outline green my-margin my-icon-size" ng-click="addFavorite()" ng-if=""></button>
+			<button class="button button-clear ion-ios-heart green my-margin my-icon-size" ng-click="removeFavorite()" ng-if=""></button>
 			<button class="button button-clear ion-android-share-alt green my-icon-size" ng-click=""></button>
 		</div>
 
@@ -16,12 +17,12 @@
 		<div class="list card my-card">
 			<div class="item item-avatar item-button-right">
 				<img>
-				<h2>{{modalData.Utilisateur.Nom}}</h2>
-				<p>En cours</p>
+				<h2>{{modalData.Utilisateur.Prenom}} {{modalData.Utilisateur.Nom}}</h2>
+				<p><i class="icon ion-location"></i> {{modalData.Ville}}</p>
 				<button class="button icon-left ion-android-contact button-balanced my-margin-right" ng-click="composeMail()" ng-show="offerData.allowMailComposing == false">Contact</button>
 				<button class="button icon-left ion-android-contact button-balanced my-margin-right" ng-click="sendMail()" ng-show="offerData.allowMailComposing == true" ng-disabled="offerData.mailContent == ''">Envoyer le mail</button>
 			</div>
-			
+
 			<div class="item item-button-right" ng-show="offerData.allowMailComposing">
 				<input type="text" class="balanced" ng-model="offerData.mailContent" placeholder="Votre message ..."></input>
 				<button class="button icon-left ion-android-contact button-balanced my-margin-right" ng-click="deleteMail()">Annuler</button>
@@ -50,21 +51,21 @@
 					<a href="#" class="subdued">5 Comments</a>
 				</p>-->
 			</div>
-			
+
 			<div class="item item-body">
 				<div class="list">
 					<!--TODO : add ng-repeat, depending on the modelData format regarding Discussion-->
-					
-					<a class="item item-thumbnail-left" ng-repeat="message in modalData.Discussion">
+
+					<a class="item item-avatar" ng-repeat="message in modalData.Discussion">
 						<img>
 						<h2>{{message.Utilisateur.Nom}}</h2>
-						<p align="right">{{formatDate(message.DateMsg)}}</p>
+						<p align="right" class="dateMessage">{{formatDate(message.DateMsg)}}</p>
 						<p>{{message.Message}}</p>
 					</a>
-				
+
 				</div>
 			</div>
-			
+
 			<div class="item item-button-right" ng-show="canLeaveComment()">
 				<input type="text" class="balanced" ng-model="offerData.newComment" placeholder="Votre commentaire ..."></input>
 				<button class="button icon-center ion-plus-circled button-balanced" ng-disabled="offerData.newComment == ''" ng-click="sendNewComment()"></button>
