@@ -50,9 +50,10 @@ angular.module('starter.controllers.Login', [])
           authService.authentication.userAvatar = "img/no_avatar.jpg";
         }
         else{
-          avatar = response.data.Fichier[0].url;
-          authService.authentication.userAvatar = response.data.Fichier[0].url;
+          avatar = response.data.Fichier.url;
+          authService.authentication.userAvatar = response.data.Fichier.url;
         }
+        console.log("Avatar:" + avatar);
         localStorageService.set('userData', { firstName: response.data.Prenom, lastName: response.data.Nom, birthDate: response.data.DateNaissance, telephone: response.data.Telephone, avatar: avatar });
 
         authService.authentication.userLastName = response.data.Nom;

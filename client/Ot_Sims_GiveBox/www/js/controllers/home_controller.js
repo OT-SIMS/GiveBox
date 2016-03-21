@@ -185,21 +185,6 @@ angular.module('starter.controllers.Home', [])
 	$scope.getAllOffers();
 	searchCategorie();
 
-	$scope.getOffersByCategories = function(categorie){
-		var req = {
-			method: 'GET',
-			url: CONFIG.serverUrl + '/api/offres/',
-			headers: {
-				'Content-Type': 'application/json',
-				'accept': 'application/json'
-			}
-		}
-
-<<<<<<< HEAD
-  // Run when the app is opened
-  $scope.getAllOffers();
-  searchCategorie();
-
   $scope.getOffersByCategories = function(categorie){
     var req = {
        method: 'GET',
@@ -210,30 +195,6 @@ angular.module('starter.controllers.Home', [])
        }
     }
 
-    var params = {};
-    params.categorie = categorie;
-
-    if($scope.coordonnees.latitude != '' && $scope.coordonnees.longitude != ''){
-
-      params.latt = $scope.coordonnees.latitude;
-      params.lgt = $scope.coordonnees.longitude;
-      params.r = '1000';
-
-      //params.latt = '100';
-      //params.lgt = '100';
-    }
-
-    req.params = params;
-
-    $http(req)
-      .then(function(response){
-        $scope.items=response.data;
-      }, function(response){
-        alert( "Problème d'envoi au serveur: " + JSON.stringify({response: response}));
-      });
-  }
-
-=======
 		var params = {};
 		params.categorie = categorie;
 
@@ -256,13 +217,12 @@ angular.module('starter.controllers.Home', [])
 		});
 	}
 
->>>>>>> origin/master
   $scope.canLeaveComment = function() {
-	var authData = localStorageService.get('authorizationData');
-	if (authData) {
-		return true;
+		var authData = localStorageService.get('authorizationData');
+		if (authData) {
+			return true;
+		}
+		return false;
 	}
-	return false;
-  }
 
 });

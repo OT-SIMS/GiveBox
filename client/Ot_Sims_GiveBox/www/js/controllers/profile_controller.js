@@ -125,7 +125,6 @@ angular.module('starter.controllers.Profile', [])
 
   $scope.getMyOffers();
   $scope.getMyFavorites();
-
-
+  authService.fillUserData();
 
 });

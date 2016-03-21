@@ -56,7 +56,7 @@ angular.module('starter', [
 	//serverUrl: "http://givebox.apphb.com",
 	//serverUrl: " http://90.27.88.22:8080/givebox/",
 	//serverUrl: "http://yoda.rispal.info/givebox/",
-	serverUrl: "http://aannecy-651-1-26-113.w86-209.abo.wanadoo.fr:8080/givebox/",
+	serverUrl: "http://aannecy-651-1-26-113.w86-209.abo.wanadoo.fr/givebox/",
 	googleapis: "https://maps.googleapis.com/maps/api/"
 })
 
