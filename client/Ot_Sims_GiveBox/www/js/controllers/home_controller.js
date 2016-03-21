@@ -145,13 +145,52 @@ angular.module('starter.controllers.Home', [])
 		};
 		$scope.modalData.marker = markerOptions;
 		
-		$scope.map.center.latitude = offer.Latitude;
-		$scope.map.center.longitude = offer.Longitude;
-		
-		$scope.marker.coords.latitude = offer.Latitude;
-		$scope.marker.coords.longitude = offer.Longitude;
+		$scope.updateMapCoordinates(offer);
 		
 		$scope.modal.show();
+	}
+	
+	/**
+	 * Use the coordinates from the offer, or use the city coordinates from google maps
+	 * 
+	 * */
+	$scope.updateMapCoordinates = function (offer) {
+		if(offer.Latitude == '' || offer.Longitude == ''){
+			var options = {
+			method: 'GET',
+			//url: 'http://nominatim.openstreetmap.org/reverse'
+			url: CONFIG.googleapis + 'geocode/json'
+		};
+
+		var params = {};
+
+		params.components = 'country:' + 'France' + '|locality:' + offer.Ville;
+
+		options.params = params;
+
+		$http(options).then(function(dataServer){
+			console.log(dataServer);
+			
+			var lat = dataServer.data.results[0].geometry.location.lat;
+			var lng = dataServer.data.results[0].geometry.location.lng;
+			
+			$scope.map.center.latitude = lat;
+			$scope.map.center.longitude = lng;
+			
+			$scope.marker.coords.latitude = lat;
+			$scope.marker.coords.longitude = lng;
+		}, function(data){
+			console.log("Problème d'envoi de la requête.");
+			alert( "Problème d'envoi au serveur: " + JSON.stringify({data: data}));
+		});
+			
+		}else{
+			$scope.map.center.latitude = offer.Latitude;
+			$scope.map.center.longitude = offer.Longitude;
+			
+			$scope.marker.coords.latitude = offer.Latitude;
+			$scope.marker.coords.longitude = offer.Longitude;
+		}
 	}
 
 	$scope.closeOffer = function() {
