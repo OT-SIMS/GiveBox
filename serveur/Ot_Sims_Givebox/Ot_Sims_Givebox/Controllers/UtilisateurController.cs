@@ -32,18 +32,43 @@ namespace Ot_Sims_Givebox.Controllers
             }
         }
         private ModelContainer db = new ModelContainer();
+        //POST: Savoir si l'user à déjà cette offre en favori, return true or fals
+        [Route("favoritest/{idoffre}")]
+        public IHttpActionResult OffreFav(int idoffre)
+        {
+            var utilisateur = UserHelper.getUser(User, db);
+            IQueryable<Favori> request = null;
+            request = from favs in db.FavoriSet where favs.OffreId.Equals(idoffre) select favs;
+            if (request.Count() == 0)
+            {
+                return Ok(false);
+            }
+            else
+            {
+                return Ok(true);
+            }
+        }
         //POST: Offres que l'user met en fav : api/utilisateur/favori/{idOffre}
         [Route("favori/{id}")]
         public async Task<IHttpActionResult> MettreFav(int id)
         {
             var utilisateur = UserHelper.getUser(User, db);
-            db.FavoriSet.Add(new Favori()
+            IQueryable<Favori> request = null;
+            request = from favs in db.FavoriSet where favs.OffreId.Equals(id) select favs;
+            if (request.Count() == 0)
             {
-                UtilisateurId = utilisateur.Id,
-                OffreId = id
-            });
-            await db.SaveChangesAsync();
-            return Ok(); 
+                db.FavoriSet.Add(new Favori()
+                {
+                    UtilisateurId = utilisateur.Id,
+                    OffreId = id
+                });
+                await db.SaveChangesAsync();
+                return Ok();
+            }
+            else
+            {
+                return Ok("Cette offre est déjà en favori");
+            }
         }
         // DEL: Enlever une offre des favoris
         [Route("favori/{id}")]
