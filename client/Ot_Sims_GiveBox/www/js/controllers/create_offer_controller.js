@@ -260,8 +260,6 @@ angular.module('starter.controllers.CreateOffer', [])
 
 			//Send each images to the server.
 			for(var i = 0; i< $scope.allMultimedia.length; i++){
-				var imagePath = $scope.allMultimedia[i];
-
 				var options = new FileUploadOptions();
 				options.fileKey = $scope.allMultimedia[i].type + "_" + i;
 				options.name = $scope.allMultimedia[i].type + "_" + i;
@@ -416,13 +414,13 @@ angular.module('starter.controllers.CreateOffer', [])
 	};
 
       $scope.findLocalityFromPostcode = function() {
-	      //https://maps.googleapis.com/maps/api/geocode/json?components=postal_code:69100|country:France
+		//https://maps.googleapis.com/maps/api/geocode/json?components=postal_code:69100|country:France
 
-	      var options = {
+		var options = {
 			method: 'GET',
 			//url: 'http://nominatim.openstreetmap.org/reverse'
 			url: CONFIG.googleapis + 'geocode/json'
-	      };
+		};
 
 	      var params = {};
 

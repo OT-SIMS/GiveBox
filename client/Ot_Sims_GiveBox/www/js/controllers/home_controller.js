@@ -131,26 +131,78 @@ angular.module('starter.controllers.Home', [])
 		}
 	}
 
-  $scope.openOffer = function(offer){
-    $scope.modalData  = offer;
-    var markerOptions = {
-      latitude : offer.Latitude,
-      longitude : offer.LOngitude
-    };
-    $scope.modalData.marker = markerOptions;
+	$scope.openModalOffer = function() {
+		$ionicModal.fromTemplateUrl('templates/offer.html', {
+			scope: $scope
+		}).then(function(modal) {
+			$scope.modal = modal;
+			$scope.modal.show();
+		});
+	}
 
-		$scope.map.center.latitude = offer.Latitude;
-		$scope.map.center.longitude = offer.Longitude;
+	$scope.openOffer = function(offer){
+		$scope.modalData  = offer;
+		var markerOptions = {
+			latitude : offer.Latitude,
+			longitude : offer.LOngitude
+		};
+		$scope.modalData.marker = markerOptions;
 
-		$scope.marker.coords.latitude = offer.Latitude;
-		$scope.marker.coords.longitude = offer.Longitude;
-    $ionicModal.fromTemplateUrl('templates/offer.html', {
-      scope: $scope
-    }).then(function(modal) {
-      $scope.modal = modal;
-      $scope.modal.show();
-    });
-  }
+		$scope.updateMapCoordinates(offer);
+	}
+
+	/**
+	 * Use the coordinates from the offer, or use the city coordinates from google maps
+	 *
+	 * */
+	$scope.updateMapCoordinates = function (offer) {
+		console.log("updateMapCoordinates ");
+
+		console.log("offer.Latitude" + offer.Latitude);
+
+		if(offer.Latitude != '' || offer.Longitude != ''){
+			console.log("use gmaps");
+			var options = {
+				method: 'GET',
+				//url: 'http://nominatim.openstreetmap.org/reverse'
+				url: CONFIG.googleapis + 'geocode/json'
+			};
+
+			var params = {};
+
+			params.components = 'country:' + 'France' + '|locality:' + offer.Ville;
+
+			options.params = params;
+
+			$http(options).then(function(dataServer){
+				console.log("updating coords gmaps : " + dataServer);
+
+				var lat = dataServer.data.results[0].geometry.location.lat;
+				var lng = dataServer.data.results[0].geometry.location.lng;
+
+				$scope.map.center.latitude = lat;
+				$scope.map.center.longitude = lng;
+
+				$scope.marker.coords.latitude = lat;
+				$scope.marker.coords.longitude = lng;
+
+				$scope.openModalOffer();
+			}, function(data){
+				console.log("Problème d'envoi de la requête.");
+				alert( "Problème d'envoi au serveur: " + JSON.stringify({data: data}));
+			});
+
+		}else{
+			console.log("Update from offer");
+			$scope.map.center.latitude = offer.Latitude;
+			$scope.map.center.longitude = offer.Longitude;
+
+			$scope.marker.coords.latitude = offer.Latitude;
+			$scope.marker.coords.longitude = offer.Longitude;
+
+			$scope.openModalOffer();
+		}
+	}
 
 	$scope.closeOffer = function() {
 		$scope.modal.hide();
@@ -195,27 +247,28 @@ angular.module('starter.controllers.Home', [])
        }
     }
 
-		var params = {};
-		params.categorie = categorie;
+    var params = {};
+    params.categorie = categorie;
 
-		if($scope.coordonnees.latitude != '' && $scope.coordonnees.longitude != ''){
+    if($scope.coordonnees.latitude != '' && $scope.coordonnees.longitude != ''){
 
-			params.latt = $scope.coordonnees.latitude;
-			params.lgt = $scope.coordonnees.longitude;
-			params.r = '1000';
+      params.latt = $scope.coordonnees.latitude;
+      params.lgt = $scope.coordonnees.longitude;
+      params.r = '1000';
 
-			//params.latt = '100';
-			//params.lgt = '100';
-		}
+      //params.latt = '100';
+      //params.lgt = '100';
+    }
 
-		req.params = params;
+    req.params = params;
 
-		$http(req).then(function(response){
-			$scope.items=response.data;
-		}, function(response){
-			alert( "Problème d'envoi au serveur: " + JSON.stringify({response: response}));
-		});
-	}
+    $http(req)
+      .then(function(response){
+        $scope.items=response.data;
+      }, function(response){
+        alert( "Problème d'envoi au serveur: " + JSON.stringify({response: response}));
+      });
+  }
 
   $scope.canLeaveComment = function() {
 		var authData = localStorageService.get('authorizationData');
