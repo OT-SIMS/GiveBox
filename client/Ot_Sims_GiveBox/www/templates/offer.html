@@ -6,8 +6,8 @@
 		</div>
 		<h1 class="title green nav-title">GiveBox</h1>
 		<div class="buttons">
-			<button class="button button-clear ion-ios-heart-outline green my-margin my-icon-size" ng-click="addFavorite()" ng-if=""></button>
-			<button class="button button-clear ion-ios-heart green my-margin my-icon-size" ng-click="removeFavorite()" ng-if=""></button>
+			<button class="button button-clear ion-ios-heart-outline green my-margin my-icon-size" ng-click="addFavorite()" ng-if="!isFavorite"></button>
+			<button class="button button-clear ion-ios-heart green my-margin my-icon-size" ng-click="removeFavorite()" ng-if="isFavorite"></button>
 			<button class="button button-clear ion-android-share-alt green my-icon-size" ng-click=""></button>
 		</div>
 
@@ -16,7 +16,8 @@
 	<ion-content>
 		<div class="list card my-card">
 			<div class="item item-avatar item-button-right">
-				<img>
+				<img ng-src="modalData.Utilisateur.Fichier[0].url" ng-if="modalData.Utilisateur.Fichier[0] != null">
+				<img ng-src="img/no_avatar.jpg" ng-if="modalData.Utilisateur.Fichier[0] == null">
 				<h2>{{modalData.Utilisateur.Prenom}} {{modalData.Utilisateur.Nom}}</h2>
 				<p><i class="icon ion-location"></i> {{modalData.Ville}}</p>
 				<button class="button icon-left ion-android-contact button-balanced my-margin-right" ng-click="composeMail()" ng-show="offerData.allowMailComposing == false">Contact</button>
@@ -57,7 +58,8 @@
 					<!--TODO : add ng-repeat, depending on the modelData format regarding Discussion-->
 
 					<a class="item item-thumbnail-left" ng-repeat="message in modalData.Discussion">
-						<img>
+						<img ng-src="message.Utilisateur.Fichier[0].url" ng-if="message.Utilisateur.Fichier[0] != null">
+						<img ng-src="img/no_avatar.jpg" ng-if="message.Utilisateur.Fichier[0] == null">
 						<h2>{{message.Utilisateur.Nom}}</h2>
 						<p align="right">{{formatDate(message.DateMsg)}}</p>
 						<p>{{message.Message}}</p>

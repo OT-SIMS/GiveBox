@@ -100,12 +100,6 @@ angular.module('starter.controllers.Home', [])
     }
   }
 
-  $ionicModal.fromTemplateUrl('templates/offer.html', {
-    scope: $scope
-  }).then(function(modal) {
-    $scope.modal = modal;
-  });
-
   $scope.openOffer = function(offer){
     $scope.modalData  = offer;
     var markerOptions = {
@@ -113,7 +107,12 @@ angular.module('starter.controllers.Home', [])
       longitude : offer.LOngitude
     };
     $scope.modalData.marker = markerOptions;
-    $scope.modal.show();
+    $ionicModal.fromTemplateUrl('templates/offer.html', {
+      scope: $scope
+    }).then(function(modal) {
+      $scope.modal = modal;
+      $scope.modal.show();
+    });  
   }
 
   $scope.closeOffer = function() {
@@ -181,7 +180,7 @@ angular.module('starter.controllers.Home', [])
         alert( "Problème d'envoi au serveur: " + JSON.stringify({response: response}));
       });
   }
-  
+
   $scope.canLeaveComment = function() {
 	var authData = localStorageService.get('authorizationData');
 	if (authData) {

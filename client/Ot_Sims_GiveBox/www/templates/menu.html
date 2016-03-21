@@ -26,7 +26,7 @@
     <ion-content>
       <ion-list>
         <ion-item class="item item-avatar my-background-green no-border" ng-if="authentication.isAuth">
-            <img class="my-background-white">
+            <img ng-src="authentication.userAvatar">
             <h2 class="title white">{{authentication.userFirstName}} {{authentication.userLastName}}</h2>
             <p><i class="icon ion-at"></i> {{authentication.userName}}</p>
         </ion-item>

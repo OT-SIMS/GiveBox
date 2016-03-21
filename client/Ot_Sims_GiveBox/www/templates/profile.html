@@ -10,7 +10,7 @@
   </ion-header-bar>
   <ion-content>
     <div class="item item-avatar">
-      <img class="my-background-green">
+      <img ng-src="authService.authentication.userAvatar">
       <h2>{{authentication.userFirstName}} {{authentication.userLastName}}</h2>
       <p><i class="icon ion-at"></i> {{authentication.userName}}</p>
     </div>
@@ -45,7 +45,7 @@
               <h2>{{offer.Titre}}</h2>
               <h3><i class="icon ion-location"></i> {{offer.Ville}}</h3>
               <p>{{offer.Description}}</p>
-              <button class="button button-balanced" ng-if="!offer.EstArchivee" ng-click="">
+              <button class="button button-balanced" ng-if="!offer.EstArchivee" ng-click="removeOffer(offer.Id)">
                 <i class="icon ion-trash-a"></i>
               </button>
             </a>
@@ -71,7 +71,7 @@
                 <h2>{{offer.Titre}}</h2>
                 <h3><i class="icon ion-location"></i> {{offer.Ville}}</h3>
                 <p>{{offer.Description}}</p>
-                <button class="button button-balanced" ng-if="!offer.estArchivee" ng-click="">
+                <button class="button button-balanced" ng-if="!offer.estArchivee" ng-click="removeFavorite(offer.Id)">
                   <i class="icon ion-heart-broken"></i>
                 </button>
               </a>
