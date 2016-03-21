@@ -36,7 +36,7 @@ angular.module('starter', [
 	$ionicPlatform.ready(function() {
 		$cordovaGeolocation.getCurrentPosition().then(success, error);
 	});
-	
+
 	$ionicPlatform.ready(function() {
 		$cordovaEmailComposer.open().then(success, error);
 	});
@@ -52,9 +52,9 @@ angular.module('starter', [
 })
 
 .constant('CONFIG', {
-    //serverUrl: "http://192.168.0.5/givebox/",//"http://yoda.rispal.info/givebox/", 
+    //serverUrl: "http://192.168.0.5/givebox/",//"http://yoda.rispal.info/givebox/",
     //serverUrl: "http://givebox.apphb.com",
-	serverUrl: " http://90.27.88.22:8080/givebox/",
+	  serverUrl: " http://90.27.88.22:8080/givebox/",
     googleapis: "https://maps.googleapis.com/maps/api/"
 })
 
