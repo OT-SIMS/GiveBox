@@ -1,46 +1,15 @@
 angular.module('starter.controllers.Offer', [])
 
 .controller('OfferCtrl', function($scope, $ionicModal, $ionicLoading, $log, $http, $ionicSlideBoxDelegate, $cordovaEmailComposer, CONFIG) {
-	$scope.map = { center: { latitude: 45.7818, longitude: 4.8731 }, zoom: 15, pan: 1 };
-	//$scope.map = {center: {latitude: 45.7818, longitude: 4.8731 }, zoom: 4 };
-	$scope.options = {scrollwheel: false};
-	$scope.coordsUpdates = 0;
-	$scope.dynamicMoveCtr = 0;
-
-	$scope.marker = {
-		id: 0,
-		coords: {
-			latitude: 45.7818,
-			longitude: 4.8731
-		},
-		options: {
-			draggable: false,
-			labelContent: "Offre"
-		},
-		click: function() {
-			$ionicSlideBoxDelegate.previous();
-		},
-		events: {
-			dragend: function (marker, eventName, args) {
-				$log.log('marker dragend');
-				var lat = marker.getPosition().lat();
-				var lon = marker.getPosition().lng();
-				$log.log(lat);
-				$log.log(lon);
-
-				$scope.marker.options = {
-					draggable: true,
-					labelContent: "lat: " + $scope.marker.coords.latitude + ' ' + 'lon: ' + $scope.marker.coords.longitude,
-					labelAnchor: "100 0",
-					labelClass: "marker-labels"
-				};
-			}
-		}
-	};
-
 	$scope.sendNewComment = function() {
 		var comment = $scope.offerData.newComment;
-
+		
+		console.log(comment);
+		
+		var toSend = {
+			message: $scope.offerData.newComment
+		}
+		
 		var req = {
 			method: 'POST',
 			url: CONFIG.serverUrl + 'api/offres/discussion/' + $scope.modalData.Id,
@@ -48,10 +17,12 @@ angular.module('starter.controllers.Offer', [])
 			'content-type': 'application/json',
 			'accept': 'application/json'
 			},
-			data: comment
+			data: toSend
 		}
 
 		$http(req).then(function(dataServer){
+			$scope.modalData.Discussion.push(dataServer.data);
+			
 			$scope.offerData.newComment = '';
 		}, function(data){
 			console.log("Problème d'envoi de la requête.");
@@ -63,32 +34,32 @@ angular.module('starter.controllers.Offer', [])
 
 	$scope.composeMail = function() {
 		$scope.offerData.allowMailComposing = true;
+		
+		var urischeme = 'email'
+		
+		cordova.plugins.email.isAvailable(urischeme,
+		function (isAvailable, withScheme) {
+			alert('Service is not available : ' + isAvailable + ' ; ' + withScheme) //unless isAvailable;
+		}
+);
 	}
 
 	$scope.sendMail = function() {
-		$cordovaEmailComposer.isAvailable(
-			function (isAvailable) {
-				// alert('Service is not available') unless isAvailable;
-				console.log("isAvailable : " + isAvailable);
-			}
-);
-
 		var email = {
 			to: 'jerome.guidon@insa-lyon.fr',
 			//cc: 'erika@mustermann.de',
 			//bcc: ['john@doe.com', 'jane@doe.com'],
 			attachments: [],
-			subject: '[Givebox] Votre offre \" ' + $scope.modalData.Titre + '\" ',
-			body: $scope.offerData.mailContent,
-			isHtml: true,
-			app: 'mailto',
+			//subject: '[Givebox] Votre offre \" ' + $scope.modalData.Titre + '\" ',
+			subject: '[Givebox] Votre offre',
+			//body: $scope.offerData.mailContent,
+			body: 'mailContent',
+			isHtml: false,
 		};
 
-		$cordovaEmailComposer.open(email).then(function() {
-			console.log("success")
-		}, function () {
-			console.log("user cancelled email");
-		});
+		cordova.plugins.email.open(email,function() {
+			console.log('email view dismissed');
+		}, this);
 	}
 
 	$scope.deleteMail = function() {

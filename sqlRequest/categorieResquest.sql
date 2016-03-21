@@ -1,4 +1,5 @@
 
+use Givebox
 declare @path varchar(max)
 declare @sql varchar(max)
 set @path = 'C:\Users\Simon\Documents\GitHub\GiveBox\sqlRequest\'

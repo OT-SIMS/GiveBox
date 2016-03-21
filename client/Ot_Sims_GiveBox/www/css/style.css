@@ -321,6 +321,10 @@ input[type=text]
     height: 100%;
 }
 
+.dateMessage {
+	font-style:italic;
+}
+
 
 /***********/
 /* PROFILE */

@@ -2,42 +2,75 @@ angular.module('starter.controllers.Home', [])
 
 .controller('HomeCtrl', function($scope, $http, $ionicModal, $cordovaGeolocation, $location, CONFIG, localStorageService){
 
-  $scope.coordonnees = {};
-  $scope.coordonnees.latitude = '';
-  $scope.coordonnees.longitude = '';
-  $scope.offerData = {
-	  newComment : '',
-	  allowMailComposing : false,
-	  mailContent: ''
-  }
+	$scope.coordonnees = {};
+	$scope.coordonnees.latitude = '';
+	$scope.coordonnees.longitude = '';
+	$scope.offerData = {
+		newComment : '',
+		allowMailComposing : false,
+		mailContent: ''
+	}
 
-  $scope.getAllOffers = function(){
-    var req = {
-       method: 'GET',
-       url: CONFIG.serverUrl + 'api/offres',
-       headers: {
-         'Content-Type': 'application/json',
-         'accept': 'application/json'
-       }
-    }
+	$scope.map = { center: { latitude: 45.7818, longitude: 4.8731 }, zoom: 15, pan: 1 };
+	//$scope.map = {center: {latitude: 45.7818, longitude: 4.8731 }, zoom: 4 };
+	$scope.options = {scrollwheel: false};
+	$scope.coordsUpdates = 0;
+	$scope.dynamicMoveCtr = 0;
 
-    console.log("ajout des params : " + $scope.coordonnees.latitude);
-    if($scope.coordonnees.latitude != '' && $scope.coordonnees.longitude != ''){
-      var params = {};
-      params.latt = $scope.coordonnees.latitude
-      params.lgt = $scope.coordonnees.longitude;
+	$scope.marker = {
+		id: 0,
+		coords: {
+			latitude: 45.7818,
+			longitude: 4.8731
+		},
+		options: {
+			draggable: false,
+			labelContent: "Offre"
+		},
+		events: {
+			dragend: function (marker, eventName, args) {
+				$log.log('marker dragend');
+				var lat = marker.getPosition().lat();
+				var lon = marker.getPosition().lng();
+				$log.log(lat);
+				$log.log(lon);
 
-      req.params = params;
-      console.log("params ok");
-    }
+				$scope.marker.options = {
+					draggable: true,
+					labelContent: "lat: " + $scope.marker.coords.latitude + ' ' + 'lon: ' + $scope.marker.coords.longitude,
+					labelAnchor: "100 0",
+					labelClass: "marker-labels"
+				};
+			}
+		}
+	};
 
-    $http(req)
-      .then(function(response){
-        $scope.items=response.data;
-      }, function(response){
-        alert( "Problème d'envoi au serveur: " + JSON.stringify({response: response}));
-      });
-  }
+	$scope.getAllOffers = function(){
+		var req = {
+			method: 'GET',
+			url: CONFIG.serverUrl + 'api/offres',
+			headers: {
+				'Content-Type': 'application/json',
+				'accept': 'application/json'
+			}
+		}
+
+		console.log("ajout des params : " + $scope.coordonnees.latitude);
+		if($scope.coordonnees.latitude != '' && $scope.coordonnees.longitude != ''){
+			var params = {};
+			params.latt = $scope.coordonnees.latitude
+			params.lgt = $scope.coordonnees.longitude;
+
+			req.params = params;
+			console.log("params ok");
+		}
+
+		$http(req).then(function(response){
+			$scope.items=response.data;
+		}, function(response){
+			alert( "Problème d'envoi au serveur: " + JSON.stringify({response: response}));
+		});
+	}
 
   $scope.updateLocalisation = function() {
 		// onSuccess Callback
@@ -55,50 +88,48 @@ angular.module('starter.controllers.Home', [])
 		function onError(error) {
 			console.log("error");
       if(error.code == 1){
-        alert("Il y a eu problème pour utiliser la géolocalisation du téléphone. celle-ci est-elle activée ?");
-      }
+		alert("Il y a eu problème pour utiliser la géolocalisation du téléphone. celle-ci est-elle activée ?");
+	}
 			//alert('code: '    + error.code    + '\n' + 'message: ' + error.message + '\n');
 		}
-
 		navigator.geolocation.getCurrentPosition(onSuccess, onError);
 	}
 
-  $scope.keyWordsResearch = function(keyword){
-    if(keyword!=undefined){
-      var req = {
-         method: 'GET',
-         url: CONFIG.serverUrl + '/api/offres/',
-         headers: {
-           'Content-Type': 'application/json',
-           'accept': 'application/json'
-         }
-      }
+	$scope.keyWordsResearch = function(keyword){
+		if(keyword!=undefined){
+			var req = {
+				method: 'GET',
+				url: CONFIG.serverUrl + '/api/offres/',
+				headers: {
+					'Content-Type': 'application/json',
+					'accept': 'application/json'
+				}
+			}
 
-      var params = {};
-      params.motcles = keyword;
+			var params = {};
+			params.motcles = keyword;
 
-      if($scope.coordonnees.latitude != '' && $scope.coordonnees.longitude != ''){
+			if($scope.coordonnees.latitude != '' && $scope.coordonnees.longitude != ''){
 
-        params.latt = $scope.coordonnees.latitude;
-        params.lgt = $scope.coordonnees.longitude;
-        params.r = '1000';
+				params.latt = $scope.coordonnees.latitude;
+				params.lgt = $scope.coordonnees.longitude;
+				params.r = '1000';
 
-        //params.latt = '100';
-        //params.lgt = '100';
-      }
+				//params.latt = '100';
+				//params.lgt = '100';
+			}
 
-      req.params = params;
+			req.params = params;
 
-      $http(req)
-        .then(function(response){
-          $scope.items=response.data;
-        }, function(response){
-          alert( "Problème d'envoi au serveur: " + JSON.stringify({response: response}));
-        });
-    } else{
-      $scope.getAllOffers();
-    }
-  }
+			$http(req).then(function(response){
+				$scope.items=response.data;
+			}, function(response){
+				alert( "Problème d'envoi au serveur: " + JSON.stringify({response: response}));
+			});
+		} else{
+			$scope.getAllOffers();
+		}
+	}
 
   $scope.openOffer = function(offer){
     $scope.modalData  = offer;
@@ -107,17 +138,23 @@ angular.module('starter.controllers.Home', [])
       longitude : offer.LOngitude
     };
     $scope.modalData.marker = markerOptions;
+
+		$scope.map.center.latitude = offer.Latitude;
+		$scope.map.center.longitude = offer.Longitude;
+
+		$scope.marker.coords.latitude = offer.Latitude;
+		$scope.marker.coords.longitude = offer.Longitude;
     $ionicModal.fromTemplateUrl('templates/offer.html', {
       scope: $scope
     }).then(function(modal) {
       $scope.modal = modal;
       $scope.modal.show();
-    });  
+    });
   }
 
-  $scope.closeOffer = function() {
-    $scope.modal.hide();
-  };
+	$scope.closeOffer = function() {
+		$scope.modal.hide();
+	};
 
   searchCategorie = function(){
 		var req = {
@@ -144,6 +181,21 @@ angular.module('starter.controllers.Home', [])
 		});
 	};
 
+	// Run when the app is opened
+	$scope.getAllOffers();
+	searchCategorie();
+
+	$scope.getOffersByCategories = function(categorie){
+		var req = {
+			method: 'GET',
+			url: CONFIG.serverUrl + '/api/offres/',
+			headers: {
+				'Content-Type': 'application/json',
+				'accept': 'application/json'
+			}
+		}
+
+<<<<<<< HEAD
   // Run when the app is opened
   $scope.getAllOffers();
   searchCategorie();
@@ -181,6 +233,30 @@ angular.module('starter.controllers.Home', [])
       });
   }
 
+=======
+		var params = {};
+		params.categorie = categorie;
+
+		if($scope.coordonnees.latitude != '' && $scope.coordonnees.longitude != ''){
+
+			params.latt = $scope.coordonnees.latitude;
+			params.lgt = $scope.coordonnees.longitude;
+			params.r = '1000';
+
+			//params.latt = '100';
+			//params.lgt = '100';
+		}
+
+		req.params = params;
+
+		$http(req).then(function(response){
+			$scope.items=response.data;
+		}, function(response){
+			alert( "Problème d'envoi au serveur: " + JSON.stringify({response: response}));
+		});
+	}
+
+>>>>>>> origin/master
   $scope.canLeaveComment = function() {
 	var authData = localStorageService.get('authorizationData');
 	if (authData) {

@@ -207,7 +207,8 @@ angular.module('starter.controllers.CreateOffer', [])
 			"Latitude": $scope.offer.latitude,
 			"Longitude": $scope.offer.longitude,
 			"CodePostal": $scope.offer.postcode,
-			"Ville": $scope.offer.town
+			"Ville": $scope.offer.town,
+			"PartagerNumero" : $scope.offer.shareNumber
 		};
 
 		var reqJson = {
@@ -251,7 +252,7 @@ angular.module('starter.controllers.CreateOffer', [])
 				console.log("upload error source " + error.source);
 				console.log("upload error target " + error.target);
 				console.log("http_status : " + error.http_status);
-				console.log("body : " + body);
+				console.log("body : " + error.body);
 				nbFailedSentMultimedia = nbFailedSentMultimedia + 1;
 				$scope.hideSpinner();
 				//TODO : message modal
@@ -301,7 +302,12 @@ angular.module('starter.controllers.CreateOffer', [])
 				}else{
 					fichier = $scope.urlForVideoPlaying($scope.allMultimedia[i].src);
 				}
-				ft.upload(fichier, encodeURI(CONFIG.serverUrl + "api/fichiers/" + dataServer.data.Id), win, fail, options);
+				console.log("fichier : " + fichier);
+				
+				var receiver = CONFIG.serverUrl + "api/fichiers/" + dataServer.data.Id;
+				console.log("receiver : " + receiver);
+				//encodeURI(CONFIG.serverUrl + "api/fichiers/" + dataServer.data.Id)
+				ft.upload(fichier, receiver, win, fail, options);
 			}
 		}, function(data){
 			console.log("Problème d'envoi de la requête.");
