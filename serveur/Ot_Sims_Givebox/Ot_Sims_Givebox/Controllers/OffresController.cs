@@ -215,7 +215,7 @@ namespace Ot_Sims_Givebox.Controllers
                 {
                     db.DiscussionSet.Add(disc);
                     await db.SaveChangesAsync();
-                    return Created("Message bien envoyé", msg);
+                    return Created("Message bien envoyé", disc);
                 }
                 return NotFound();
             }
