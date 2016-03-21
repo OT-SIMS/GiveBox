@@ -15,12 +15,15 @@
 
 	<ion-content>
 		<div class="list card my-card">
-			<div class="item item-avatar item-button-right">
+			<div class="item item-avatar">  <!--item-button-right"-->
 				<img>
 				<h2>{{modalData.Utilisateur.Prenom}} {{modalData.Utilisateur.Nom}}</h2>
 				<p><i class="icon ion-location"></i> {{modalData.Ville}}</p>
+				<!--
 				<button class="button icon-left ion-android-contact button-balanced my-margin-right" ng-click="composeMail()" ng-show="offerData.allowMailComposing == false">Contact</button>
 				<button class="button icon-left ion-android-contact button-balanced my-margin-right" ng-click="sendMail()" ng-show="offerData.allowMailComposing == true" ng-disabled="offerData.mailContent == ''">Envoyer le mail</button>
+				-->
+				<p><i class="icon ion-at"></i> {{modalData.Utilisateur.Email}}</p>
 			</div>
 
 			<div class="item item-button-right" ng-show="offerData.allowMailComposing">
@@ -67,7 +70,7 @@
 			</div>
 
 			<div class="item item-button-right" ng-show="canLeaveComment()">
-				<input type="text" class="balanced" ng-model="offerData.newComment" placeholder="Votre commentaire ..."></input>
+				<input type="text" class="balanced width-max" ng-model="offerData.newComment" placeholder="Votre commentaire ..."></input>
 				<button class="button icon-center ion-plus-circled button-balanced" ng-disabled="offerData.newComment == ''" ng-click="sendNewComment()"></button>
 			</div>
 		</div>
