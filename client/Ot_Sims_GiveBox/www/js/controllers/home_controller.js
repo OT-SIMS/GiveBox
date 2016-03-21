@@ -146,8 +146,6 @@ angular.module('starter.controllers.Home', [])
 		$scope.modalData.marker = markerOptions;
 		
 		$scope.updateMapCoordinates(offer);
-		
-		$scope.modal.show();
 	}
 	
 	/**
@@ -155,41 +153,51 @@ angular.module('starter.controllers.Home', [])
 	 * 
 	 * */
 	$scope.updateMapCoordinates = function (offer) {
-		if(offer.Latitude == '' || offer.Longitude == ''){
+		console.log("updateMapCoordinates ");
+		
+		console.log("offer.Latitude" + offer.Latitude);
+		
+		if(offer.Latitude != '' || offer.Longitude != ''){
+			console.log("use gmaps");
 			var options = {
-			method: 'GET',
-			//url: 'http://nominatim.openstreetmap.org/reverse'
-			url: CONFIG.googleapis + 'geocode/json'
-		};
+				method: 'GET',
+				//url: 'http://nominatim.openstreetmap.org/reverse'
+				url: CONFIG.googleapis + 'geocode/json'
+			};
 
-		var params = {};
+			var params = {};
 
-		params.components = 'country:' + 'France' + '|locality:' + offer.Ville;
+			params.components = 'country:' + 'France' + '|locality:' + offer.Ville;
 
-		options.params = params;
+			options.params = params;
 
-		$http(options).then(function(dataServer){
-			console.log(dataServer);
-			
-			var lat = dataServer.data.results[0].geometry.location.lat;
-			var lng = dataServer.data.results[0].geometry.location.lng;
-			
-			$scope.map.center.latitude = lat;
-			$scope.map.center.longitude = lng;
-			
-			$scope.marker.coords.latitude = lat;
-			$scope.marker.coords.longitude = lng;
-		}, function(data){
-			console.log("Problème d'envoi de la requête.");
-			alert( "Problème d'envoi au serveur: " + JSON.stringify({data: data}));
-		});
+			$http(options).then(function(dataServer){
+				console.log("updating coords gmaps : " + dataServer);
+				
+				var lat = dataServer.data.results[0].geometry.location.lat;
+				var lng = dataServer.data.results[0].geometry.location.lng;
+				
+				$scope.map.center.latitude = lat;
+				$scope.map.center.longitude = lng;
+				
+				$scope.marker.coords.latitude = lat;
+				$scope.marker.coords.longitude = lng;
+				
+				$scope.modal.show();
+			}, function(data){
+				console.log("Problème d'envoi de la requête.");
+				alert( "Problème d'envoi au serveur: " + JSON.stringify({data: data}));
+			});
 			
 		}else{
+			console.log("Update from offer");
 			$scope.map.center.latitude = offer.Latitude;
 			$scope.map.center.longitude = offer.Longitude;
 			
 			$scope.marker.coords.latitude = offer.Latitude;
 			$scope.marker.coords.longitude = offer.Longitude;
+			
+			$scope.modal.show();
 		}
 	}
 
