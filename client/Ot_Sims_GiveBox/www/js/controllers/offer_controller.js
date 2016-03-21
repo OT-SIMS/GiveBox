@@ -1,6 +1,11 @@
 angular.module('starter.controllers.Offer', [])
 
-.controller('OfferCtrl', function($scope, $ionicModal, $ionicLoading, $log, $http, $ionicSlideBoxDelegate, $cordovaEmailComposer, CONFIG) {
+.controller('OfferCtrl', function($scope, $ionicModal, $ionicLoading, $log, $http, $ionicSlideBoxDelegate, $cordovaEmailComposer, CONFIG, $sce) {
+	
+	$scope.trustSrc = function(src) {
+		return $sce.trustAsResourceUrl(src);
+	}
+  
 	$scope.sendNewComment = function() {
 		var comment = $scope.offerData.newComment;
 		

@@ -160,7 +160,7 @@ angular.module('starter.controllers.Home', [])
 
 		console.log("offer.Latitude" + offer.Latitude);
 
-		if(offer.Latitude != '' || offer.Longitude != ''){
+		if(offer.Latitude == '' || offer.Longitude == ''|| offer.Longitude == null|| offer.Latitude == null){
 			console.log("use gmaps");
 			var options = {
 				method: 'GET',
@@ -182,6 +182,7 @@ angular.module('starter.controllers.Home', [])
 
 				$scope.map.center.latitude = lat;
 				$scope.map.center.longitude = lng;
+				$scope.map.zoom = 5;
 
 				$scope.marker.coords.latitude = lat;
 				$scope.marker.coords.longitude = lng;

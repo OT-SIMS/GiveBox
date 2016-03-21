@@ -35,8 +35,9 @@
 			<div class="item item-body">
 				<h3>{{modalData.Titre}}</h3>
 				<ion-slide-box>
-					<ion-slide ng-repeat="image in modalData.Fichier">
-					<img id="offerImg" class="full-image" ng-src="{{image.url}}">
+					<ion-slide ng-repeat="element in modalData.Fichier">
+					<img id="offerImg" class="full-image" ng-src="{{element.url}}" ng-show="element.FichierTypeId == 1">
+					<video ng-show="element.FichierTypeId == 2" class="centerme" width="100%" height="100%" ng-src="{{trustSrc(element.url)}}" controls="controls" ></video>
 					</ion-slide>
 				</ion-slide-box>
 				<p>
