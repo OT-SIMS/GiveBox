@@ -12,7 +12,8 @@ angular.module('starter.services.Auth', [])
         userLastName: "",
         userFirstName: "",
         userAvatar: "",
-        userLocation: ""
+        userBirthDate: "",
+        userTelephone: ""
     };
 
     var _saveRegistration = function (registration) {
@@ -66,7 +67,9 @@ angular.module('starter.services.Auth', [])
         _authentication.userLastName = "";
         _authentication.userFirstName = "";
         _authentication.userAvatar = "";
-        _authentication.userLocation = "";
+        _authentication.userBirthDate = "";
+        _authentication.userTelephone = "";
+
 
     };
 
@@ -85,6 +88,9 @@ angular.module('starter.services.Auth', [])
       if(userData){
         _authentication.userFirstName = userData.firstName;
         _authentication.userLastName = userData.lastName;
+        _authentication.userBirthDate = userData.birthDate;
+        _authentication.userTelephone = userData.telephone;
+        _authentication.userAvatar = userData.avatar;
       }
     }
 

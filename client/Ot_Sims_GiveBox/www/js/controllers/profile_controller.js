@@ -63,6 +63,40 @@ angular.module('starter.controllers.Profile', [])
       });
   }
 
+  $scope.removeOffer = function(offerID){
+		var req = {
+      method: 'DEL',
+      url: CONFIG.serverUrl + 'api/offres/' + offerID,
+      headers: {
+        'Content-Type': 'application/json',
+        'accept': 'application/json'
+      }
+    }
+    $http(req)
+      .then(function(response){
+        console.log("Remove from offers");
+      }, function(response){
+        alert( "Problème d'envoi au serveur: " + JSON.stringify({response: response}));
+      });
+	}
+
+  $scope.removeFavorite = function(offerID){
+		var req = {
+      method: 'DEL',
+      url: CONFIG.serverUrl + 'api/utilisateur/favori/' + offerID,
+      headers: {
+        'Content-Type': 'application/json',
+        'accept': 'application/json'
+      }
+    }
+    $http(req)
+      .then(function(response){
+        console.log("Remove from favorites");
+      }, function(response){
+        alert( "Problème d'envoi au serveur: " + JSON.stringify({response: response}));
+      });
+	}
+
   $scope.openOffer = function(offer){
     var markerOptions = {
       latitude : offer.Latitude,

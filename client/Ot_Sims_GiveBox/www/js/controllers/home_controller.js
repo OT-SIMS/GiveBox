@@ -10,7 +10,7 @@ angular.module('starter.controllers.Home', [])
 		allowMailComposing : false,
 		mailContent: ''
 	}
-  
+
 	$scope.map = { center: { latitude: 45.7818, longitude: 4.8731 }, zoom: 15, pan: 1 };
 	//$scope.map = {center: {latitude: 45.7818, longitude: 4.8731 }, zoom: 4 };
 	$scope.options = {scrollwheel: false};
@@ -23,7 +23,7 @@ angular.module('starter.controllers.Home', [])
 			latitude: 45.7818,
 			longitude: 4.8731
 		},
-		options: { 
+		options: {
 			draggable: false,
 			labelContent: "Offre"
 		},
@@ -130,12 +130,15 @@ angular.module('starter.controllers.Home', [])
 			$scope.getAllOffers();
 		}
 	}
-
-	$ionicModal.fromTemplateUrl('templates/offer.html', {
-		scope: $scope
-	}).then(function(modal) {
-		$scope.modal = modal;
-	});
+	
+	$scope.openModalOffer = function() {
+		$ionicModal.fromTemplateUrl('templates/offer.html', {
+			scope: $scope
+		}).then(function(modal) {
+			$scope.modal = modal;
+			$scope.modal.show();
+		});
+	}
 
 	$scope.openOffer = function(offer){
 		$scope.modalData  = offer;
@@ -183,7 +186,7 @@ angular.module('starter.controllers.Home', [])
 				$scope.marker.coords.latitude = lat;
 				$scope.marker.coords.longitude = lng;
 				
-				$scope.modal.show();
+				$scope.openModalOffer();
 			}, function(data){
 				console.log("Problème d'envoi de la requête.");
 				alert( "Problème d'envoi au serveur: " + JSON.stringify({data: data}));
@@ -197,7 +200,7 @@ angular.module('starter.controllers.Home', [])
 			$scope.marker.coords.latitude = offer.Latitude;
 			$scope.marker.coords.longitude = offer.Longitude;
 			
-			$scope.modal.show();
+			$scope.openModalOffer();
 		}
 	}
 
@@ -229,43 +232,44 @@ angular.module('starter.controllers.Home', [])
   		$scope.message = data;
 		});
 	};
-	
-	// Run when the app is opened
-	$scope.getAllOffers();
-	searchCategorie();
-	
-	$scope.getOffersByCategories = function(categorie){
-		var req = {
-			method: 'GET',
-			url: CONFIG.serverUrl + '/api/offres/',
-			headers: {
-				'Content-Type': 'application/json',
-				'accept': 'application/json'
-			}
-		}
 
-		var params = {};
-		params.categorie = categorie;
+  // Run when the app is opened
+  $scope.getAllOffers();
+  searchCategorie();
 
-		if($scope.coordonnees.latitude != '' && $scope.coordonnees.longitude != ''){
+  $scope.getOffersByCategories = function(categorie){
+    var req = {
+       method: 'GET',
+       url: CONFIG.serverUrl + '/api/offres/',
+       headers: {
+         'Content-Type': 'application/json',
+         'accept': 'application/json'
+       }
+    }
 
-			params.latt = $scope.coordonnees.latitude;
-			params.lgt = $scope.coordonnees.longitude;
-			params.r = '1000';
+    var params = {};
+    params.categorie = categorie;
 
-			//params.latt = '100';
-			//params.lgt = '100';
-		}
+    if($scope.coordonnees.latitude != '' && $scope.coordonnees.longitude != ''){
 
-		req.params = params;
+      params.latt = $scope.coordonnees.latitude;
+      params.lgt = $scope.coordonnees.longitude;
+      params.r = '1000';
 
-		$http(req).then(function(response){
-			$scope.items=response.data;
-		}, function(response){
-			alert( "Problème d'envoi au serveur: " + JSON.stringify({response: response}));
-		});
-	}
-  
+      //params.latt = '100';
+      //params.lgt = '100';
+    }
+
+    req.params = params;
+
+    $http(req)
+      .then(function(response){
+        $scope.items=response.data;
+      }, function(response){
+        alert( "Problème d'envoi au serveur: " + JSON.stringify({response: response}));
+      });
+  }
+
   $scope.canLeaveComment = function() {
 	var authData = localStorageService.get('authorizationData');
 	if (authData) {

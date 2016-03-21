@@ -44,10 +44,21 @@ angular.module('starter.controllers.Login', [])
       }
       else {
         console.log(response.data);
-        localStorageService.set('userData', { firstName: response.data.Prenom, lastName: response.data.Nom });
+        var avatar;
+        if(response.data.Fichier==null){
+          avatar= "img/no_avatar.jpg";
+          authService.authentication.userAvatar = "img/no_avatar.jpg";
+        }
+        else{
+          avatar = response.data.Fichier[0].url;
+          authService.authentication.userAvatar = response.data.Fichier[0].url;
+        }
+        localStorageService.set('userData', { firstName: response.data.Prenom, lastName: response.data.Nom, birthDate: response.data.DateNaissance, telephone: response.data.Telephone, avatar: avatar });
 
         authService.authentication.userLastName = response.data.Nom;
         authService.authentication.userFirstName = response.data.Prenom;
+        authService.authentication.userBirthDate = response.data.DateNaissance;
+        authService.authentication.userTelephone = response.data.Telephone;
 
       }
     }, function(response){

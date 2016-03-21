@@ -75,10 +75,18 @@ namespace Ot_Sims_Givebox.Controllers
         public async Task<IHttpActionResult> DeleteFav(int id)
         {
             var utilisateur = UserHelper.getUser(User, db);
-            Favori favori = db.FavoriSet.Find(id);
-            db.FavoriSet.Remove(favori);
-            await db.SaveChangesAsync();
-            return Ok();
+            IQueryable<Favori> request = null;
+            request = from favs in db.FavoriSet where favs.OffreId.Equals(id) select favs;
+            if (request.Count() == 0)
+            {
+                return Ok("Cette offre n'est pas dans vos favoris");
+            }
+            else
+            {
+                db.FavoriSet.Remove(request.First());
+                await db.SaveChangesAsync();
+                return Ok();
+            }
         }
         // GET: Offres mises en fav par l'user : api/utilisateur/favori
         [Route("favori")]
