@@ -5,7 +5,7 @@
     </div>
     <h1 class="title green nav-title">GiveBox</h1>
     <div class="buttons">
-      <button class="button button-clear ion-android-checkbox-outline green my-icon-size" ng-click=""></button>
+      <button class="button button-clear ion-android-checkbox-outline green my-icon-size" ng-click="validateUpdate()"></button>
     </div>
   </ion-header-bar>
   <ion-content class="has-bottom">
@@ -22,24 +22,24 @@
           <i class="icon ion-chevron-right icon-accessory"></i>
         </ion-item>
         <ion-item class="item-input no-border" ng-if="updateValue==2">
-          <input type="text" placeholder="Prénom"></input>
-          <input type="text" placeholder="Nom"></input>
+          <input type="text" placeholder="Prénom" ng-model="userData.Prenom"></input>
+          <input type="text" placeholder="Nom" ng-model="userData.Nom"></input>
         </ion-item>
         <ion-item class="my-button-width button button-stable icon-left ion-android-lock item-icon-right" ng-click="updateElement(3)">
           <span class="my-margin-left">Mot de passe</span> <i class="icon ion-chevron-right icon-accessory"></i>
         </ion-item>
         <ion-item class="item-input no-border" ng-if="updateValue==3">
-          <input type="text" placeholder="Ancien mot de passe"></input>
+          <input type="text" placeholder="Ancien mot de passe" ng-model="userData.password.OldPassword"></input>
         </ion-item>
         <ion-item class="item-input no-border" ng-if="updateValue==3">
-          <input type="text" placeholder="Nouveau mot de passe"></input>
+          <input type="text" placeholder="Nouveau mot de passe" ng-model="userData.password.NewPassword"></input>
         </ion-item>
         <ion-item class="item-input no-border" ng-if="updateValue==3">
-          <input type="text" placeholder="Confirmation mot de passe"></input>
+          <input type="text" placeholder="Confirmation mot de passe" ng-model="userData.password.ConfirmPassword"></input>
         </ion-item>
-        <ion-item class="my-button-width button button-stable icon-left ion-android-notifications item-icon-right">
+        <!--<ion-item class="my-button-width button button-stable icon-left ion-android-notifications item-icon-right">
           <span class="my-margin-left">Notifications</span> <i class="icon ion-chevron-right icon-accessory"></i>
-        </ion-item>
+        </ion-item>-->
         <ion-item class="my-button-width button button-stable icon-left ion-android-exit" ng-click="logOut(); closeUpdateProfile(); closeProfile()">
           <span class="my-margin-left">Log Out</span>
         </ion-item>

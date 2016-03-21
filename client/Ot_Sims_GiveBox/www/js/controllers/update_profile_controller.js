@@ -23,6 +23,16 @@ angular.module('starter.controllers.UpdateProfile', [])
     });
   };
 
+  $scope.userData = null;
+  $scope.validateUpdate = function() {
+    if (!$scope.userData){
+      $scope.closeUpdateProfile();
+    }
+    else{
+      console.log($scope.userData);
+    }
+  };
+
   $scope.logOutFromProfile = function(){
     $scope.modal.remove()
     .then(function() {

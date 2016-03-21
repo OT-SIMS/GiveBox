@@ -27,9 +27,8 @@
       <ion-list>
         <ion-item class="item item-avatar my-background-green no-border" ng-if="authentication.isAuth">
             <img class="my-background-white">
-            <h2 ng-if="authentication.userLastName==''" class="title white">{{authentication.userName}}</h2>
-            <h2 ng-if="authentication.userLastName!=''" class="title white">{{authentication.userFirstName}} {{authentication.userLastName}}</h2>
-            <p><i class="icon ion-location"></i> User Location</p>
+            <h2 class="title white">{{authentication.userFirstName}} {{authentication.userLastName}}</h2>
+            <p><i class="icon ion-at"></i> {{authentication.userName}}</p>
         </ion-item>
         <ion-item class="item-icon-left" menu-close href="#/app/home">
           <i class="icon ion-home"></i>Catalogue

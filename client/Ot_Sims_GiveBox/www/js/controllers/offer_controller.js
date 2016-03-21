@@ -13,7 +13,7 @@ angular.module('starter.controllers.Offer', [])
 			latitude: 45.7818,
 			longitude: 4.8731
 		},
-		options: { 
+		options: {
 			draggable: false,
 			labelContent: "Offre"
 		},
@@ -37,10 +37,10 @@ angular.module('starter.controllers.Offer', [])
 			}
 		}
 	};
-	
-	$scope.sendNewComment = function() {		
+
+	$scope.sendNewComment = function() {
 		var comment = $scope.offerData.newComment;
-		
+
 		var req = {
 			method: 'POST',
 			url: CONFIG.serverUrl + 'api/offres/discussion/' + $scope.modalData.Id,
@@ -50,21 +50,21 @@ angular.module('starter.controllers.Offer', [])
 			},
 			data: comment
 		}
-		
+
 		$http(req).then(function(dataServer){
 			$scope.offerData.newComment = '';
 		}, function(data){
 			console.log("Problème d'envoi de la requête.");
 			//alert( "Problème d'envoi au serveur: " + JSON.stringify({data: data}));
 		});
-		
-		
+
+
 	}
-	
+
 	$scope.composeMail = function() {
 		$scope.offerData.allowMailComposing = true;
 	}
-	
+
 	$scope.sendMail = function() {
 		$cordovaEmailComposer.isAvailable(
 			function (isAvailable) {
@@ -72,7 +72,7 @@ angular.module('starter.controllers.Offer', [])
 				console.log("isAvailable : " + isAvailable);
 			}
 );
-		
+
 		var email = {
 			to: 'jerome.guidon@insa-lyon.fr',
 			//cc: 'erika@mustermann.de',
@@ -90,18 +90,18 @@ angular.module('starter.controllers.Offer', [])
 			console.log("user cancelled email");
 		});
 	}
-	
+
 	$scope.deleteMail = function() {
 		$scope.offerData.allowMailComposing = false;
 		$scope.offerData.mailContent = '';
 	}
-	
+
 	$scope.next = function() {
 		$ionicSlideBoxDelegate.next();
 	};
-	
+
 	$scope.formatDate = function(date) {
-// 		var toReturn = '';		
+// 		var toReturn = '';
 		///2016-03-17T18:01:42.663
 		var months = [
 			'Janvier',
@@ -117,14 +117,49 @@ angular.module('starter.controllers.Offer', [])
 			'Novembre',
 			'Décembre'
 		]
-		
+
 		var strMonth = date.substring(5,7);
 		var month = months[_.parseInt(strMonth-1)];
-		
+
 		return "le " + date.substring(8,10) + " " + month + " " + date.substring(0,4) + " à " + date.substring(11,13) + "h" + date.substring(14,16);
 	}
-	
+
 	$scope.previous = function() {
 		$ionicSlideBoxDelegate.previous();
 	};
+
+	$scope.addFavorite = function(){
+		var req = {
+      method: 'POST',
+      url: CONFIG.serverUrl + 'api/utilisateur/favori/' + $scope.modalData.Id,
+      headers: {
+        'Content-Type': 'application/json',
+        'accept': 'application/json'
+      }
+    }
+    $http(req)
+      .then(function(response){
+        console.log("Add to favorites");
+      }, function(response){
+        alert( "Problème d'envoi au serveur: " + JSON.stringify({response: response}));
+      });
+	}
+
+	$scope.removeFavorite = function(){
+		var req = {
+      method: 'DEL',
+      url: CONFIG.serverUrl + 'api/utilisateur/favori/' + $scope.modalData.Id,
+      headers: {
+        'Content-Type': 'application/json',
+        'accept': 'application/json'
+      }
+    }
+    $http(req)
+      .then(function(response){
+        console.log("Remove from favorites");
+      }, function(response){
+        alert( "Problème d'envoi au serveur: " + JSON.stringify({response: response}));
+      });
+	}
+
 });
