@@ -78,6 +78,8 @@ angular.module('starter.controllers.UpdateProfile', [])
 
     localStorageService.set('userData', { firstName: authService.authentication.userFirstName, lastName: authService.authentication.userLastName, birthDate: authService.authentication.userBirthDate, telephone: authService.authentication.userTelephone, avatar: $scope.avatarURL });
     authService.authentication.userAvatar = $scope.avatarURL;
+
+    $scope.closeUpdateProfile();
   };
 
   $scope.userData = {};
