@@ -15,6 +15,10 @@
 						<input type="text" class="balanced" ng-model="offer.description" placeholder="Description de votre offre"></input>
 					</ion-item>
 			</ion-list>
+			
+			<ion-list type="card">
+					<ion-checkbox class="balanced item-checkbox-right" ng-model="offer.shareNumber"><strong>Partager mon numéro de téléphone</strong></ion-checkbox>
+			</ion-list>
 
 			<ion-list type="card">
 				<label class="item item-input item-select" id="categorieLabel">
@@ -56,7 +60,7 @@
 				</label>
 			</ion-list>
 
-			<ion-list type="list-inset">
+			<ion-list type="card">
 				<ion-item>
 					<span class="balanced"><strong>Photos/Videos</strong></span>
 				</ion-item>

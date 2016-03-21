@@ -67,7 +67,7 @@
 			
 			<div class="item item-button-right" ng-show="canLeaveComment()">
 				<input type="text" class="balanced" ng-model="offerData.newComment" placeholder="Votre commentaire ..."></input>
-				<button class="button icon-center ion-plus-circled button-balanced" ng-disabled="newComment == ''" ng-click="sendNewComment()"></button>
+				<button class="button icon-center ion-plus-circled button-balanced" ng-disabled="offerData.newComment == ''" ng-click="sendNewComment()"></button>
 			</div>
 		</div>
 		<br>
