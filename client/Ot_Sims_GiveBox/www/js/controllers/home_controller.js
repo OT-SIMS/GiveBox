@@ -68,7 +68,7 @@ angular.module('starter.controllers.Home', [])
 		$http(req).then(function(response){
 			$scope.items=response.data;
 		}, function(response){
-			alert( "Problème d'envoi au serveur: " + JSON.stringify({response: response}));
+			console.log( "Problème d'envoi au serveur: " + JSON.stringify({response: response}));
 		});
 	}
 
@@ -124,7 +124,7 @@ angular.module('starter.controllers.Home', [])
 			$http(req).then(function(response){
 				$scope.items=response.data;
 			}, function(response){
-				alert( "Problème d'envoi au serveur: " + JSON.stringify({response: response}));
+				console.log( "Problème d'envoi au serveur: " + JSON.stringify({response: response}));
 			});
 		} else{
 			$scope.getAllOffers();
@@ -189,8 +189,8 @@ angular.module('starter.controllers.Home', [])
 
 				$scope.openModalOffer();
 			}, function(data){
-				console.log("Problème d'envoi de la requête.");
-				alert( "Problème d'envoi au serveur: " + JSON.stringify({data: data}));
+				//console.log("Problème d'envoi de la requête.");
+				console.log( "[updateMapCoordinates]Problème d'envoi au serveur: " + JSON.stringify({data: data}));
 			});
 
 		}else{
@@ -267,7 +267,7 @@ angular.module('starter.controllers.Home', [])
       .then(function(response){
         $scope.items=response.data;
       }, function(response){
-        alert( "Problème d'envoi au serveur: " + JSON.stringify({response: response}));
+        console.log( "Problème d'envoi au serveur: " + JSON.stringify({response: response}));
       });
   }
 

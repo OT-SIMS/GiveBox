@@ -118,7 +118,7 @@ angular.module('starter.controllers.Offer', [])
         console.log("Add to favorites");
 				$scope.isFavorite = true;
       }, function(response){
-        alert( "Problème d'envoi au serveur: " + JSON.stringify({response: response}));
+        console.log( "Problème d'envoi au serveur: " + JSON.stringify({response: response}));
       });
 	}
 
@@ -136,7 +136,7 @@ angular.module('starter.controllers.Offer', [])
         console.log("Remove from favorites");
 				$scope.isFavorite = false;
       }, function(response){
-        alert( "Problème d'envoi au serveur: " + JSON.stringify({response: response}));
+        console.log( "Problème d'envoi au serveur: " + JSON.stringify({response: response}));
       });
 	}
 
@@ -154,7 +154,7 @@ angular.module('starter.controllers.Offer', [])
 				$scope.isFavorite=response.data;
         console.log(response.data);
       }, function(response){
-        alert( "Problème d'envoi au serveur: " + JSON.stringify({response: response}));
+        console.log( "Problème d'envoi au serveur: " + JSON.stringify({response: response}));
       });
 	};
 
