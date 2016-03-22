@@ -439,7 +439,7 @@ angular.module('starter.controllers.CreateOffer', [])
 
 						      if(addressComponents != undefined){
 							      _.each(addressComponents, function(element){
-								      if(_.contains(element.types, "locality")){
+								      if(_.includes(element.types, "locality")){
 									      $scope.town = element.long_name
 
 									      $scope.cities.push($scope.town);
@@ -488,10 +488,10 @@ angular.module('starter.controllers.CreateOffer', [])
 		      var address_components = dataServer.data.results[0].address_components;
 
 		      _.each(address_components, function(element){
-			      if(_.contains(element.types, "postal_code")){
+			      if(_.includes(element.types, "postal_code")){
 				      $scope.offer.postcode = element.long_name;
 			      }
-			      else if(_.contains(element.types, "locality")){
+			      else if(_.includes(element.types, "locality")){
 				      $scope.town = element.long_name
 				      $scope.cities = [];
 				      $scope.cities.push($scope.town);
