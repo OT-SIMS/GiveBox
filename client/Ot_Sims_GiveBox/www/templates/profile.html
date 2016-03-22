@@ -28,7 +28,7 @@
             </div>
             <a class="item item-thumbnail-left item-button-right" ng-repeat="offer in myOffers" ng-click="openOffer(offer)" ng-if="!offer.EstArchivee">
               <img ng-src="{{offer.Fichier[0].url}}" ng-if="offer.Fichier[0] != null">
-              <img ng-src="img/no_img.jpg" ng-if="item.Fichier[0] == null">
+              <!--img ng-src="img/no_img.jpg" ng-if="item.Fichier[0] == null"-->
               <h2>{{offer.Titre}}</h2>
               <h3><i class="icon ion-location"></i> {{offer.Ville}}</h3>
               <p>{{offer.Description}}</p>
@@ -67,7 +67,7 @@
               </div>
               <a class="item item-thumbnail-left item-button-right" ng-repeat="offer in value" ng-click="openOffer(offer)">
                 <img ng-src="{{offer.Fichier[0].url}}" ng-if="offer.Fichier[0] != null">
-                <img ng-src="img/no_img.jpg" ng-if="item.Fichier[0] == null">
+                <!--img ng-src="img/no_img.jpg" ng-if="item.Fichier[0] == null"-->
                 <h2>{{offer.Titre}}</h2>
                 <h3><i class="icon ion-location"></i> {{offer.Ville}}</h3>
                 <p>{{offer.Description}}</p>
