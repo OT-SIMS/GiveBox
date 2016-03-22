@@ -40,21 +40,22 @@ angular.module('starter.controllers.Login', [])
     $http(req).then(function(response){
       if(response.status == '204'){
         console.log('complete infos needed');
+        $scope.modal.hide();
         $scope.completeProfile();
       }
       else {
         console.log(response.data);
-        var avatar;
+        var myAvatar;
         if(response.data.Fichier==null){
-          avatar= "img/no_avatar.jpg";
+          myAvatar= "img/no_avatar.jpg";
           authService.authentication.userAvatar = "img/no_avatar.jpg";
         }
         else{
-          avatar = response.data.Fichier.url;
+          myAvatar = response.data.Fichier.url;
           authService.authentication.userAvatar = response.data.Fichier.url;
         }
-        console.log("Avatar:" + avatar);
-        localStorageService.set('userData', { firstName: response.data.Prenom, lastName: response.data.Nom, birthDate: response.data.DateNaissance, telephone: response.data.Telephone, avatar: avatar });
+        console.log("Avatar:" + myAvatar);
+        localStorageService.set('userData', { firstName: response.data.Prenom, lastName: response.data.Nom, birthDate: response.data.DateNaissance, telephone: response.data.Telephone, avatar: myAvatar });
 
         authService.authentication.userLastName = response.data.Nom;
         authService.authentication.userFirstName = response.data.Prenom;

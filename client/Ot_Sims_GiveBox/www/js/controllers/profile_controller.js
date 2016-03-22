@@ -41,7 +41,7 @@ angular.module('starter.controllers.Profile', [])
         $scope.myOffers=response.data;
         console.log(response.data);
       }, function(response){
-        alert( "Problème d'envoi au serveur: " + JSON.stringify({response: response}));
+        console.log( "Problème d'envoi au serveur: " + JSON.stringify({response: response}));
       });
   }
 
@@ -59,7 +59,7 @@ angular.module('starter.controllers.Profile', [])
       .then(function(response){
         $scope.myFavorites=response.data;
       }, function(response){
-        alert( "Problème d'envoi au serveur: " + JSON.stringify({response: response}));
+        console.log( "Problème d'envoi au serveur: " + JSON.stringify({response: response}));
       });
   }
 
@@ -76,7 +76,7 @@ angular.module('starter.controllers.Profile', [])
       .then(function(response){
         console.log("Remove from offers");
       }, function(response){
-        alert( "Problème d'envoi au serveur: " + JSON.stringify({response: response}));
+        console.log( "Problème d'envoi au serveur: " + JSON.stringify({response: response}));
       });
 	}
 
@@ -93,7 +93,7 @@ angular.module('starter.controllers.Profile', [])
       .then(function(response){
         console.log("Remove from favorites");
       }, function(response){
-        alert( "Problème d'envoi au serveur: " + JSON.stringify({response: response}));
+        console.log( "Problème d'envoi au serveur: " + JSON.stringify({response: response}));
       });
 	}
 

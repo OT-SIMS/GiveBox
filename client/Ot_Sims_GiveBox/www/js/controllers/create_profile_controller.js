@@ -12,6 +12,7 @@ angular.module('starter.controllers.CreateProfile', [])
       }).then(function(modal) {
         $scope.modal = modal;
       });
+      $scope.modal.hide();
       $scope.openProfile();
     },
     function (err) {

@@ -53,6 +53,11 @@ angular.module('starter', [
 
 .constant('CONFIG', {
 	serverUrl: "http://vil69-4-82-230-146-177.fbx.proxad.net/givebox/",
+	//serverUrl: "http://192.168.0.5/givebox/",//"http://yoda.rispal.info/givebox/",
+	//serverUrl: "http://givebox.apphb.com",
+	//serverUrl: " http://90.27.88.22:8080/givebox/",
+	//serverUrl: "http://yoda.rispal.info/givebox/",
+	//serverUrl: "http://aannecy-651-1-26-113.w86-209.abo.wanadoo.fr/givebox/",
 	googleapis: "https://maps.googleapis.com/maps/api/"
 })
 
