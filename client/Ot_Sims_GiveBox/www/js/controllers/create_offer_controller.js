@@ -208,7 +208,6 @@ angular.module('starter.controllers.CreateOffer', [])
 			"Longitude": $scope.offer.longitude,
 			"CodePostal": $scope.offer.postcode,
 			"Ville": $scope.offer.town,
-			"PartagerNumero" : $scope.offer.shareNumber
 		};
 
 		var reqJson = {

@@ -1,6 +1,6 @@
 angular.module('starter.controllers.Offer', [])
 
-.controller('OfferCtrl', function($scope, $ionicModal, $ionicLoading, $log, $http, $ionicSlideBoxDelegate, $cordovaEmailComposer, CONFIG, $sce) {
+.controller('OfferCtrl', function($scope, $ionicModal, $ionicLoading, $log, $http, $ionicSlideBoxDelegate, $cordovaEmailComposer, CONFIG, $sce, localStorageService) {
 	
 	$scope.trustSrc = function(src) {
 		return $sce.trustAsResourceUrl(src);
@@ -141,22 +141,33 @@ angular.module('starter.controllers.Offer', [])
 	}
 
 	$scope.isFavoriteTest = function(){
-		var req = {
-      method: 'POST',
-      url: CONFIG.serverUrl + 'api/utilisateur/favoritest/' + $scope.modalData.Id,
-      headers: {
-        'Content-Type': 'application/json',
-        'accept': 'application/json'
-      }
-    }
-    $http(req)
-      .then(function(response){
-				$scope.isFavorite=response.data;
-        console.log(response.data);
-      }, function(response){
-        console.log( "Problème d'envoi au serveur: " + JSON.stringify({response: response}));
-      });
+		console.log("isFavoriteTest");
+		//Check if we are logged in
+		var authData = localStorageService.get('authorizationData');
+		if (!authData) {
+			$scope.isFavorite = false;
+		}else{
+			$scope.requestIsFavoriteTest();
+		}
 	};
+	
+	$scope.requestIsFavoriteTest = function() {
+		var req = {
+			method: 'POST',
+			url: CONFIG.serverUrl + 'api/utilisateur/favoritest/' + $scope.modalData.Id,
+			headers: {
+				'Content-Type': 'application/json',
+				'accept': 'application/json'
+			}
+		}
+		
+		$http(req).then(function(response){
+			$scope.isFavorite=response.data;
+			console.log(response.data);
+		}, function(response){
+			console.log( "[isFavoriteTest] Problème d'envoi au serveur: " + JSON.stringify({response: response}));
+		});
+	}
 
 	$scope.isFavoriteTest();
 });

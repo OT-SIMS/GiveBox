@@ -142,11 +142,11 @@ angular.module('starter.controllers.Home', [])
 
 	$scope.openOffer = function(offer){
 		$scope.modalData  = offer;
-		var markerOptions = {
-			latitude : offer.Latitude,
-			longitude : offer.LOngitude
-		};
-		$scope.modalData.marker = markerOptions;
+// 		var markerOptions = {
+// 			latitude : offer.Latitude,
+// 			longitude : offer.LOngitude
+// 		};
+// 		$scope.modalData.marker = markerOptions;
 
 		$scope.updateMapCoordinates(offer);
 	}
@@ -175,17 +175,18 @@ angular.module('starter.controllers.Home', [])
 			options.params = params;
 
 			$http(options).then(function(dataServer){
-				console.log("updating coords gmaps : " + dataServer);
 
 				var lat = dataServer.data.results[0].geometry.location.lat;
 				var lng = dataServer.data.results[0].geometry.location.lng;
 
-				$scope.map.center.latitude = lat;
-				$scope.map.center.longitude = lng;
-				$scope.map.zoom = 5;
+				$scope.map.center.latitude = parseInt(lat);
+				$scope.map.center.longitude = parseInt(lng);
+				$scope.map.zoom = 13;
 
-				$scope.marker.coords.latitude = lat;
-				$scope.marker.coords.longitude = lng;
+				$scope.marker.coords.latitude = parseInt(lat);
+				$scope.marker.coords.longitude = parseInt(lng);
+				
+				console.log("updated coords gmaps : " + lat + " ; " + lng);
 
 				$scope.openModalOffer();
 			}, function(data){
