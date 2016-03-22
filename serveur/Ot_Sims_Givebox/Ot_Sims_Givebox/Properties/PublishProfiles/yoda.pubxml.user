@@ -313,10 +313,10 @@ en modifiant ce fichier MSBuild. Pour en savoir plus à ce sujet, consultez la p
       <publishTime>02/29/2016 15:29:08</publishTime>
     </File>
     <File Include="bin/Ot_Sims_Givebox.dll">
-      <publishTime>03/21/2016 15:05:25</publishTime>
+      <publishTime>03/21/2016 15:10:44</publishTime>
     </File>
     <File Include="bin/Ot_Sims_Givebox.pdb">
-      <publishTime>03/21/2016 15:05:25</publishTime>
+      <publishTime>03/21/2016 15:10:44</publishTime>
     </File>
     <File Include="bin/Owin.dll">
       <publishTime>02/29/2016 10:37:50</publishTime>

@@ -106,7 +106,6 @@ namespace Ot_Sims_Givebox.Controllers
 
         // GET: api/Offres/5
         [AllowAnonymous]
-
         [ResponseType(typeof(Offre))]
         public async Task<IHttpActionResult> GetOffre(int id)
         {

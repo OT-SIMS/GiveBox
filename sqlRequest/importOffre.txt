@@ -1,7 +1,2 @@
 Id,UtilisateurId,Titre,Descritption,Latitude,Longitude,CategorieId,CodePostal,Ville,EstArchivee
-,1,Test,desc,1,1,25,69000,Lyon,1
-,1,velo rouge,ceci est un velo rouge, 100,100,7,13012,Marseille,0
-,1,rouge a levres, ceci est un rouge a levres, 200,200,28,13013,Marseille,0
-,1,velo bleu, ceci est un velo bleu, 150,150,7,69100,Villeurbanne,0
-,1,velos bleus, ceci sont DEUX velos bleus, 150,150,7,69400,Villeurbanne,0
-,1, bleu blanc rouge, ceci est un test chiant, 150,150,10,69006,Lyon,0
+,1,Nain de jardin,Nain de jardin en très bon état, je m'en débarasse suite à un déménagement,45.781791899999995,4.8731072,22,69100,Villeurbanne,0
