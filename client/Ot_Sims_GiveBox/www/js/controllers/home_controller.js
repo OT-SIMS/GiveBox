@@ -179,12 +179,12 @@ angular.module('starter.controllers.Home', [])
 				var lat = dataServer.data.results[0].geometry.location.lat;
 				var lng = dataServer.data.results[0].geometry.location.lng;
 
-				$scope.map.center.latitude = parseInt(lat);
-				$scope.map.center.longitude = parseInt(lng);
+				$scope.map.center.latitude = lat;
+				$scope.map.center.longitude = lng;
 				$scope.map.zoom = 13;
 
-				$scope.marker.coords.latitude = parseInt(lat);
-				$scope.marker.coords.longitude = parseInt(lng);
+				$scope.marker.coords.latitude = lat;
+				$scope.marker.coords.longitude = lng;
 				
 				console.log("updated coords gmaps : " + lat + " ; " + lng);
 
