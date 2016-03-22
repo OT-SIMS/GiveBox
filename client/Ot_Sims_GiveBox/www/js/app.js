@@ -33,9 +33,9 @@ angular.module('starter', [
 		console.log(navigator.device.capture);
 	});
 
-	$ionicPlatform.ready(function() {
-		$cordovaGeolocation.getCurrentPosition().then(success, error);
-	});
+// 	$ionicPlatform.ready(function() {
+// 		$cordovaGeolocation.getCurrentPosition().then(success, error);
+// 	});
 
 	$ionicPlatform.ready(function() {
 		$cordovaEmailComposer.open().then(success, error);
